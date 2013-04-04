@@ -1,0 +1,1469 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
+<title>Databases</title>
+<style type="text/css">
+
+/*
+:Authors: Ian Bicking, Michael Foord
+:Contact: fuzzyman@voidspace.org.uk
+:Date: 2005/08/26 
+:Version: 0.1.0
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for Docutils.
+Based on ``blue_box.css`` by Ian Bicking
+and ``html4css1.css`` revision 1.46.
+*/
+
+@import url(html4css1.css);
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+em, i {
+  /* Typically serif fonts have much nicer italics */
+  font-family: Times New Roman, Times, serif;
+}
+
+a.target {
+  color: blue;
+}
+
+a.target {
+  color: blue;
+}
+
+a.toc-backref {
+  text-decoration: none;
+  color: black;
+}
+
+a.toc-backref:hover {
+  background-color: inherit;
+}
+
+a:hover {
+  background-color: #cccccc;
+}
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Helvetica, Arial, sans-serif;
+  border: thin solid black;
+  /* This makes the borders rounded on Mozilla, which pleases me */
+  -moz-border-radius: 8px;
+  padding: 4px;
+}
+
+h1 {
+  background-color: #444499;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h1 a.toc-backref, h2 a.toc-backref { 
+  color: #ffffff;
+}
+
+h2 {
+  background-color: #666666;
+  color: #ffffff;
+  border: medium solid black;
+}
+
+h3, h4, h5, h6 {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+h3 a.toc-backref, h4 a.toc-backref, h5 a.toc-backref, 
+h6 a.toc-backref { 
+  color: #000000;
+}
+
+h1.title {
+  text-align: center;
+  background-color: #444499;
+  color: #eeeeee;
+  border: thick solid black;
+  -moz-border-radius: 20px;
+}
+
+table.footnote {
+  padding-left: 0.5ex;
+}
+
+table.citation {
+  padding-left: 0.5ex
+}
+
+pre.literal-block, pre.doctest-block {
+  border: thin black solid;
+  padding: 5px;
+}
+
+.image img { border-style : solid;
+            border-width : 2px;
+}
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 100%;
+}
+
+code, tt {
+  color: #000066;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="databases">
+<h1 class="title">Databases</h1>
+
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id2">Databases</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id2">Databases</a><ul>
+<li><a class="reference internal" href="#types-of-databases" id="id3">Types of databases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relational-databases-rdbms" id="id4">Relational databases (RDBMS)</a><ul>
+<li><a class="reference internal" href="#developing-the-database-schema" id="id5">Developing the database schema</a><ul>
+<li><a class="reference internal" href="#normal-forms" id="id6">Normal forms</a><ul>
+<li><a class="reference internal" href="#first-normal-form" id="id7">First normal form</a></li>
+<li><a class="reference internal" href="#second-normal-form" id="id8">Second normal form</a></li>
+<li><a class="reference internal" href="#third-normal-form" id="id9">Third normal form</a></li>
+<li><a class="reference internal" href="#other-best-practices" id="id10">Other best practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#structured-query-language" id="id11">Structured Query Language</a></li>
+<li><a class="reference internal" href="#getting-data-in" id="id12">Getting data in</a><ul>
+<li><a class="reference internal" href="#insert-into" id="id13">INSERT INTO</a></li>
+<li><a class="reference internal" href="#importing-a-datafile" id="id14">Importing a datafile</a></li>
+<li><a class="reference internal" href="#using-scripting" id="id15">Using scripting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-data-out" id="id16">Getting data out</a><ul>
+<li><a class="reference internal" href="#single-tables" id="id17">Single tables</a></li>
+<li><a class="reference internal" href="#combining-tables" id="id18">Combining tables</a><ul>
+<li><a class="reference internal" href="#join" id="id19">JOIN</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-functions" id="id20">Additional functions</a><ul>
+<li><a class="reference internal" href="#and-or-in" id="id21">AND, OR, IN</a></li>
+<li><a class="reference internal" href="#distinct" id="id22">DISTINCT</a></li>
+<li><a class="reference internal" href="#order-by" id="id23">ORDER BY</a></li>
+<li><a class="reference internal" href="#count" id="id24">COUNT</a></li>
+<li><a class="reference internal" href="#max-min-avg" id="id25">MAX(), MIN(), AVG()</a></li>
+<li><a class="reference internal" href="#group-by" id="id26">GROUP BY</a></li>
+<li><a class="reference internal" href="#union-intersect" id="id27">UNION, INTERSECT</a></li>
+<li><a class="reference internal" href="#like" id="id28">LIKE</a></li>
+<li><a class="reference internal" href="#limit" id="id29">LIMIT</a></li>
+<li><a class="reference internal" href="#subqueries" id="id30">Subqueries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#perl-dbi" id="id31">Perl-DBI</a><ul>
+<li><a class="reference internal" href="#dbi-and-dbd" id="id32">DBI and DBD</a></li>
+<li><a class="reference internal" href="#installing-dbi-and-dbd" id="id33">Installing DBI and DBD</a></li>
+<li><a class="reference internal" href="#connecting-to-a-database" id="id34">Connecting to a database</a></li>
+<li><a class="reference internal" href="#do-something" id="id35">Do something</a></li>
+<li><a class="reference internal" href="#slurp-data-from-database" id="id36">Slurp data from database</a></li>
+<li><a class="reference internal" href="#getting-data-one-at-a-time" id="id37">Getting data one at a time</a></li>
+<li><a class="reference internal" href="#using-parameters" id="id38">Using parameters</a></li>
+<li><a class="reference internal" href="#binding-variables" id="id39">Binding variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercises" id="id40">Exercises</a><ul>
+<li><a class="reference internal" href="#database-schema-normalization" id="id41">Database schema normalization</a></li>
+<li><a class="reference internal" href="#loading-data" id="id42">Loading data</a></li>
+<li><a class="reference internal" href="#querying-data-sql" id="id43">Querying data - SQL</a></li>
+<li><a class="reference internal" href="#querying-data-perl-dbi" id="id44">Querying data - Perl/DBI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Author:</th><td class="field-body">Jan Aerts</td>
+</tr>
+<tr class="field"><th class="field-name">Date:</th><td class="field-body">February 15, 2012</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Part of the content of this lecture is taken from the database lectures from the yearly Programming for Biology course at CSHL, and the EasySoft tutorial at http://bit.ly/x2yNDb)</em></p>
+<p>Data management is critical in any science, including biology. In this session, we will look at different database concepts, from file-based solutions and relational (SQL) databases (RDBMS) to the more recent NoSQL databases (column-based or document-based) such as MongoDB. I will give some indications on when you'd choose one technology over the other.</p>
+<p>For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI. For document-oriented databases (MongoDB), I will discuss the basic concepts (collections, documents) and introduce the students to the mongo interactive shell. I'll also talk about how to access a MongoDB database from perl.</p>
+<div class="section" id="types-of-databases">
+<h2><a class="toc-backref" href="#id3">Types of databases</a></h2>
+<p>There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of <em>tables</em> that contain <em>rows</em> (which represent instance data) and <em>columns</em> (representing properties of that data). Any table can be thought of as an Excel-sheet.</p>
+</div>
+</div>
+<div class="section" id="relational-databases-rdbms">
+<h1><a class="toc-backref" href="#id4">Relational databases (RDBMS)</a></h1>
+<p>Relational databases are the most wide-spread paradigm used to store data. They use the concept of <em>tables</em> with each <em>row</em> containing an instance of the data, and each <em>column</em> representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a <em>database server</em> in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use <a class="reference external" href="http://www.sqlite.org">SQLite3</a>. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). <tt class="docutils literal">sqlite3 my_db.sqlite</tt> is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...</p>
+<div class="section" id="developing-the-database-schema">
+<h2><a class="toc-backref" href="#id5">Developing the database schema</a></h2>
+<p>For the purpose of this lecture, let's say you want to store individuals and their genotypes. In Excel, you could create a sheet that looks like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="7%" />
+<col width="5%" />
+<col width="9%" />
+<col width="7%" />
+<col width="7%" />
+<col width="5%" />
+<col width="9%" />
+<col width="7%" />
+<col width="7%" />
+<col width="5%" />
+<col width="9%" />
+<col width="7%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">individual</th>
+<th class="head">ethnicity</th>
+<th class="head">rs12345</th>
+<th class="head">rs12345_amb</th>
+<th class="head">chr_12345</th>
+<th class="head">pos_12345</th>
+<th class="head">rs98765</th>
+<th class="head">rs98765_amb</th>
+<th class="head">chr_98765</th>
+<th class="head">pos_98765</th>
+<th class="head">rs28465</th>
+<th class="head">rs28465_amb</th>
+<th class="head">chr_28465</th>
+<th class="head">pos_28465</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>individual_A</td>
+<td>caucasian</td>
+<td>A/A</td>
+<td>A</td>
+<td>1</td>
+<td>12345</td>
+<td>A/G</td>
+<td>R</td>
+<td>1</td>
+<td>98765</td>
+<td>G/T</td>
+<td>K</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+<tr><td>individual_B</td>
+<td>caucasian</td>
+<td>A/C</td>
+<td>M</td>
+<td>1</td>
+<td>12345</td>
+<td>G/G</td>
+<td>G</td>
+<td>1</td>
+<td>98765</td>
+<td>G/G</td>
+<td>G</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+</tbody>
+</table>
+<p>So let's create a relational database to store this data.</p>
+<pre class="literal-block">
+%% sqlite3 test.sqlite
+</pre>
+<p>We can get help using <tt class="docutils literal">.help</tt>:</p>
+<pre class="literal-block">
+sqlite&gt; .help
+</pre>
+<p>We first create a table, and insert that data:</p>
+<pre class="literal-block">
+sqlite&gt; CREATE TABLE genotypes (individual STRING,
+                                ethnicity STRING,
+                                rs12345 STRING,
+                                rs12345_amb STRING,
+                                chr_12345 STRING,
+                                pos_12345 INTEGER,
+                                rs98765 STRING,
+                                rs98765_amb STRING,
+                                chr_98765 STRING,
+                                pos_98765 INTEGER,
+                                rs28465 STRING,
+                                rs28465_amb STRING,
+                                chr_28465 STRING,
+                                pos_28465 INTEGER);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, chr_12345, pos_12345,
+                                                      rs98765, rs98765_amb, chr_98765, pos_98765,
+                                                      rs28465, rs28465_amb, chr_28465, pos_28465)
+                       VALUES ('individual_A','caucasian','A/A','A','1',12345,
+                                                          'A/G','R','1',98765,
+                                                          'G/T','K','5',28465);
+
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, chr_12345, pos_12345,
+                                                      rs98765, rs98765_amb, chr_98765, pos_98765,
+                                                      rs28465, rs28465_amb, chr_28465, pos_28465)
+                       VALUES ('individual_A','caucasian','A/C','M','1',12345,
+                                                          'G/G','G','1',98765,
+                                                          'G/G','G','5',28465);
+</pre>
+<p>(Note that every SQL command is ended with a semi-colon...) This created a new table called <tt class="docutils literal">genotypes</tt>; we can quickly check that everything is loaded (we'll come back to getting data out later):</p>
+<pre class="literal-block">
+sqlite&gt; .mode column
+sqlite&gt; .headers on
+sqlite&gt; SELECT * FROM genotypes;
+</pre>
+<p>Done! For every new SNP we just add a new column, right? Wrong...</p>
+<div class="section" id="normal-forms">
+<h3><a class="toc-backref" href="#id6">Normal forms</a></h3>
+<p>There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the &quot;normal forms&quot;.</p>
+<div class="section" id="first-normal-form">
+<h4><a class="toc-backref" href="#id7">First normal form</a></h4>
+<p>To get to the first normal form:</p>
+<ul class="simple">
+<li>Eliminate duplicative columns from the same table</li>
+<li>Create separate tables for each group of related data and identify each row with a unique column (the primary key)</li>
+</ul>
+<p>The columns <tt class="docutils literal">rs123451</tt>, <tt class="docutils literal">rs98765</tt> and <tt class="docutils literal">rs28465</tt> are duplicates; they describe exactly the same type of thing (albeit different instances). According to the first rule of the first normal form, we need to eliminate these. And we can do that by creating new records (rows) for each SNP. In addition, each row should have a unique key. Best practices tell us to use autoincrementing integers, the primary key should contain <em>no</em> information in itself.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="18%" />
+<col width="13%" />
+<col width="10%" />
+<col width="12%" />
+<col width="18%" />
+<col width="15%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">individual</th>
+<th class="head">ethnicity</th>
+<th class="head">snp</th>
+<th class="head">genotype</th>
+<th class="head">genotype_amb</th>
+<th class="head">chromosome</th>
+<th class="head">position</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>individual_A</td>
+<td>caucasian</td>
+<td>rs12345</td>
+<td>A/A</td>
+<td>A</td>
+<td>1</td>
+<td>12345</td>
+</tr>
+<tr><td>2</td>
+<td>individual_A</td>
+<td>caucasian</td>
+<td>rs98765</td>
+<td>A/G</td>
+<td>R</td>
+<td>1</td>
+<td>98765</td>
+</tr>
+<tr><td>3</td>
+<td>individual_A</td>
+<td>caucasian</td>
+<td>rs28465</td>
+<td>G/T</td>
+<td>K</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+<tr><td>4</td>
+<td>individual_B</td>
+<td>caucasian</td>
+<td>rs12345</td>
+<td>A/C</td>
+<td>M</td>
+<td>1</td>
+<td>12345</td>
+</tr>
+<tr><td>5</td>
+<td>individual_B</td>
+<td>caucasian</td>
+<td>rs98765</td>
+<td>G/G</td>
+<td>G</td>
+<td>1</td>
+<td>98765</td>
+</tr>
+<tr><td>6</td>
+<td>individual_B</td>
+<td>caucasian</td>
+<td>rs28465</td>
+<td>G/G</td>
+<td>G</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+</tbody>
+</table>
+<p>To generate this table:</p>
+<pre class="literal-block">
+sqlite&gt; DROP TABLE genotypes;
+sqlite&gt; CREATE TABLE genotypes (id INTEGER PRIMARY KEY, individual STRING, ethnicity STRING, snp STRING,
+                                genotype STRING, genotype_amb STRING, chromosome STRING, position INTEGER);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_A','caucasian','rs12345','A/A','A','1',12345);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_A','caucasian','rs98765','A/G','R','1',98765);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_A','caucasian','rs28465','G/T','K','1',28465);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_B','caucasian','rs12345','A/C','M','1',12345);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_B','caucasian','rs98765','G/G','G','1',98765);
+sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
+                       VALUES ('individual_B','caucasian','rs28465','G/G','G','1',28465);
+</pre>
+<p>The fact that <tt class="docutils literal">id</tt> is defined as <tt class="docutils literal">INTEGER PRIMARY KEY</tt> makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for <tt class="docutils literal">id</tt> automatically takes care of everything.</p>
+</div>
+<div class="section" id="second-normal-form">
+<h4><a class="toc-backref" href="#id8">Second normal form</a></h4>
+<p>There is still a lot of duplication in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:</p>
+<ul class="simple">
+<li>Remove subsets of data that apply to multiple rows of a table and place them in separate tables.</li>
+<li>Create relationships between these new tables and their predecessors through the use of foreign keys.</li>
+</ul>
+<p>So how could we do that for the table above? Each row contains 3 different types of things: information about an individual (<em>i.c.</em> name and ethnicity), a SNP (<em>i.c.</em> the accession number, chromosome and position), and a genotype linking those two together (the genotype column, and the column containing the IUPAC ambiguity code for that genotype). To get to the second normal form, we need to put each of these in a separate table:</p>
+<ul class="simple">
+<li>The name of each table should be plural (not mandatory, but good practice).</li>
+<li>Each table should have a primary key, ideally named <tt class="docutils literal">id</tt>. Different tables can contain columns that have the same name; column names should be unique within a table, but can occur across tables.</li>
+<li>The <tt class="docutils literal">individual</tt> column is renamed to <tt class="docutils literal">name</tt>, and <tt class="docutils literal">snp</tt> to <tt class="docutils literal">accession</tt>.</li>
+<li>In the genotypes table, individuals and SNPs are linked by referring to their primary keys (as used in the <tt class="docutils literal">individuals</tt> and <tt class="docutils literal">snps</tt> tables). Again best practice: if a foreign key refers to the <tt class="docutils literal">id</tt> column in the <tt class="docutils literal">individuals</tt> table, it should be named <tt class="docutils literal">individual_id</tt> (note the singular).</li>
+<li>The foreign keys <tt class="docutils literal">individual_id</tt> and <tt class="docutils literal">snp_id</tt> in the <tt class="docutils literal">genotypes</tt> table must be of the same type as the <tt class="docutils literal">id</tt> columns in the <tt class="docutils literal">individuals</tt> and <tt class="docutils literal">snps</tt> tables, respectively.</li>
+</ul>
+<img alt="primary_foreign_keys.png" src="primary_foreign_keys.png" />
+<p>The <em>individuals</em> table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="52%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">name</th>
+<th class="head">ethnicity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>individual_A</td>
+<td>caucasian</td>
+</tr>
+<tr><td>2</td>
+<td>individual_B</td>
+<td>caucasian</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>snps</em> table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="31%" />
+<col width="34%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">accession</th>
+<th class="head">chromosome</th>
+<th class="head">position</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>rs12345</td>
+<td>1</td>
+<td>12345</td>
+</tr>
+<tr><td>2</td>
+<td>rs98765</td>
+<td>1</td>
+<td>98765</td>
+</tr>
+<tr><td>3</td>
+<td>rs28465</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>genotypes</em> table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="32%" />
+<col width="15%" />
+<col width="20%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">individual_id</th>
+<th class="head">snp_id</th>
+<th class="head">genotype</th>
+<th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>1</td>
+<td>1</td>
+<td>A/A</td>
+<td>A</td>
+</tr>
+<tr><td>2</td>
+<td>1</td>
+<td>2</td>
+<td>A/G</td>
+<td>R</td>
+</tr>
+<tr><td>3</td>
+<td>1</td>
+<td>3</td>
+<td>G/T</td>
+<td>K</td>
+</tr>
+<tr><td>4</td>
+<td>2</td>
+<td>1</td>
+<td>A/C</td>
+<td>M</td>
+</tr>
+<tr><td>5</td>
+<td>2</td>
+<td>2</td>
+<td>G/G</td>
+<td>G</td>
+</tr>
+<tr><td>6</td>
+<td>2</td>
+<td>3</td>
+<td>G/G</td>
+<td>G</td>
+</tr>
+</tbody>
+</table>
+<p>To generate these tables:</p>
+<pre class="literal-block">
+sqlite&gt; DROP TABLE individuals;
+sqlite&gt; DROP TABLE snps;
+sqlite&gt; DROP TABLE genotypes;
+sqlite&gt; CREATE TABLE individuals (id INTEGER PRIMARY KEY, name STRING, ethnicity STRING);
+sqlite&gt; CREATE TABLE snps (id INTEGER PRIMARY KEY, accession STRING, chromosome STRING, position INTEGER);
+sqlite&gt; CREATE TABLE genotypes (id INTEGER PRIMARY KEY, individual_id INTEGER, snp_id INTEGER, genotype STRING, genotype_amb STRING);
+sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES ('individual_A','caucasian');
+sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES ('individual_B','caucasian');
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs12345','1',12345);
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs98765','1',98765);
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs28465','5',28465);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,1,'A/A','A');
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,2,'A/G','R');
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,3,'G/T','K');
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,1,'A/C','M');
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,2,'G/G','G');
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,'G/G','G');
+</pre>
+</div>
+<div class="section" id="third-normal-form">
+<h4><a class="toc-backref" href="#id9">Third normal form</a></h4>
+<p>In the third normal form, we try to eliminate unnecessary data from our database; data that could be calculated based on other things that are present. In our example table <tt class="docutils literal">genotypes</tt>, the <tt class="docutils literal">genotype</tt> and <tt class="docutils literal">genotype_amb</tt> columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final database would look like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="52%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">name</th>
+<th class="head">ethnicity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>individual_A</td>
+<td>caucasian</td>
+</tr>
+<tr><td>2</td>
+<td>individual_B</td>
+<td>caucasian</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>snps</em> table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="31%" />
+<col width="34%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">accession</th>
+<th class="head">chromosome</th>
+<th class="head">position</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>rs12345</td>
+<td>1</td>
+<td>12345</td>
+</tr>
+<tr><td>2</td>
+<td>rs98765</td>
+<td>1</td>
+<td>98765</td>
+</tr>
+<tr><td>3</td>
+<td>rs28465</td>
+<td>5</td>
+<td>28465</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>genotypes</em> table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="39%" />
+<col width="18%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">individual_id</th>
+<th class="head">snp_id</th>
+<th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>1</td>
+<td>1</td>
+<td>A</td>
+</tr>
+<tr><td>2</td>
+<td>1</td>
+<td>2</td>
+<td>R</td>
+</tr>
+<tr><td>3</td>
+<td>1</td>
+<td>3</td>
+<td>K</td>
+</tr>
+<tr><td>4</td>
+<td>2</td>
+<td>1</td>
+<td>M</td>
+</tr>
+<tr><td>5</td>
+<td>2</td>
+<td>2</td>
+<td>G</td>
+</tr>
+<tr><td>6</td>
+<td>2</td>
+<td>3</td>
+<td>G</td>
+</tr>
+</tbody>
+</table>
+<p>To know what your database schema looks like, you can issue the <tt class="docutils literal">.schema</tt> command. <tt class="docutils literal">.tables</tt> gives you a list of the tables that are defined.</p>
+</div>
+<div class="section" id="other-best-practices">
+<h4><a class="toc-backref" href="#id10">Other best practices</a></h4>
+<p>There are some additional guidelines that you can use in creating your database schema, although different people use different guidelines. What I do:</p>
+<ul class="simple">
+<li>No capitals in table or column names</li>
+<li>Every table name is plural (<em>e.g.</em> <tt class="docutils literal">genes</tt>)</li>
+<li>The primary key of each table should be <tt class="docutils literal">id</tt></li>
+<li>Any foreign key should be the singular of the table name, plus <tt class="docutils literal">_id</tt>. So for example, a <tt class="docutils literal">genotypes</tt> table can have a <tt class="docutils literal">sample_id</tt> column which refers to the <tt class="docutils literal">id</tt> column of the <tt class="docutils literal">samples</tt> table.</li>
+</ul>
+<p>In some cases, I digress from the rule of &quot;every table name is plural&quot;, especially if a table is really meant to link to other tables together. A table <tt class="docutils literal">genotypes</tt> which has an <tt class="docutils literal">id</tt>, <tt class="docutils literal">sample_id</tt>, <tt class="docutils literal">snp_id</tt>, and <tt class="docutils literal">genotype</tt> could <em>e.g.</em> also be called <tt class="docutils literal">sample2snp</tt>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="structured-query-language">
+<h2><a class="toc-backref" href="#id11">Structured Query Language</a></h2>
+<p>Any interacting with data in RDBMS can happen through the Structured Query Language (SQL): create tables, insert data, search data, ... There are two subparts of SQL:</p>
+<p><em>DDL - Data Definition Language</em>:</p>
+<pre class="literal-block">
+CREATE DATABASE test;
+CREATE TABLE snps (id INT PRIMARY KEY AUTOINCREMENT, accession STRING, chromosome STRING, position INTEGER);
+ALTER TABLE...
+DROP TABLE snps;
+</pre>
+<p>For examples: see above.</p>
+<p><em>DML - Data Manipulation Language</em>:</p>
+<pre class="literal-block">
+SELECT
+UPDATE
+INSERT
+DELETE
+</pre>
+<p>Some additional functions are:</p>
+<pre class="literal-block">
+DISTINCT
+COUNT(*)
+COUNT(DISTINCT column)
+MAX(), MIN(), AVG()
+GROUP BY
+UNION, INTERSECT
+</pre>
+<p>We'll look closer at getting data into a database and then querying it, using these four SQL commands.</p>
+</div>
+<div class="section" id="getting-data-in">
+<h2><a class="toc-backref" href="#id12">Getting data in</a></h2>
+<div class="section" id="insert-into">
+<h3><a class="toc-backref" href="#id13">INSERT INTO</a></h3>
+<p>There are several ways to load data into a database. The method used above is the most straightforward but inadequate if you have to load a large amount of data.</p>
+<p>It's basically:</p>
+<pre class="literal-block">
+sqlite&gt; INSERT INTO &lt;table_name&gt; (&lt;column_1&gt;, &lt;column_2&gt;, &lt;column_3&gt;) VALUES (&lt;value_1&gt;, &lt;value_2&gt;, &lt;value_3&gt;);
+</pre>
+</div>
+<div class="section" id="importing-a-datafile">
+<h3><a class="toc-backref" href="#id14">Importing a datafile</a></h3>
+<p>But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a comma-separated file straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (<em>e.g.</em> &quot;data.csv&quot;) that looks like this:</p>
+<pre class="literal-block">
+individual_C,african
+individual_D,african
+individual_C,asian
+</pre>
+<p>SQLite contains a <tt class="docutils literal">.import</tt> command to load this type of data. Syntax: <tt class="docutils literal">.import &lt;file&gt; &lt;table&gt;</tt>. So you could issue:</p>
+<pre class="literal-block">
+sqlite&gt; .separator ','
+sqlite&gt; .import data.csv individuals
+</pre>
+<p>Aargh... We get an error!</p>
+<pre class="literal-block">
+Error: data.tsv line 1: expected 3 columns of data but found 2
+</pre>
+<p>This is because the table contains an ID column that is used as primary key and that increments automatically. Unfortunately, SQLite cannot work around this issue automatically. One option is to add the new IDs to the text file and import that new file. But this is <strong>not</strong> recommended, because it screws with some internal counters (SQLite keeps a counter whenever it autoincrements a column, but this counter is not adjusted if you hardwire the ID). A possible workaround is to create a temporary table (<em>e.g.</em> <tt class="docutils literal">individuals_tmp</tt>) <em>without</em> the <tt class="docutils literal">id</tt> column, import the data in that table, and then copy the data from that temporary table to the real <tt class="docutils literal">individuals</tt>.</p>
+<pre class="literal-block">
+sqlite&gt; .schema individuals
+sqlite&gt; CREATE TABLE individuals_tmp (name STRING, ethnicity STRING);
+sqlite&gt; .separator ','
+sqlite&gt; .import data.csv individuals_tmp
+sqlite&gt; INSERT INTO individuals (name, ethnicity) SELECT * FROM individuals_tmp;
+sqlite&gt; DROP TABLE individuals_tmp;
+</pre>
+<p>Your <tt class="docutils literal">individuals</tt> table should now look like this (using <tt class="docutils literal">SELECT * FROM individuals;</tt>):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="52%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">name</th>
+<th class="head">ethnicity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>individual_A</td>
+<td>caucasian</td>
+</tr>
+<tr><td>2</td>
+<td>individual_B</td>
+<td>caucasian</td>
+</tr>
+<tr><td>3</td>
+<td>individual_C</td>
+<td>african</td>
+</tr>
+<tr><td>4</td>
+<td>individual_D</td>
+<td>african</td>
+</tr>
+<tr><td>5</td>
+<td>individual_E</td>
+<td>asian</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="using-scripting">
+<h3><a class="toc-backref" href="#id15">Using scripting</a></h3>
+<p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby). But as this is a Perl-oriented course... See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
+</div>
+</div>
+<div class="section" id="getting-data-out">
+<h2><a class="toc-backref" href="#id16">Getting data out</a></h2>
+<div class="section" id="single-tables">
+<h3><a class="toc-backref" href="#id17">Single tables</a></h3>
+<p>It is very simple to query a single table. The basic syntax is:</p>
+<pre class="literal-block">
+SELECT &lt;column_name1, column_name2&gt; FROM &lt;table_name&gt; WHERE &lt;conditions&gt;;
+</pre>
+<p>If you want to see all columns, you can use <tt class="docutils literal">*</tt> instead of a list of column names, and you can leave out the <tt class="docutils literal">WHERE</tt> clause. The simplest query is therefore <tt class="docutils literal">SELECT * FROM &lt;table_name&gt;;</tt>.</p>
+<p>Data can be filtered using a WHERE clause. For example:</p>
+<pre class="literal-block">
+SELECT * FROM individuals WHERE ethnicity = 'african';
+SELECT * FROM individuals WHERE ethnicity = 'african' OR ethnicity = 'caucasian';
+SELECT * FROM individuals WHERE ethnicity IN ('african', 'caucasian');
+SELECT * FROM individuals WHERE ethnicity != 'asian';
+</pre>
+<p>You often just want to see a small subset of data just to make sure that you're looking at the right thing. In that case: add a LIMIT clause to the end of your query:</p>
+<pre class="literal-block">
+SELECT * FROM individuals LIMIT 5;
+SELECT * FROM individuals WHERE ethnicity = 'caucasian' LIMIT 1;
+</pre>
+<p>If you just want know the number of records that would match your query, use <tt class="docutils literal"><span class="pre">COUNT(*)</span></tt>:</p>
+<pre class="literal-block">
+SELECT COUNT(*) FROM individuals WHERE ethnicity = 'african';
+</pre>
+<p>Using the <tt class="docutils literal">GROUP BY</tt> clause you can aggregate data. For example:</p>
+<pre class="literal-block">
+SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;
+</pre>
+</div>
+<div class="section" id="combining-tables">
+<h3><a class="toc-backref" href="#id18">Combining tables</a></h3>
+<p>In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:</p>
+<pre class="literal-block">
+SELECT snp_id, genotype_amb FROM genotypes;
+</pre>
+<p>This isn't very informative, because we get the uninformative numbers for SNPs instead of SNP accession numbers. To run a query across tables, we have to call both tables in the FROM clause:</p>
+<pre class="literal-block">
+SELECT snps.accession, genotypes.genotype_amb FROM snps, genotypes WHERE snps.id = genotypes.snp_id;
+</pre>
+<p>What happens here?</p>
+<ul class="simple">
+<li>Both the <tt class="docutils literal">snps</tt> and <tt class="docutils literal">genotypes</tt> tables are referenced in the FROM clause.</li>
+<li>In the SELECT clause, we tell the query what columns to return. We prepend the column names with the table name, to know what column we actually mean (<tt class="docutils literal">snps.id</tt> is a different column from <tt class="docutils literal">individuals.id</tt>).</li>
+<li>In the WHERE clause, we actually provide the link between the 2 tables: the value for <tt class="docutils literal">snp_id</tt> in the <tt class="docutils literal">genotypes</tt> table should correspond with the <tt class="docutils literal">id</tt> column in the <tt class="docutils literal">snps</tt> table. What do you think would happen if we wouldn't provide this WHERE clause? How many records would be returned?</li>
+</ul>
+<p>Having to type the table names in front of the column names can become tiresome. We can however create aliases like this:</p>
+<pre class="literal-block">
+SELECT s.accession, g.genotype_amb FROM snps s, genotypes g WHERE s.id = g.snp_id;
+</pre>
+<p>Now how do we get a list of individuals with their genotypes for all SNPs?:</p>
+<pre class="literal-block">
+SELECT i.name, s.accession, g.genotype_amb
+FROM individuals i, snps s, genotypes g
+WHERE i.id = g.individual_id
+AND s.id = g.snp_id;
+</pre>
+<div class="section" id="join">
+<h4><a class="toc-backref" href="#id19">JOIN</a></h4>
+<p>Sometimes, though, we have to join tables in a different way. Suppose that our <tt class="docutils literal">snps</tt> table contains SNPs that are nowhere mentioned in the <tt class="docutils literal">genotypes</tt> table, but we still want to have them mentioned in our output:</p>
+<pre class="literal-block">
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs11223','2',11223);
+</pre>
+<p>If we run the following query:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT s.accession, s.chromosome, s.position, g.genotype_amb
+   ...&gt; FROM snps s, genotypes g
+   ...&gt; WHERE s.id = g.snp_id
+   ...&gt; ORDER BY s.accession, g.genotype_amb;
+</pre>
+<p>We get the following output:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="21%" />
+<col width="23%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">chromosome</th>
+<th class="head">position</th>
+<th class="head">accession</th>
+<th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>12345</td>
+<td>rs12345</td>
+<td>A</td>
+</tr>
+<tr><td>1</td>
+<td>12345</td>
+<td>rs12345</td>
+<td>M</td>
+</tr>
+<tr><td>1</td>
+<td>98765</td>
+<td>rs98765</td>
+<td>G</td>
+</tr>
+<tr><td>1</td>
+<td>98765</td>
+<td>rs98765</td>
+<td>R</td>
+</tr>
+<tr><td>5</td>
+<td>28465</td>
+<td>rs28465</td>
+<td>G</td>
+</tr>
+<tr><td>5</td>
+<td>28465</td>
+<td>rs28465</td>
+<td>K</td>
+</tr>
+</tbody>
+</table>
+<p>But we actually want to have rs11223 in the list as well. Using this approach, we can't because of the <tt class="docutils literal">WHERE s.id = g.snp_id</tt> clause. The solution to this is to use an explicit join. To make things complicated, there are several types: <em>inner</em> and <em>outer</em> joins. In principle, an inner join gives the result of the intersect between two tables, while an outer join gives the results of the union. What we've been doing up to now is look at the intersection, so the approach we used above is equivalent to an <strong>inner join</strong>:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT s.accession, g.genotype_amb
+   ...&gt; FROM snps s INNER JOIN genotypes g ON s.id = g.snp_id
+   ...&gt; ORDER BY s.accession, g.genotype_amb;
+</pre>
+<p>gives;</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">accession</th>
+<th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>rs12345</td>
+<td>A</td>
+</tr>
+<tr><td>rs12345</td>
+<td>M</td>
+</tr>
+<tr><td>rs28465</td>
+<td>G</td>
+</tr>
+<tr><td>rs28465</td>
+<td>K</td>
+</tr>
+<tr><td>rs98765</td>
+<td>G</td>
+</tr>
+<tr><td>rs98765</td>
+<td>R</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>left outer join</strong> returns <em>all</em> records from the left table, and will include any matches from the right table:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT s.accession, g.genotype_amb
+   ...&gt; FROM snps s LEFT OUTER JOIN genotypes g ON s.id = g.snp_id
+   ...&gt; ORDER BY s.accession, g.genotype_amb;
+</pre>
+<p>gives:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">accession</th>
+<th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>rs11223</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>rs12345</td>
+<td>A</td>
+</tr>
+<tr><td>rs12345</td>
+<td>M</td>
+</tr>
+<tr><td>rs28465</td>
+<td>G</td>
+</tr>
+<tr><td>rs28465</td>
+<td>K</td>
+</tr>
+<tr><td>rs98765</td>
+<td>G</td>
+</tr>
+<tr><td>rs98765</td>
+<td>R</td>
+</tr>
+</tbody>
+</table>
+<p>(Notice the extra line for <tt class="docutils literal">rs11223</tt>.)</p>
+<p>A <strong>full outer join</strong>, finally, return <em>all</em> rows from the left table, and <em>all</em> rows from the right table, matching any rows that should be.</p>
+</div>
+</div>
+<div class="section" id="additional-functions">
+<h3><a class="toc-backref" href="#id20">Additional functions</a></h3>
+<div class="section" id="and-or-in">
+<h4><a class="toc-backref" href="#id21">AND, OR, IN</a></h4>
+<p>Your queries might need to combine different conditions:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' AND position &lt; 40000;
+sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' OR chromosome = '5';
+sqlite&gt; SELECT * FROM snps WHERE chromosome IN ('1','5');
+</pre>
+</div>
+<div class="section" id="distinct">
+<h4><a class="toc-backref" href="#id22">DISTINCT</a></h4>
+<p>Whenever you want the <em>unique</em> values in a column: use <tt class="docutils literal">DISTINCT</tt> in the <tt class="docutils literal">SELECT</tt> clause:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT genotype_amb FROM genotypes;
+</pre>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>A</td>
+</tr>
+<tr><td>R</td>
+</tr>
+<tr><td>K</td>
+</tr>
+<tr><td>M</td>
+</tr>
+<tr><td>G</td>
+</tr>
+<tr><td>G</td>
+</tr>
+</tbody>
+</table>
+<pre class="literal-block">
+sqlite&gt; SELECT DISTINCT genotype_amb FROM genotypes;
+</pre>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">genotype_amb</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>A</td>
+</tr>
+<tr><td>G</td>
+</tr>
+<tr><td>K</td>
+</tr>
+<tr><td>M</td>
+</tr>
+<tr><td>R</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal">DISTINCT</tt> automatically sorts the results.</p>
+</div>
+<div class="section" id="order-by">
+<h4><a class="toc-backref" href="#id23">ORDER BY</a></h4>
+<pre class="literal-block">
+sqlite&gt; SELECT * FROM snps ORDER BY chromosome;
+sqlite&gt; SELECT * FROM snps ORDER BY accession DESC;
+</pre>
+</div>
+<div class="section" id="count">
+<h4><a class="toc-backref" href="#id24">COUNT</a></h4>
+<p>For when you want to count things:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT COUNT(*) FROM genotypes WHERE genotype_amb = 'G';
+</pre>
+</div>
+<div class="section" id="max-min-avg">
+<h4><a class="toc-backref" href="#id25">MAX(), MIN(), AVG()</a></h4>
+<p>...act as you would expect (only works with numbers, obviously):</p>
+<pre class="literal-block">
+sqlite&gt; SELECT MAX(position) FROM snps;
+</pre>
+</div>
+<div class="section" id="group-by">
+<h4><a class="toc-backref" href="#id26">GROUP BY</a></h4>
+<p><tt class="docutils literal">GROUP BY</tt> can be very useful in that it first aggregates data. It is often used together with <tt class="docutils literal">COUNT</tt>, <tt class="docutils literal">MAX</tt>, <tt class="docutils literal">MIN</tt> or <tt class="docutils literal">AVG</tt>:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT genotype_amb, COUNT(*) FROM genotypes GROUP BY genotype_amb;
+sqlite&gt; SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c DESC;
+sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER BY chromosome;
+</pre>
+<table border="1" class="docutils">
+<colgroup>
+<col width="92%" />
+<col width="8%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">genotype_amb</th>
+<th class="head">c</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>G</td>
+<td>2</td>
+</tr>
+<tr><td>A</td>
+<td>1</td>
+</tr>
+<tr><td>K</td>
+<td>1</td>
+</tr>
+<tr><td>M</td>
+<td>1</td>
+</tr>
+<tr><td>R</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">chromosome</th>
+<th class="head">MAX(position)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>98765</td>
+</tr>
+<tr><td>2</td>
+<td>11223</td>
+</tr>
+<tr><td>5</td>
+<td>28465</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="union-intersect">
+<h4><a class="toc-backref" href="#id27">UNION, INTERSECT</a></h4>
+<p>It is sometimes hard to get the exact rows back that you need using the <tt class="docutils literal">WHERE</tt> clause. In such cases, it might be possible to construct the output based on taking the union or intersection of two or more different queries:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT * FROM snps WHERE chromosome = '1';
+sqlite&gt; SELECT * FROM snps WHERE position &lt; 40000;
+sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' INTERSECT SELECT * FROM snps WHERE position &lt; 40000;
+</pre>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="31%" />
+<col width="34%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">id</th>
+<th class="head">accession</th>
+<th class="head">chromosome</th>
+<th class="head">position</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>1</td>
+<td>rs12345</td>
+<td>1</td>
+<td>12345</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="like">
+<h4><a class="toc-backref" href="#id28">LIKE</a></h4>
+<p>Sometimes you want to make fuzzy matches. What if you're not sure if the ethnicity has a capital or not?</p>
+<pre class="literal-block">
+sqlite&gt; SELECT * FROM individuals WHERE ethnicity = 'African';
+</pre>
+<p>returns no results...</p>
+<pre class="literal-block">
+sqlite&gt; SELECT * FROM individuals WHERE ethnicity LIKE '%frican';
+</pre>
+</div>
+<div class="section" id="limit">
+<h4><a class="toc-backref" href="#id29">LIMIT</a></h4>
+<p>If you only want to get the first 10 results back (<em>e.g.</em> to find out if your complicated query does what it should do without running the whole actual query), use <tt class="docutils literal">LIMIT</tt>:</p>
+<pre class="literal-block">
+sqlite&gt;&gt; SELECT * FROM snps LIMIT 2;
+</pre>
+</div>
+<div class="section" id="subqueries">
+<h4><a class="toc-backref" href="#id30">Subqueries</a></h4>
+<p>As we mentioned in the beginning, the general setup of a <tt class="docutils literal">SELECT</tt> is:</p>
+<pre class="literal-block">
+SELECT &lt;column_names&gt;
+FROM &lt;table&gt;
+WHERE &lt;condition&gt;;
+</pre>
+<p>But as you've seen in the examples above, the <em>output</em> from any SQL query is itself basically a table. So we can actually use that output <em>table</em> to run another <tt class="docutils literal">SELECT</tt> on. For example:</p>
+<pre class="literal-block">
+sqlite&gt; SELECT *
+   ...&gt; FROM (
+   ...&gt;        SELECT *
+   ...&gt;        FROM snps
+   ...&gt;        WHERE chromosome IN ('1','5'))
+   ...&gt; WHERE position &lt; 40000;
+</pre>
+<p>Of course, you can use <tt class="docutils literal">UNION</tt> and <tt class="docutils literal">INTERSECT</tt> in the subquery as well...</p>
+<p>subqueries: select count(*) from (select distinct genotype_amb)</p>
+</div>
+</div>
+</div>
+<div class="section" id="perl-dbi">
+<h2><a class="toc-backref" href="#id31">Perl-DBI</a></h2>
+<p>Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (<em>e.g.</em> <tt class="docutils literal"><span class="pre">Class::DBI</span></tt>, <tt class="docutils literal"><span class="pre">DBIx::Class</span></tt>, and <tt class="docutils literal"><span class="pre">Rose::DB::Object</span></tt>). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO <tt class="docutils literal">DBI</tt>.</p>
+<p>Why would you want to access a database from within Perl? SQL is already a very strong language, so why add the difficulty of another layer on top of that? Actually, SQL can do a lot, but not everything. It has no support for control flow (<tt class="docutils literal">while</tt>, <tt class="docutils literal">foreach</tt>, ...; except in PL/SQL) and conditional branches (<tt class="docutils literal">if</tt>, <tt class="docutils literal">else</tt>). In addition, most programs that make use of a database are written in some other language like Perl. From Perl the programmer does the interaction with the user, with files, and so on. Perl also provides the program logic. And the interaction with the database is typically to execute some database commands, such as fetching data from the database and processing it using Perl's capabilities. The logic of the program may depend on the data found in the database, but it is Perl, not SQL, that provides most of this logic.</p>
+<div class="section" id="dbi-and-dbd">
+<h3><a class="toc-backref" href="#id32">DBI and DBD</a></h3>
+<p>In Perl, a set of modules have been written that allow interaction with relational databases. DataBase Independent (DBI) is a module that handles most of the interaction from the program code; DataBase Dependent (or DataBase Driver; DBD) is a set of modules, different for each particular DBMS, that handles actually communicating with the DBMS.</p>
+<p>To use a MySQL database from Perl you need first to have MySQL installed and properly configured. This is not a Perl job, but a database administration job: you have to get MySQL and install it on your system and set up the appropriate user accounts and permissions.</p>
+<p>Then you have to install the Perl DBD driver for MySQL, as well as the Perl DBI module. The combination of MySQL (the DBMS), DBD (the particular driver for your DBMS), and DBI (the Perl interface to the DBI and DBMS), is what gives you the actual connection from Perl to the database, and enables you to send SQL statements to the database and retrieve results.</p>
+</div>
+<div class="section" id="installing-dbi-and-dbd">
+<h3><a class="toc-backref" href="#id33">Installing DBI and DBD</a></h3>
+<pre class="literal-block">
+perl -MCPAN -e shell
+cpan&gt; install DBI
+cpan&gt; install DBD::SQLite
+</pre>
+</div>
+<div class="section" id="connecting-to-a-database">
+<h3><a class="toc-backref" href="#id34">Connecting to a database</a></h3>
+<p>First thing we need is a <em>database handle</em> that we can use to pipe everything through:</p>
+<pre class="literal-block">
+#!/usr/bin/perl
+use strict;
+use warnings;
+use DBI;
+
+my $dbh = DBI-&gt;connect(&quot;dbi:SQLite:dbname=test.sqlite&quot;,     #DataSource Name DSN
+                       &quot;&quot;,                                  #username
+                       &quot;&quot;,                                  #password
+                       {AutoCommit =&gt; 1, RaiseError =&gt; 1})  #options
+          or die $DBI::errstr;
+</pre>
+</div>
+<div class="section" id="do-something">
+<h3><a class="toc-backref" href="#id35">Do something</a></h3>
+<p>The simplest way to do something in a database from Perl is to use <tt class="docutils literal">do</tt>. It lets you do anything to the database that you could do in plain SQL. It doesn't <em>really</em> interact with you Perl program if you're selecting records, though:</p>
+<pre class="literal-block">
+$dbh-&gt;do(&lt;&lt;EOSQL)
+  INSERT INTO snps (accession, chromosome, position)
+  VALUES ('rs99887', '7', 99887);
+EOSQL
+</pre>
+</div>
+<div class="section" id="slurp-data-from-database">
+<h3><a class="toc-backref" href="#id36">Slurp data from database</a></h3>
+<p>In getting data from a database, we can run a query and retrieve all data in one large array using <tt class="docutils literal">select_arrayref</tt>:</p>
+<pre class="literal-block">
+my &#64;snps = &#64;{$dbh-&gt;selectall_arrayref(&lt;&lt;'EOSQL')};
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = '1'
+EOSQL
+
+for my $snp (&#64;snps) {
+  my ($acc, $chr, $pos) = &#64;$snp;
+  #do something with this data...
+}
+</pre>
+<p><tt class="docutils literal">&#64;snps</tt> holds all data that matches the query, so will be large. Every element in <tt class="docutils literal">&#64;snps</tt> is an array reference.</p>
+</div>
+<div class="section" id="getting-data-one-at-a-time">
+<h3><a class="toc-backref" href="#id37">Getting data one at a time</a></h3>
+<p>But if you except to get a large dataset back, loading everything at once into memory is dangerous. In that case (or anytime, actually) you can use one-at-a-time selects:</p>
+<pre class="literal-block">
+my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = '1';
+EOSQL
+
+$sth-&gt;execute();
+while (my $snp = $sth-&gt;fetchrow_arrayref) {
+  my ($acc, $chr, $pos) = &#64;$snp;
+  #do something with this data...
+}
+</pre>
+<p>This approach works in 3 steps: first you <em>prepare</em> the dataset by specifying the query, then you <em>execute</em> it, and finally you call the <tt class="docutils literal">fetchrow_array</tt> method until it returns <tt class="docutils literal">undef</tt>.</p>
+</div>
+<div class="section" id="using-parameters">
+<h3><a class="toc-backref" href="#id38">Using parameters</a></h3>
+<p>In the example above, we hard-coded that the query should be for chromosome 1. What if you want to make that a variable? What if we don't know yet at that point which chromosome to look for? To solve this problem, we can use <em>placeholders</em>:</p>
+<pre class="literal-block">
+my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = ?;
+EOSQL
+
+my &#64;numbers = ('1','5');
+foreach my $c (&#64;numbers) {
+  print &quot;Now querying for chromosome &quot;, $c, &quot;\n&quot;;
+  $sth-&gt;execute($c);
+  while (my $snp = $sth-&gt;fetchrow_arrayref) {
+    my ($acc, $chr, $pos) = &#64;$snp;
+    print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
+  }
+}
+</pre>
+<p>In case you want to have two or more variables, just define them in the order that they appear in the SQL query:</p>
+<pre class="literal-block">
+my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = ?
+  AND position &lt; ?;
+EOSQL
+
+$sth-&gt;execute('1', 40000);
+while (my $snp = $sth-&gt;fetchrow_arrayref) {
+  my ($acc, $chr, $pos) = &#64;$snp;
+  print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
+}
+</pre>
+</div>
+<div class="section" id="binding-variables">
+<h3><a class="toc-backref" href="#id39">Binding variables</a></h3>
+<p>Another method for accessing the results from a query, is to <em>bind</em> columns to a variable, and then use <tt class="docutils literal">fetch</tt>:</p>
+<pre class="literal-block">
+my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = '1';
+EOSQL
+
+$sth-&gt;execute();
+my ($acc, $chr, $pos);
+$sth-&gt;bind_columns(\$acc, \$chr, \$pos);
+while ($sth-&gt;fetch) {
+  #do something with acc, chr and pos
+}
+</pre>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2><a class="toc-backref" href="#id40">Exercises</a></h2>
+<div class="section" id="database-schema-normalization">
+<h3><a class="toc-backref" href="#id41">Database schema normalization</a></h3>
+<p>We'll use two files on the server that were used in previous lectures as well:</p>
+<ul class="simple">
+<li>Database-Intro/AffyAnnotation.clean</li>
+<li>Database-Intro/RMAvalues0.05.txt</li>
+</ul>
+<p>The RMAvalues0.05.txt file contains expression values for different individuals for a huge number of probesets. The AffyAnnotation.cleaned file has annotations for these probesets. We need to create a (normalized) database schema.</p>
+<p>In groups of 2, please draw a database scheme which we can discuss afterwards.</p>
+</div>
+<div class="section" id="loading-data">
+<h3><a class="toc-backref" href="#id42">Loading data</a></h3>
+<p>Can we use the <tt class="docutils literal">.import</tt> function to get the data in? Why or why not?</p>
+</div>
+<div class="section" id="querying-data-sql">
+<h3><a class="toc-backref" href="#id43">Querying data - SQL</a></h3>
+<p>Copy the file Database-Intro/exercise.sqlite to your own workspace.</p>
+<p>Some questions to answer:</p>
+<ul class="simple">
+<li>Find out what the different tables are in the database, and what they look like.</li>
+</ul>
+<!-- .tables, .schema -->
+<ul class="simple">
+<li>How many genes have no location?</li>
+</ul>
+<!-- SELECT count(*) FROM genes WHERE location IS NULL; -->
+<ul class="simple">
+<li>How many distinct omim genes are mentioned in the gene table?</li>
+</ul>
+<!-- SELECT count(*) FROM (SELECT DISTINCT omim FROM genes) g; -->
+<ul class="simple">
+<li>What is the gene with the most probesets?</li>
+</ul>
+<!-- SELECT gene_id, count(*) AS c FROM probesets GROUP BY gene_id ORDER BY c DESC LIMIT 10; -->
+<ul class="simple">
+<li>Recreate (a version of) the AffyAnnotation.clean file (<em>i.e.</em> a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, go_terms).</li>
+</ul>
+<p>Output should look like this:</p>
+<pre class="literal-block">
+name        symbol      location    ensembl          omim        value
+----------  ----------  ----------  ---------------  ----------  ----------
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      6468
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      5887
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      166
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      166
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      6260
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      5634
+117_at      HSPA6       chr1q23     ENSG00000173110  140555      166
+117_at      HSPA6       chr1q23     ENSG00000173110  140555      6457
+121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      5634
+121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      6183
+</pre>
+<!-- SELECT p.name, g.symbol, g.location, g.ensembl, g.omim, o.value
+...> FROM probesets p, genes g, gene_ontologies o, gene2go go
+...> WHERE p.gene_id = g.id
+...> AND go.gene_id = g.id
+...> AND go.gene_ontology_id = o.id; -->
+</div>
+<div class="section" id="querying-data-perl-dbi">
+<h3><a class="toc-backref" href="#id44">Querying data - Perl/DBI</a></h3>
+<p>Same questions, but now do this from within perl.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
