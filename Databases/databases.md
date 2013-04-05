@@ -894,7 +894,14 @@ Some questions to answer:
 * How many genes have no location?
 * How many distinct omim genes are mentioned in the gene table?
 * What is the gene with the most probesets?
-* Recreate (a version of) the AffyAnnotation.clean file (i.e. a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, expression-value).
+* Run a query on the database that returns the results shown below. Columns should be:
+  * probeset name
+  * gene symbol of the gene containing that probe
+  * location of that gene
+  * ensembl ID of that gene
+  * omim id of that gene
+  * sample name
+  * expression value for that sample for that probe
 
 Output should look like this:
 
