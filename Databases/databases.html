@@ -344,6 +344,7 @@ sup {
 <li><a href="#additional-functions">Additional functions</a>
 
 <ol>
+<li><a href="#null">NULL</a></li>
 <li><a href="#and-or-in">AND, OR, IN</a></li>
 <li><a href="#distinct">DISTINCT</a></li>
 <li><a href="#order-by">ORDER BY</a></li>
@@ -1255,6 +1256,48 @@ AND s.id = g.snp_id;
 <p>A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.</p>
 
 <h2><a id="additional-functions"></a>Additional functions</h2>
+
+<h3><a id="null"></a>NULL</h3>
+
+<p>What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">snp-id </th>
+<th align="left"> gene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">rs1234 </td>
+<td align="left"> gene_A</td>
+</tr>
+<tr>
+<td align="left">rs2345 </td>
+<td align="left"> gene_A</td>
+</tr>
+<tr>
+<td align="left">rs3456 </td>
+<td align="left"> gene_B</td>
+</tr>
+<tr>
+<td align="left">rs4567 </td>
+<td></td>
+</tr>
+<tr>
+<td align="left">rs6789 </td>
+<td align="left"> gene_C</td>
+</tr>
+<tr>
+<td align="left">rs7890 </td>
+<td align="left"> gene_C</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>We cannot <code>SELECT * FROM snps WHERE gene = "";</code> because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue <code>SELECT * FROM snps WHERE gene IS NULL;</code> or to get the rest <code>SELECT * FROM snps WHERE GENE IS NOT NULL;</code>. Note that it is <code>IS NULL</code> and <strong>not</strong> <code>= NULL</code>...</p>
 
 <h3><a id="and-or-in"></a>AND, OR, IN</h3>
 

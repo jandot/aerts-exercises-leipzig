@@ -17,6 +17,7 @@
     1. [Combining tables](#combining-tables)
     1. [JOIN](#join)
 1. [Additional functions](#additional-functions)
+    1. [NULL](#null)
     1. [AND, OR, IN](#and-or-in)
     1. [DISTINCT](#distinct)
     1. [ORDER BY](#order-by)
@@ -502,6 +503,21 @@ rs98765 | R
 A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.
 
 ## <a id="additional-functions"></a>Additional functions ##
+
+### <a id="null"></a>NULL ###
+
+What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?
+
+snp-id | gene
+:------|:----
+rs1234 | gene_A
+rs2345 | gene_A
+rs3456 | gene_B
+rs4567 | 
+rs6789 | gene_C
+rs7890 | gene_C
+
+We cannot `SELECT * FROM snps WHERE gene = "";` because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue `SELECT * FROM snps WHERE gene IS NULL;` or to get the rest `SELECT * FROM snps WHERE GENE IS NOT NULL;`. Note that it is `IS NULL` and **not** `= NULL`... 
 
 ### <a id="and-or-in"></a>AND, OR, IN ###
 
