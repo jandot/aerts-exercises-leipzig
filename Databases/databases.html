@@ -302,31 +302,91 @@ sup {
 	}
 }
 </style>
-<title>Databases</title>
+<title><a id="databases"></a> Databases</title>
 
 </head>
 <body>
-<p>CREATED USING markable.in/editor/</p>
+<p><strong>Table of Contents</strong></p>
 
-<h1>Databases</h1>
+<ol>
+<li><a href="#relational-databases">Relational databases</a></li>
+<li><a href="#schema">Developing the database schema</a>
+
+<ol>
+<li><a href="#normal-forms">Normal forms</a>
+
+<ol>
+<li><a href="#first-normal-form">First normal form</a></li>
+<li><a href="#second-normal-form">Second normal form</a></li>
+<li><a href="#third-normal-form">Third normal form</a></li>
+</ol>
+</li>
+<li><a href="#best-practices">Other best practices</a></li>
+</ol>
+</li>
+<li><a href="#sql">SQL - Structured Query Language</a></li>
+<li><a href="#getting-data-in">Getting data in</a>
+
+<ol>
+<li><a href="#insert-into">INSERT INTO</a></li>
+<li><a href="#import">Importing a datafile</a></li>
+<li><a href="#scripted-import">Using scripting</a></li>
+</ol>
+</li>
+<li><a href="#getting-data-out">Getting data out</a>
+
+<ol>
+<li><a href="#single-tables">Single tables</a></li>
+<li><a href="#combining-tables">Combining tables</a></li>
+<li><a href="#join">JOIN</a></li>
+</ol>
+</li>
+<li><a href="#additional-functions">Additional functions</a>
+
+<ol>
+<li><a href="#and-or-in">AND, OR, IN</a></li>
+<li><a href="#distinct">DISTINCT</a></li>
+<li><a href="#order-by">ORDER BY</a></li>
+<li><a href="#count">COUNT</a></li>
+<li><a href="#max-min-avg">MAX-MIN-AVG</a></li>
+<li><a href="#group-by">GROUP BY</a></li>
+<li><a href="#union-intersect">UNION, INTERSECT</a></li>
+<li><a href="#like">LIKE</a></li>
+<li><a href="#limit">LIMIT</a></li>
+<li><a href="#subqueries">Subqueries</a></li>
+</ol>
+</li>
+<li><a href="#drawbacks">Drawbacks of RDBMS</a>
+
+<ol>
+<li><a href="#scalability">Scalability</a></li>
+<li><a href="#modeling">Modeling</a></li>
+</ol>
+</li>
+<li><a href="#perl-dbi">Perl-DBI</a></li>
+<li><a href="#exercises">Exercises</a></li>
+</ol>
+
+
+<h1><a id="databases"></a> Databases</h1>
 
 <p>Jan Aerts; March 4, 2013</p>
 
 <p><em>(Part of the content of this lecture is taken from the database lectures from the yearly Programming for Biology course at CSHL, and the EasySoft tutorial at http://bit.ly/x2yNDb)</em></p>
 
-<p>Data management is critical in any science, including biology. In this session, we will look at different database concepts, from file-based solutions and relational (SQL) databases (RDBMS) to the more recent NoSQL databases (column-based or document-based) such as MongoDB. I will give some indications on when you'd choose one technology over the other.</p>
+<p>Data management is critical in any science, including biology. In this session, we will focus on relational (SQL) databases (RDBMS) as these are the most common. If time permits we might venture into the world of NoSQL databases (<em>e.g.</em> MongoDB) to allow storing of huge datasets.</p>
 
-<p>For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI. For document-oriented databases (MongoDB), I will discuss the basic concepts (collections, documents) and introduce the students to the mongo interactive shell. I'll also talk about how to access a MongoDB database from perl.</p>
+<p>For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI (for future reference). Document-oriented and other NoSQL databases (such as MongoDB) can often also be accessed through either an interactive shell and/or APIs (application programming interfaces) in languages such as perl, ruby, java, clojure, ...</p>
 
-<h2>Types of databases</h2>
+<h2><a id="database-types"></a> Types of databases</h2>
 
 <p>There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of tables that contain rows (which represent instance data) and columns (representing properties of that data). Any table can be thought of as an Excel-sheet.</p>
 
-<h1>Relational databases</h1>
+<h1><a id="relational-databases"></a> Relational databases</h1>
 
-<p>Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use SQLite3. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). <code>sqlite3 my_db.sqlite</code> is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...</p>
+<p>Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use <strong>SQLite3</strong>. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). <code>sqlite3 my_db.sqlite</code> is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...</p>
 
-<h2>Developing the database schema</h2>
+<h2><a id="schema"></a> Developing the database schema</h2>
 
 <p>For the purpose of this lecture, let's say you want to store individuals and their genotypes. In Excel, you could create a sheet that looks like this:</p>
 
@@ -394,7 +454,7 @@ sup {
 
 <p><code>sqlite&gt; .help</code></p>
 
-<p>We first create a table, and insert that data:</p>
+<p>We first create a table, and insert that data (we'll come back to the exact syntax later):</p>
 
 <pre><code>sqlite&gt; CREATE TABLE genotypes (individual STRING,
                                 ethnicity STRING,
@@ -425,7 +485,7 @@ sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, c
                                                           'G/G','G','5',28465);
 </code></pre>
 
-<p>(Note that every SQL command is ended with a semi-colon...) This created a new table called genotypes; we can quickly check that everything is loaded (we'll come back to getting data out later):</p>
+<p>(Note that every SQL command is ended with a <strong>semi-colon</strong>...) This created a new table called genotypes; we can quickly check that everything is loaded (we'll come back to getting data out later):</p>
 
 <pre><code>sqlite&gt; .mode column
 sqlite&gt; .headers on
@@ -434,17 +494,21 @@ sqlite&gt; SELECT * FROM genotypes;
 
 <p>Done! For every new SNP we just add a new column, right? Wrong...</p>
 
-<h3>Normal forms</h3>
+<h3><a id="normal-forms"></a>Normal forms</h3>
 
 <p>There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the "normal forms".</p>
 
-<h4>First normal form</h4>
+<h4><a id="first-normal-form"></a>First normal form</h4>
 
 <p>To get to the first normal form:</p>
 
-<p>Eliminate duplicative columns from the same table
-Create separate tables for each group of related data and identify each row with a unique column (the primary key)
-The columns rs123451, rs98765 and rs28465 are duplicates; they describe exactly the same type of thing (albeit different instances). According to the first rule of the first normal form, we need to eliminate these. And we can do that by creating new records (rows) for each SNP. In addition, each row should have a unique key. Best practices tell us to use autoincrementing integers, the primary key should contain no information in itself.</p>
+<ul>
+<li><strong>Eliminate duplicative columns</strong> from the same table</li>
+<li>Create separate tables for each group of <strong>related data</strong> and identify each row with a unique column (the primary key)</li>
+</ul>
+
+
+<p>The columns rs123451, rs98765 and rs28465 are duplicates; they describe exactly the same type of thing (albeit different instances). According to the first rule of the first normal form, we need to eliminate these. And we can do that by creating new records (rows) for each SNP. In addition, each row should have a <strong>unique key</strong>. Best practices tell us to use autoincrementing integers, the <strong>primary key should contain no information in itself</strong>.</p>
 
 <table>
 <thead>
@@ -543,25 +607,32 @@ sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype
                        VALUES ('individual_B','caucasian','rs28465','G/G','G','1',28465);
 </code></pre>
 
-<p>The fact that id is defined as INTEGER PRIMARY KEY makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for id automatically takes care of everything.</p>
+<p>The fact that <code>id</code> is defined as INTEGER PRIMARY KEY makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for id automatically takes care of everything.</p>
 
-<h4>Second normal form</h4>
+<h4><a id="second-normal-form"></a>Second normal form</h4>
 
-<p>There is still a lot of duplication in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:</p>
+<p>There is <strong>still a lot of duplication</strong> in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:</p>
 
-<p>Remove subsets of data that apply to multiple rows of a table and place them in separate tables.
-Create relationships between these new tables and their predecessors through the use of foreign keys.
-So how could we do that for the table above? Each row contains 3 different types of things: information about an individual (i.c. name and ethnicity), a SNP (i.c. the accession number, chromosome and position), and a genotype linking those two together (the genotype column, and the column containing the IUPAC ambiguity code for that genotype). To get to the second normal form, we need to put each of these in a separate table:</p>
+<ul>
+<li><strong>Remove subsets of data that apply to multiple rows</strong> of a table and place them in separate tables.</li>
+<li><strong>Create relationships between these new tables</strong> and their predecessors through the use of <strong>foreign keys</strong>.</li>
+</ul>
 
-<p>The name of each table should be plural (not mandatory, but good practice).
-Each table should have a primary key, ideally named id. Different tables can contain columns that have the same name; column names should be unique within a table, but can occur across tables.
-The individual column is renamed to name, and snp to accession.
-In the genotypes table, individuals and SNPs are linked by referring to their primary keys (as used in the individuals and snps tables). Again best practice: if a foreign key refers to the id column in the individuals table, it should be named individual_id (note the singular).
-The foreign keys individual_id and snp_id in the genotypes table must be of the same type as the id columns in the individuals and snps tables, respectively.</p>
+
+<p>So how could we do that for the table above? Each row contains <strong>3 different types of things</strong>: information about an individual (i.c. name and ethnicity), a SNP (i.c. the accession number, chromosome and position), and a genotype linking those two together (the genotype column, and the column containing the IUPAC ambiguity code for that genotype). To get to the second normal form, we need to put each of these in a separate table:</p>
+
+<ul>
+<li>The name of each table should be <strong>plural</strong> (not mandatory, but good practice).</li>
+<li>Each table should have a <strong>primary key</strong>, ideally named <code>id</code>. Different tables can contain columns that have the same name; column names should be unique within a table, but can occur across tables.</li>
+<li>The individual column is renamed to name, and snp to accession.</li>
+<li>In the genotypes table, individuals and SNPs are linked by referring to their primary keys (as used in the individuals and snps tables). Again best practice: if a <strong>foreign key</strong> refers to the id column in the individuals table, it should be named <strong>individual_id</strong> (note the singular).</li>
+<li>The foreign keys individual_id and snp_id in the genotypes table must be of the same type as the id columns in the individuals and snps tables, respectively.</li>
+</ul>
+
 
 <p><img src="primary_foreign_keys.png" alt="Primary and foreign keys" /></p>
 
-<p>The individuals table:</p>
+<p>The <code>individuals</code> table:</p>
 
 <table>
 <thead>
@@ -586,7 +657,7 @@ The foreign keys individual_id and snp_id in the genotypes table must be of the 
 </table>
 
 
-<p>The snps table:</p>
+<p>The <code>snps</code> table:</p>
 
 <table>
 <thead>
@@ -620,7 +691,7 @@ The foreign keys individual_id and snp_id in the genotypes table must be of the 
 </table>
 
 
-<p>The genotypes table:</p>
+<p>The <code>genotypes</code> table:</p>
 
 <table>
 <thead>
@@ -700,9 +771,9 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,'G/G','G');
 </code></pre>
 
-<h4>Third normal form</h4>
+<h4><a id="third-normal-form"></a>Third normal form</h4>
 
-<p>In the third normal form, we try to eliminate unnecessary data from our database; data that could be calculated based on other things that are present. In our example table genotypes, the genotype and genotype_amb columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final database would look like this:</p>
+<p>In the third normal form, we try to <strong>eliminate unnecessary data</strong> from our database; data that could be <strong>calculated</strong> based on other things that are present. In our example table genotypes, the genotype and genotype_amb columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final <code>individuals</code> table would look like this:</p>
 
 <table>
 <thead>
@@ -727,7 +798,7 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 </table>
 
 
-<p>The snps table:</p>
+<p>The <code>snps</code> table:</p>
 
 <table>
 <thead>
@@ -761,7 +832,7 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 </table>
 
 
-<p>The genotypes table:</p>
+<p>The <code>genotypes</code> table:</p>
 
 <table>
 <thead>
@@ -813,19 +884,23 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 </table>
 
 
-<p>To know what your database schema looks like, you can issue the .schema command. .tables gives you a list of the tables that are defined.</p>
+<p>To know what your database schema looks like, you can issue the <code>.schema</code> command in sqlite3. <code>.tables</code> gives you a list of the tables that are defined.</p>
 
-<h3>Other best practices</h3>
+<h3><a id="best-practices"></a>Other best practices</h3>
 
 <p>There are some additional guidelines that you can use in creating your database schema, although different people use different guidelines. What I do:</p>
 
-<p>No capitals in table or column names
-Every table name is plural (e.g. genes)
-The primary key of each table should be id
-Any foreign key should be the singular of the table name, plus _id. So for example, a genotypes table can have a sample_id column which refers to the id column of the samples table.
-In some cases, I digress from the rule of "every table name is plural", especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called sample2snp.</p>
+<ul>
+<li><strong>No capitals</strong> in table or column names</li>
+<li>Every <strong>table name</strong> is <strong>plural</strong> (e.g. <code>genes</code>)</li>
+<li>The <strong>primary key</strong> of each table should be <code>id</code></li>
+<li>Any <strong>foreign key</strong> should be the <strong>singular of the table name, plus "_id"</strong>. So for example, a genotypes table can have a sample_id column which refers to the id column of the samples table.</li>
+</ul>
 
-<h2>Structured Query Language</h2>
+
+<p>In some cases, I digress from the rule of "every table name is plural", especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called <code>sample2snp</code>.</p>
+
+<h2><a id="sql"></a>Structured Query Language</h2>
 
 <p>Any interacting with data in RDBMS can happen through the Structured Query Language (SQL): create tables, insert data, search data, ... There are two subparts of SQL:</p>
 
@@ -859,9 +934,9 @@ UNION, INTERSECT
 
 <p>We'll look closer at getting data into a database and then querying it, using these four SQL commands.</p>
 
-<h2>Getting data in</h2>
+<h2><a id="getting-data-in"></a>Getting data in</h2>
 
-<h3>INSERT INTO</h3>
+<h3><a id="insert-into"></a>INSERT INTO</h3>
 
 <p>There are several ways to load data into a database. The method used above is the most straightforward but inadequate if you have to load a large amount of data.</p>
 
@@ -871,9 +946,9 @@ UNION, INTERSECT
                           VALUES (&lt;value_1&gt;, &lt;value_2&gt;, &lt;value_3&gt;);
 </code></pre>
 
-<h3>Importing a datafile</h3>
+<h3><a id="import"></a>Importing a datafile</h3>
 
-<p>But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a comma-separated file straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (e.g. "data.csv") that looks like this:</p>
+<p>But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a <strong>comma-separated file</strong> straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (e.g. called <code>data.csv</code>) that looks like this:</p>
 
 <pre><code>individual_C,african
 individual_D,african
@@ -886,12 +961,12 @@ individual_C,asian
 sqlite&gt; .import data.csv individuals
 </code></pre>
 
-<p>Aargh... We get an error!</p>
+<p>Aargh... We get an <strong>error</strong>!</p>
 
 <pre><code>Error: data.tsv line 1: expected 3 columns of data but found 2
 </code></pre>
 
-<p>This is because the table contains an ID column that is used as primary key and that increments automatically. Unfortunately, SQLite cannot work around this issue automatically. One option is to add the new IDs to the text file and import that new file. But this is not recommended, because it screws with some internal counters (SQLite keeps a counter whenever it autoincrements a column, but this counter is not adjusted if you hardwire the ID). A possible workaround is to create a temporary table (e.g. individuals_tmp) without the id column, import the data in that table, and then copy the data from that temporary table to the real individuals.</p>
+<p>This is because the table contains an <strong>ID column</strong> that is used as primary key and that increments automatically. Unfortunately, SQLite cannot work around this issue automatically. One option is to add the new IDs to the text file and import that new file. But we don't want that, because it screws with some internal counters (SQLite keeps a counter whenever it autoincrements a column, but this counter is not adjusted if you hardwire the ID). A possible <strong>workaround</strong> is to create a temporary table (e.g. <code>individuals_tmp</code>) without the id column, import the data in that table, and then copy the data from that temporary table to the real individuals.</p>
 
 <pre><code>sqlite&gt; .schema individuals
 sqlite&gt; CREATE TABLE individuals_tmp (name STRING, ethnicity STRING);
@@ -901,7 +976,7 @@ sqlite&gt; INSERT INTO individuals (name, ethnicity) SELECT * FROM individuals_t
 sqlite&gt; DROP TABLE individuals_tmp;
 </code></pre>
 
-<p>Your individuals table should now look like this (using <code>SELECT * FROM individuals;</code>):</p>
+<p>Your <code>individuals</code> table should now look like this (using <code>SELECT * FROM individuals;</code>):</p>
 
 <table>
 <thead>
@@ -941,20 +1016,20 @@ sqlite&gt; DROP TABLE individuals_tmp;
 </table>
 
 
-<h3>Using scripting</h3>
+<h3><a id="scripted-import"></a>Using scripting</h3>
 
-<p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby). But as this is a Perl-oriented course... See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
+<p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead…) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
 
-<h2>Getting data out</h2>
+<h2><a id="getting-data-out"></a>Getting data out</h2>
 
-<h3>Single tables</h3>
+<h3><a id="single-tables"></a>Single tables</h3>
 
-<p>It is very simple to query a single table. The basic syntax is:</p>
+<p>It is very simple to query a single table. The <strong>basic syntax</strong> is:</p>
 
 <pre><code>SELECT &lt;column_name1, column_name2&gt; FROM &lt;table_name&gt; WHERE &lt;conditions&gt;;
 </code></pre>
 
-<p>If you want to see all columns, you can use * instead of a list of column names, and you can leave out the WHERE clause. The simplest query is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>.</p>
+<p>If you want to see <strong>all columns</strong>, you can use <strong>"*"</strong> instead of a list of column names, and you can leave out the WHERE clause. The <strong>simplest query</strong> is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>. So the <code>&lt;column_name1, column_name2&gt;</code> defines slices the table vertically while the WHERE clause slices it horizontally.</p>
 
 <p>Data can be filtered using a <code>WHERE</code> clause. For example:</p>
 
@@ -964,23 +1039,23 @@ SELECT * FROM individuals WHERE ethnicity IN ('african', 'caucasian');
 SELECT * FROM individuals WHERE ethnicity != 'asian';
 </code></pre>
 
-<p>You often just want to see a small subset of data just to make sure that you're looking at the right thing. In that case: add a LIMIT clause to the end of your query:</p>
+<p>You often just want to see a <strong>small subset of data</strong> just to make sure that you're looking at the right thing. In that case: add a <code>LIMIT</code> clause to the end of your query. Please <em>always</em> do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.</p>
 
 <pre><code>SELECT * FROM individuals LIMIT 5;
 SELECT * FROM individuals WHERE ethnicity = 'caucasian' LIMIT 1;
 </code></pre>
 
-<p>If you just want know the number of records that would match your query, use <code>COUNT(*)</code>:</p>
+<p>If you just want know the <strong>number of records</strong> that would match your query, use <code>COUNT(*)</code>:</p>
 
 <pre><code>SELECT COUNT(*) FROM individuals WHERE ethnicity = 'african';
 </code></pre>
 
-<p>Using the <code>GROUP BY</code> clause you can aggregate data. For example:</p>
+<p>Using the <code>GROUP BY</code> clause you can <strong>aggregate</strong> data. For example:</p>
 
 <pre><code>SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;
 </code></pre>
 
-<h3>Combining tables</h3>
+<h3><a id="combining-tables"></a>Combining tables</h3>
 
 <p>In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:</p>
 
@@ -996,12 +1071,12 @@ SELECT * FROM individuals WHERE ethnicity = 'caucasian' LIMIT 1;
 
 <ul>
 <li>Both the snps and genotypes tables are referenced in the FROM clause.</li>
-<li>In the SELECT clause, we tell the query what columns to return. We prepend the column names with the table name, to know what column we actually mean (snps.id is a different column from individuals.id).</li>
-<li>In the WHERE clause, we actually provide the link between the 2 tables: the value for snp_id in the genotypes table should correspond with the id column in the snps table. What do you think would happen if we wouldn't provide this WHERE clause? How many records would be returned?</li>
+<li>In the SELECT clause, we tell the query what columns to return. We <strong>prepend the column names with the table name</strong>, to know what column we actually mean (snps.id is a different column from individuals.id).</li>
+<li><strong>In the WHERE clause, we actually provide the link between the 2 tables</strong>: the value for snp_id in the genotypes table should correspond with the id column in the snps table. What do you think would happen if we wouldn't provide this WHERE clause? How many records would be returned?</li>
 </ul>
 
 
-<p>Having to type the table names in front of the column names can become tiresome. We can however create aliases like this:</p>
+<p>Having to type the table names in front of the column names can become tiresome. We can however create <strong>aliases</strong> like this:</p>
 
 <pre><code>SELECT s.accession, g.genotype_amb FROM snps s, genotypes g WHERE s.id = g.snp_id;
 </code></pre>
@@ -1014,7 +1089,7 @@ WHERE i.id = g.individual_id
 AND s.id = g.snp_id;
 </code></pre>
 
-<h3>JOIN</h3>
+<h3><a id="join"></a>JOIN</h3>
 
 <p>Sometimes, though, we have to join tables in a different way. Suppose that our snps table contains SNPs that are nowhere mentioned in the genotypes table, but we still want to have them mentioned in our output:</p>
 
@@ -1081,14 +1156,14 @@ AND s.id = g.snp_id;
 </table>
 
 
-<p>But we actually want to have rs11223 in the list as well. Using this approach, we can't because of the <code>WHERE s.id = g.snp_id</code> clause. The solution to this is to use an explicit join. To make things complicated, there are several types: inner and outer joins. In principle, an inner join gives the result of the intersect between two tables, while an outer join gives the results of the union. What we've been doing up to now is look at the intersection, so the approach we used above is equivalent to an inner join:</p>
+<p>But we actually want to have rs11223 in the list as well. Using this approach, we can't because of the <code>WHERE s.id = g.snp_id</code> clause. The solution to this is to use an <strong>explicit join</strong>. To make things complicated, there are several types: inner and outer joins. In principle, an inner join gives the result of the intersect between two tables, while an outer join gives the results of the union. What we've been doing up to now is look at the intersection, so the approach we used above is equivalent to an inner join:</p>
 
 <pre><code>sqlite&gt; SELECT s.accession, g.genotype_amb
    ...&gt; FROM snps s INNER JOIN genotypes g ON s.id = g.snp_id
    ...&gt; ORDER BY s.accession, g.genotype_amb;
 </code></pre>
 
-<p>gives;</p>
+<p>gives:</p>
 
 <table>
 <thead>
@@ -1126,7 +1201,7 @@ AND s.id = g.snp_id;
 </table>
 
 
-<p>A left outer join returns all records from the left table, and will include any matches from the right table:</p>
+<p>A <strong>left outer join</strong> returns all records from the left table, and will include any matches from the right table:</p>
 
 <pre><code>sqlite&gt; SELECT s.accession, g.genotype_amb
    ...&gt; FROM snps s LEFT OUTER JOIN genotypes g ON s.id = g.snp_id
@@ -1175,24 +1250,24 @@ AND s.id = g.snp_id;
 </table>
 
 
-<p>(Notice the extra line for rs11223.)</p>
+<p>(Notice the extra line for rs11223!)</p>
 
 <p>A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.</p>
 
-<h2>Additional functions</h2>
+<h2><a id="additional-functions"></a>Additional functions</h2>
 
-<h3>AND, OR, IN</h3>
+<h3><a id="and-or-in"></a>AND, OR, IN</h3>
 
-<p>Your queries might need to combine different conditions:</p>
+<p>Your queries might need to <strong>combine different conditions</strong>:</p>
 
 <pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' AND position &lt; 40000;
 sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' OR chromosome = '5';
 sqlite&gt; SELECT * FROM snps WHERE chromosome IN ('1','5');
 </code></pre>
 
-<h4>DISTINCT</h4>
+<h3><a id="distinct"></a>DISTINCT</h3>
 
-<p>Whenever you want the unique values in a column: use DISTINCT in the SELECT clause:</p>
+<p>Whenever you want the <strong>unique values</strong> in a column: use DISTINCT in the SELECT clause:</p>
 
 <pre><code>sqlite&gt; SELECT genotype_amb FROM genotypes;
 genotype_amb
@@ -1213,29 +1288,29 @@ R
 
 <p>DISTINCT automatically sorts the results.</p>
 
-<h4>ORDER BY</h4>
+<h3><a id="order-by"></a>ORDER BY</h3>
 
 <pre><code>sqlite&gt; SELECT * FROM snps ORDER BY chromosome;
 sqlite&gt; SELECT * FROM snps ORDER BY accession DESC;
 </code></pre>
 
-<h4>COUNT</h4>
+<h3><a id="count"></a>COUNT</h3>
 
 <p>For when you want to count things:</p>
 
 <pre><code>sqlite&gt; SELECT COUNT(*) FROM genotypes WHERE genotype_amb = 'G';
 </code></pre>
 
-<h4>MAX(), MIN(), AVG()</h4>
+<h3><a id="max-min-avg"></a>MAX(), MIN(), AVG()</h3>
 
 <p>...act as you would expect (only works with numbers, obviously):</p>
 
 <pre><code>sqlite&gt; SELECT MAX(position) FROM snps;
 </code></pre>
 
-<h4>GROUP BY</h4>
+<h3><a id="group-by"></a>GROUP BY</h3>
 
-<p>GROUP BY can be very useful in that it first aggregates data. It is often used together with COUNT, MAX, MIN or AVG:</p>
+<p>GROUP BY can be very useful in that it first <strong>aggregates dat</strong>a. It is often used together with COUNT, MAX, MIN or AVG:</p>
 
 <pre><code>sqlite&gt; SELECT genotype_amb, COUNT(*) FROM genotypes GROUP BY genotype_amb;
 sqlite&gt; SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c 
@@ -1299,9 +1374,9 @@ sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER 
 </table>
 
 
-<h4>UNION, INTERSECT</h4>
+<h3><a id="union-intersect"></a>UNION, INTERSECT</h3>
 
-<p>It is sometimes hard to get the exact rows back that you need using the WHERE clause. In such cases, it might be possible to construct the output based on taking the union or intersection of two or more different queries:</p>
+<p>It is sometimes hard to get the exact rows back that you need using the WHERE clause. In such cases, it might be possible to construct the output based on taking the <strong>union or intersection</strong> of two or more different queries:</p>
 
 <pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = '1';
 sqlite&gt; SELECT * FROM snps WHERE position &lt; 40000;
@@ -1328,7 +1403,7 @@ sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' INTERSECT SELECT * FROM snp
 </table>
 
 
-<h4>LIKE</h4>
+<h3><a id="like"></a>LIKE</h3>
 
 <p>Sometimes you want to make fuzzy matches. What if you're not sure if the ethnicity has a capital or not?</p>
 
@@ -1340,14 +1415,14 @@ sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' INTERSECT SELECT * FROM snp
 <pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity LIKE '%frican';
 </code></pre>
 
-<h4>LIMIT</h4>
+<h3><a id="limit"></a>LIMIT</h3>
 
 <p>If you only want to get the first 10 results back (e.g. to find out if your complicated query does what it should do without running the whole actual query), use LIMIT:</p>
 
 <pre><code>sqlite&gt;&gt; SELECT * FROM snps LIMIT 2;
 </code></pre>
 
-<h4>Subqueries</h4>
+<h3><a id="subqueries"></a>Subqueries</h3>
 
 <p>As we mentioned in the beginning, the general setup of a SELECT is:</p>
 
@@ -1356,7 +1431,7 @@ FROM &lt;table&gt;
 WHERE &lt;condition&gt;;
 </code></pre>
 
-<p>But as you've seen in the examples above, the output from any SQL query is itself basically a table. So we can actually use that output table to run another SELECT on. For example:</p>
+<p>But as you've seen in the examples above, the <strong>output from any SQL query is itself basically a table</strong>. So we can actually <strong>use that output table to run another SELECT</strong>. For example:</p>
 
 <pre><code>sqlite&gt; SELECT *
    ...&gt; FROM (
@@ -1368,9 +1443,35 @@ WHERE &lt;condition&gt;;
 
 <p>Of course, you can use UNION and INTERSECT in the subquery as well...</p>
 
-<p>subqueries: select count(*) from (select distinct genotype_amb)</p>
+<p>Another example:</p>
 
-<h2>Perl-DBI</h2>
+<pre><code>sqlite&gt; SELECT COUNT(*)
+   ...&gt; FROM (
+   ...&gt;        SELECT DISTINCT genotype_amb
+   ...&gt;        FROM genotypes);
+</code></pre>
+
+<h2><a id="ensembl"></a>Public bioinformatics databases</h2>
+
+<p>Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.</p>
+
+<p>To access the last release of human from Ensembl: <code>mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37</code>. To get an overview of the tables that we can query: <code>show tables</code>.</p>
+
+<h2><a id="drawbacks"></a>Drawbacks of relational databases</h2>
+
+<p>Relational databases are great. They can be a big help in storing and organizing your data. But they are not the ideal solution in all situations.</p>
+
+<h3><a id="scalability"></a>Scalability</h3>
+
+<p>Relational databases are only scalable in a limited way. The fact that you try to normalize your data (see <a href="#normal-forms">here</a>) means that your data is distributed over different tables. Any query on that data often requires extensive joins. This is OK, until you have tables with millions of rows. A join can in that case a <em>very</em> long time to run.</p>
+
+<p>[Although outside of the scope of this lecture.] One solution sometimes used is to go for a star-schema rather than a fully normalized schema. Or using a NoSQL database management system that is horizontally scalable (document-oriented, column-oriented or graph databases).</p>
+
+<h3><a id="modeling"></a>Modeling</h3>
+
+<p>Some types of information are difficult to model when using a relational paradigm. In a relational database, different records can be linked across tables using foreign keys. If you're however really interested in the relations themselved (<em>e.g.</em> social graphs, protein-protein-interaction, …) you are much better of to use a real graph database (<em>e.g.</em> neo4j) instead of a relational database. In a graph database finding all neighbours-of-neighbours in a graph of 50 members (basically) takes as long as in a graph with 50 million members.</p>
+
+<h2><a id="perl-dbi"></a>Perl-DBI (for future reference)</h2>
 
 <p>Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (e.g. Class::DBI, DBIx::Class, and Rose::DB::Object). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO DBI.</p>
 
@@ -1509,7 +1610,7 @@ while ($sth-&gt;fetch) {
 }
 </code></pre>
 
-<h2>Exercises</h2>
+<h2><a id="exercises"></a>Exercises</h2>
 
 <h3>Database schema normalization</h3>
 
@@ -1525,13 +1626,78 @@ while ($sth-&gt;fetch) {
 
 <p>In groups of 2, please draw a database scheme which we can discuss afterwards.</p>
 
-<h3>Loading data</h3>
+<h3>When not to use RDBMS</h3>
 
-<p>Can we use the .import function to get the data in? Why or why not?</p>
+<p>Suppose you want to model a social graph. People have names, and know other people. Every "know" is reciprocal (so if I know you then you know me). The data might look like this:</p>
+
+<pre><code>Tim knows Terry
+Tom knows Terry
+Terry knows Gerry
+Gerry knows Rik
+Gerry knows James
+James knows John
+Fred knows James
+Frits knows Fred
+</code></pre>
+
+<p>In table format:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">knower </th>
+<th align="left"> knowee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Tim </td>
+<td align="left"> Terry</td>
+</tr>
+<tr>
+<td align="left">Tom </td>
+<td align="left"> Terry</td>
+</tr>
+<tr>
+<td align="left">Terry </td>
+<td align="left"> Gerry</td>
+</tr>
+<tr>
+<td align="left">Gerry </td>
+<td align="left"> Rik</td>
+</tr>
+<tr>
+<td align="left">Gerry </td>
+<td align="left"> James</td>
+</tr>
+<tr>
+<td align="left">James </td>
+<td align="left"> John</td>
+</tr>
+<tr>
+<td align="left">Fred </td>
+<td align="left"> James</td>
+</tr>
+<tr>
+<td align="left">Frits </td>
+<td align="left"> Fred</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Given that you <em>really</em> want to have this in a relational database, how would you find out who are the friends of the friends of James?</p>
 
 <h3>Querying data - SQL</h3>
 
-<p>Copy the file Database-Intro/exercise.sqlite to your own workspace.</p>
+<p>Get the data ready:</p>
+
+<ol>
+<li>Copy the file Database-Intro/exercise.sqlite to your own workspace.</li>
+<li>Create a new sqlite database: <code>sqlite3 database-exercise</code></li>
+<li>Import the database dump: <code>.restore exercise.sqlite</code></li>
+</ol>
+
 
 <p>Some questions to answer:</p>
 
@@ -1540,24 +1706,24 @@ while ($sth-&gt;fetch) {
 <li>How many genes have no location?</li>
 <li>How many distinct omim genes are mentioned in the gene table?</li>
 <li>What is the gene with the most probesets?</li>
-<li>Recreate (a version of) the AffyAnnotation.clean file (i.e. a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, go_terms).</li>
+<li>Recreate (a version of) the AffyAnnotation.clean file (i.e. a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, expression-value).</li>
 </ul>
 
 
 <p>Output should look like this:</p>
 
-<pre><code>name        symbol      location    ensembl          omim        value
-----------  ----------  ----------  ---------------  ----------  ----------
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      6468
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      5887
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      166
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      166
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      6260
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      5634
-117_at      HSPA6       chr1q23     ENSG00000173110  140555      166
-117_at      HSPA6       chr1q23     ENSG00000173110  140555      6457
-121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      5634
-121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      6183
+<pre><code>name        symbol      location    ensembl          omim        name        value           
+----------  ----------  ----------  ---------------  ----------  ----------  ----------------
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human1      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human2      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human3      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human4      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp1      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp2      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp3      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp4      6.75378974247776
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human1      8.41163999867383
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383
 </code></pre>
 
 <h3>Querying data - Perl/DBI</h3>
