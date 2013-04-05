@@ -8,7 +8,7 @@
     SELECT COUNT(*) FROM (SELECT DISTINCT omim FROM genes);
 
 * What is the gene with the most probesets?
-    SELECT gene_id, COUNT(*) AS c FROM probesets GROUP BY gene_id ORDER BY a DESC LIMIT 10;
+    SELECT gene_id, COUNT(*) AS c FROM probesets GROUP BY gene_id ORDER BY c DESC LIMIT 10;
     => gene with gene_id 2447 has 34 probes
     SELECT * FROM genes WHERE id = 2447;
     => gene is ABP1
