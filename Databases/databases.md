@@ -812,7 +812,11 @@ Can we use the .import function to get the data in? Why or why not?
 
 ### Querying data - SQL ###
 
-Copy the file Database-Intro/exercise.sqlite to your own workspace.
+Get the data ready:
+
+1. Copy the file Database-Intro/exercise.sqlite to your own workspace.
+1. Create a new sqlite database: `sqlite3 database-exercise`
+1. Import the database dump: `.restore exercise.sqlite`
 
 Some questions to answer:
 
@@ -820,23 +824,23 @@ Some questions to answer:
 * How many genes have no location?
 * How many distinct omim genes are mentioned in the gene table?
 * What is the gene with the most probesets?
-* Recreate (a version of) the AffyAnnotation.clean file (i.e. a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, go_terms).
+* Recreate (a version of) the AffyAnnotation.clean file (i.e. a table with these columns: probeset_id, gene_symbol, location, ensembl, omim, expression-value).
 
 Output should look like this:
 
 ```
-name        symbol      location    ensembl          omim        value
-----------  ----------  ----------  ---------------  ----------  ----------
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      6468
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      5887
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      166
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      166
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      6260
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      5634
-117_at      HSPA6       chr1q23     ENSG00000173110  140555      166
-117_at      HSPA6       chr1q23     ENSG00000173110  140555      6457
-121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      5634
-121_at      PAX8        chr2q12-q1  ENSG00000125618  167415      6183
+name        symbol      location    ensembl          omim        name        value           
+----------  ----------  ----------  ---------------  ----------  ----------  ----------------
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human1      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human2      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human3      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human4      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp1      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp2      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp3      6.75378974247776
+1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp4      6.75378974247776
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human1      8.41163999867383
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383
 ```
 
 ### Querying data - Perl/DBI ###
