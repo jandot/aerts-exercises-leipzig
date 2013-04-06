@@ -1,0 +1,38 @@
+{
+  "width": 400,
+  "height": 200,
+  "padding": {"top": 10, "left": 30, "bottom": 20, "right": 10},
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"x":10.0, "y":8.04}, {"x":8.0, "y":55}, {"x":13.0, "y":7.58},
+        {"x":9.0, "y":8.81}, {"x":11.0, "y":8.33}, {"x":14.0, "y":9.96},
+        {"x":6.0, "y":7.24}, {"x":4.0, "y":4.26}, {"x":12.0, "y":10.84},
+        {"x":7.0, "y":4.82}, {"x":5.0, "y":5.68}
+      ]
+    }
+  ],
+  "scales": [
+    {"name":"x", "range":"width", "nice":true, "domain":{"data":"table", "field":"data.x"}},
+    {"name":"y", "range":"height", "nice":true, "domain":{"data":"table", "field":"data.y"}}
+  ],
+  "axes": [
+    {"type":"x", "scale":"x"},
+    {"type":"y", "scale":"y"}
+  ],
+  "marks": [
+    {
+      "type": "symbol",
+      "from": {"data":"table"},
+      "properties": {
+        "enter": {
+          "x": {"scale":"x", "field":"data.x"},
+          "y": {"scale":"y", "field":"data.y"},
+        },
+        "update": { "fill": {"value":"steelblue"} },
+        "hover": { "fill": {"value":"red"} }
+      }
+    }
+  ]
+}
