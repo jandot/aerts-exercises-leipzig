@@ -6,14 +6,15 @@
     {
       "name": "table",
       "values": [
-        {"x":10.0, "y":8.04, "label":"A"}, {"x":8.0, "y":6.95, "label":"B"}, {"x":13.0, "y":7.58, "label":"C"},
-        {"x":9.0, "y":8.81, "label":"D"}, {"x":11.0, "y":8.33, "label":"E"}, {"x":14.0, "y":9.96, "label":"F"},
-        {"x":6.0, "y":7.24, "label":"G"}, {"x":4.0, "y":4.26, "label":"H"}, {"x":12.0, "y":10.84, "label":"I"}
+        {"x":"A", "y":28}, {"x":"B", "y":46}, {"x":"C", "y":63},
+        {"x":"D", "y":81}, {"x":"E", "y":99}, {"x":"F", "y":81},
+        {"x":"G", "y":63}, {"x":"H", "y":46}, {"x":"I", "y":28}
+
       ]
     }
   ],
   "scales": [
-    {"name":"x", "range":"width", "domain":{"data":"table", "field":"data.x"}},
+    {"name":"x", "type":"ordinal", "range":"width", "domain":{"data":"table", "field":"data.x"}},
     {"name":"y", "range":"height", "nice":true, "domain":{"data":"table", "field":"data.y"}}
   ],
   "axes": [
@@ -22,31 +23,18 @@
   ],
   "marks": [
     {
-      "type": "symbol",
+      "type": "rect",
       "from": {"data":"table"},
       "properties": {
         "enter": {
           "x": {"scale":"x", "field":"data.x"},
-          "y": {"scale":"y", "field":"data.y"}
-        },
-        "update": { "fill": {"value":"hotpink"}, "size":{"value":100}, "shape":{"value":"diamond"} },
-        "hover": { "fill": {"value":"deeppink"}, "size":{"value":300} }
-      }
-    },
-    {
-      "type": "text",
-      "from": {"data":"table"},
-      "properties": {
-        "enter": {
-          "x": {"scale":"x", "field":"data.x"},
+          "width": {"scale":"x", "band":true, "offset":-1},
           "y": {"scale":"y", "field":"data.y"},
-          "text": {"field":"data.label"},
-           "dx":{"value":-15}
+          "y2": {"scale":"y", "value":0}
         },
-        "update": { "fill": {"value":"black"} },
+        "update": { "fill": {"value":"hotpink"} },
         "hover": { "fill": {"value":"deeppink"} }
       }
     }
-
   ]
 }
