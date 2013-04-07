@@ -6,9 +6,10 @@
     {
       "name": "table",
       "values": [
-        {"x":"A", "y":28}, {"x":"B", "y":55}, {"x":"C", "y":43},
-        {"x":"D", "y":91}, {"x":"E", "y":81}, {"x":"F", "y":53},
-        {"x":"G", "y":19}, {"x":"H", "y":87}, {"x":"I", "y":52}
+        {"x":"A", "y":28}, {"x":"B", "y":46}, {"x":"C", "y":63},
+        {"x":"D", "y":81}, {"x":"E", "y":99}, {"x":"F", "y":81},
+        {"x":"G", "y":63}, {"x":"H", "y":46}, {"x":"I", "y":28}
+
       ]
     }
   ],
@@ -31,8 +32,8 @@
           "y": {"scale":"y", "field":"data.y"},
           "y2": {"scale":"y", "value":0}
         },
-        "update": { "fill": {"value":"steelblue"} },
-        "hover": { "fill": {"value":"red"} }
+        "update": { "fill": {"value":"hotpink"} },
+        "hover": { "fill": {"value":"deeppink"} }
       }
     }
   ]
