@@ -24,6 +24,8 @@
   "marks": [
     {
       "type": "symbol",
+      "size": 5,
+      "shape": "circle",
       "from": {"data":"table"},
       "properties": {
         "enter": {
