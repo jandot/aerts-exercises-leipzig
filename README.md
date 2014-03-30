@@ -8,10 +8,11 @@ Latest versions of the files are in git repository http://github.com/jandot/aert
 
 The repository is cloned onto the evopserver in /homes/evopserver/jan, and we create symbolic links in the lectures directories:
 
-    git 
     cd /homes/evopserver/lectures/Databases
     ln -s /homes/evopserver/jan/aerts-exercises-leipzig/Databases/databases.html .
     ln -s /homes/evopserver/jan/aerts-exercises-leipzig/Databases/primary_foreign_keys.png .
+    cd /homes/evopserver/lectures/Databases/exercises
+    ln -s /homes/evopserver/jan/aerts-exercises-leipzig/Databases/exercises/* .
     cd /homes/evopserver/lectures/Visualization
     ln -s /homes/evopserver/jan/aerts-exercises-leipzig/Visualization/VisualAnalytics.pdf .
     ln -s /homes/evopserver/jan/aerts-exercises-leipzig/Visualization/structural_variation.gvf .
