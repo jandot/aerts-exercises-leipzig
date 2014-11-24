@@ -28,6 +28,7 @@
     1. [LIKE](#like)
     1. [LIMIT](#limit)
     1. [Subqueries](#subqueries)
+1. [Views](#views)
 1. [Drawbacks of RDBMS](#drawbacks)
     1. [Scalability](#scalability)
     1. [Modeling](#modeling)
@@ -469,14 +470,14 @@ sqlite> SELECT s.accession, g.genotype_amb
 
 gives:
 
-accession | genotype_amb
-:---------|:------------
-rs12345 | A
-rs12345 | M
-rs28465 | G
-rs28465 | K
-rs98765 | G
-rs98765 | R
+accession | genotype_amb | 
+:---------|:-------------|:-
+rs12345 | A | 
+rs12345 | M | 
+rs28465 | G | 
+rs28465 | K | 
+rs98765 | G | 
+rs98765 | R | 
 
 A **left outer join** returns all records from the left table, and will include any matches from the right table:
 
@@ -488,15 +489,15 @@ sqlite> SELECT s.accession, g.genotype_amb
 
 gives:
 
-accession | genotype_amb
-:---------|:------------
-rs11223 |  
-rs12345 | A
-rs12345 | M
-rs28465 | G
-rs28465 | K
-rs98765 | G
-rs98765 | R
+accession | genotype_amb | 
+:---------|:-------------|:-
+rs11223 |   | 
+rs12345 | A | 
+rs12345 | M | 
+rs28465 | G | 
+rs28465 | K | 
+rs98765 | G | 
+rs98765 | R | 
 
 (Notice the extra line for rs11223!)
 
@@ -508,14 +509,14 @@ A full outer join, finally, return all rows from the left table, and all rows fr
 
 What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?
 
-snp-id | gene
-:------|:----
-rs1234 | gene_A
-rs2345 | gene_A
-rs3456 | gene_B
-rs4567 | 
-rs6789 | gene_C
-rs7890 | gene_C
+snp-id | gene | 
+:------|:-----|:- 
+rs1234 | gene_A | 
+rs2345 | gene_A | 
+rs3456 | gene_B | 
+rs4567 |  | 
+rs6789 | gene_C | 
+rs7890 | gene_C | 
 
 We cannot `SELECT * FROM snps WHERE gene = "";` because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue `SELECT * FROM snps WHERE gene IS NULL;` or to get the rest `SELECT * FROM snps WHERE GENE IS NOT NULL;`. Note that it is `IS NULL` and **not** `= NULL`... 
 
@@ -674,6 +675,39 @@ sqlite> SELECT COUNT(*)
 Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.
 
 To access the last release of human from Ensembl: `mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37`. To get an overview of the tables that we can query: `show tables`.
+
+## <a id="views"></a>Views ##
+
+By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP `rs12345` in `individual_A` we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:
+
+```
+SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype, g.genotype_amb
+FROM individuals i, snps s, genotypes g
+WHERE i.id = g.individual_id
+AND s.id = g.snp_id;
+```
+
+There is however a way to make this easier: you can create **views** on the data. This basically saves the whole query and gives it a name. You do this by adding `CREATE VIEW some_name AS` to the front of the query, like this:
+
+```
+CREATE VIEW v_genotypes AS
+SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype, g.genotype_amb
+FROM individuals i, snps s, genotypes g
+WHERE i.id = g.individual_id
+AND s.id = g.snp_id;
+```
+
+You can think of this as if you had made a new table with the name `v_genotypes` that you can use just like any other table, for example:
+
+```
+SELECT *
+FROM v_genotypes g
+WHERE g.genotype_amb = 'R';
+```
+
+The difference with an actual table is, however, that the result of the view is actually not stored itself. Whenever you do `SELECT * FROM v_genotypes`, it will actually perform the whole query in the background.
+
+Note: to make sure that I can tell by the name if something is a table or a view, I always add a `v_` in front of the name that I give to the view.
 
 ## <a id="drawbacks"></a>Drawbacks of relational databases ##
 
