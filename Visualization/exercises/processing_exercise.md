@@ -11,7 +11,11 @@ Processing is a language based on java, with its own development environment. Al
 ![Processing IDE](images/Processing-1_2_1.png)
 
 ## Download and install Processing
-Processing can be downloaded from [http://processing.org/download/](http://processing.org/download/). Download it into your **C:\\workdir** folder. (It will **not** work if it is downloaded to your desktop.)
+Processing can be downloaded from [http://processing.org/download/](http://processing.org/download/).
+
+* For Windows: Double-click the zip-file; there should be a `processing.exe` file which is your program.
+* For Mac: Just double-click the downloaded file.
+* For linux: 
 
 ## A minimal script
 A minimal script is provided below.
@@ -140,7 +144,7 @@ The data for this exercise concerns **flight information** between different cit
 * distance
 
 ### Getting the data
-In the directory **xyz**, create a new folder called `data`. Download the file [**http://bitbucket.org/jandot/flamesworkshop/downloads/flights.csv**](http://bitbucket.org/jandot/flamesworkshop/downloads/flights.csv) into this new folder.
+First **save your sketch**. In the directory where you saved it, create a new folder called `data`. Download the file [**http://bitbucket.org/jandot/flamesworkshop/downloads/flights.csv**](http://bitbucket.org/jandot/flamesworkshop/downloads/flights.csv) into this new folder.
 
 ### Accessing the data from Processing
 Let's write a small script in Processing to visualize this data. The **visual encoding** that we'll use for each flight will be the following:
@@ -154,7 +158,7 @@ Let's write a small script in Processing to visualize this data. The **visual en
 [2]  
 [3]  size(800,800);
 [4]  noStroke();
-[5]  fill(255,0,0,10); // colour = red; transparency = 10%
+[5]  fill(0,0,255,10); // colour = blue; transparency = 10%
 [6]  
 [7]  background(255,255,255); // set background to white
 [8]  for ( TableRow row : table.rows() ) {
@@ -175,6 +179,7 @@ You can see that the resulting image shows a map of the world, with areas with h
 Let's go through the code:
 
 * [1] The data from the file "flights.csv" is read into a variable `table` which is of type `Table`. The `"header"` indicates that the first line of the file is a list of column headers.
+* [4] `noStroke()` tell Processing to not draw the border around disks, rectangles or other elements.
 * [8] This is another way to loop over a collection, instead of the `for ( int i = 0; i < 10; i++ ) { }` we used before. In this line, we loop over all `table.rows()`, and each time we put the new row into a variable `row`.
 * [9] `row.getFloat("from_long")` extracts the value from the `from_long` column from that row and makes it a `float`. This is then stored in the variable `from_long`.
 * [11] In this line, we transform the longitude value to a value between 0 and the width of our canvas.
@@ -280,7 +285,7 @@ The `draw()` function is run 60 times per second. This means that 60 times per s
 
 Some things to note:
 
-* We have to define the `table` variable at the top.
+* We have to define the `table` variable at the top, and load the actual data (using `loadTable`) in the `setup()` function.
 * We have to set the background every single redraw. If we wouldn't, each picture is drawn on top of the previous one.
 
 Now how do we adapt this so that the radius of the circles depends on the x-position of my pointer? Luckily, Processing provides two variables called `mouseX` and `mouseY` that are very useful. `mouseX` returns the x position of the pointer. So basically the only thing we have to do is replace `float r = map(distance, 0, 15406, 3, 15);` with `float r = map(mouseX, 0, 800, 3, 15);` (Note that we changed the `15406` to `800`.) If we do that, and our mouse is towards the right side of the image, we get the following picture:
@@ -384,12 +389,12 @@ Having the mouse in the middle to the canvas gives us this image:
 
 ![medium_distances](images/flights_mediumdistances.png)
 
-Playing with this visualization, there are some signals that pop up. Moving left and right at about 70-90 pixels from the left, we see a "snake" moving along the north-east coast of Brazil (see Figure below, also indicating position of mouse). This indicates that most of these flights probably go to the same major city in that country. Other dynamic patterns appear in Europe as well.
+Playing with this visualization, there are some signals that pop up. Moving left and right at about 70-90 pixels from the left, we see a "snake" moving along the north-east coast of Brazil (see Figure below, also indicating position of mouse). This indicates that most of these flights probably go to the same major city in that country. Other dynamic patterns appear in Europe as well. In Figure 10, some dots appear to be darker than others. Why do you think this is?
 
 ![snake_brazil](images/snake_brazil.png)
 
 **Buttons and sliders**
-Of course many tools have buttons and sliders. Let's implement those in Processing. Instead of using the mouse position as a filter as before, why don't we make a slider to do the same? Unfortunately, this is a bit more complex that it should be... So let's first start with a **button**. To create a button, what we basically do is draw a rectangle, and check if the mouse position is within the area of that rectangle when we press the mouse button.
+Of course many tools have buttons and sliders. Let's implement those in Processing. Instead of using the mouse position as a filter as before, why don't we make a slider to do the same? Unfortunately, this is a bit more complex than it should be... So let's first start with a **button**. To create a button, what we basically do is draw a rectangle, and check if the mouse position is within the area of that rectangle when we press the mouse button.
 
 *Script 10*
 ```java
@@ -521,7 +526,7 @@ Now let's implement an actual **slider**. This looks a lot like what we had befo
 
 ![slider](images/slider.png)
 
-So what changed? We now define a variable (a float) called `circlePosition` at the top and set its initial value to 50 on line [8]. At the start of the `draw()` function [13-17], we also draw a line that will serve as a guide as well as the actual circle. Furthermore, we change lines [21-24] to refer to the `circlePosition` instead of `mouseX`. Note that that includes using +/- 2 instead of +/- 25 as a buffer, and using the minimum and maximum values of the line (i.e. 50 and 150) instead of those of the mouse in the map functions. Finally, we write the `mouseDragged()` function at the bottom (lines [45-52]). A "mouse-drag" in Processing-speak means: pressing the mouse button, then moving the mouse to another position, and finally releasing the mouse button. The `mouseDragged()` function looks a lot like the `mouseClicked()` function in script 10. We want to make sure that when we are on top of the circle when we start dragging (both horizontally [46] and vertically [47]). Also, we need to make sure that we cannot drag the circle further than the minimum or maximum value [48]. If the situation complies to these three conditions, we change the `circlePosition` to `mouseX`, which basically means that the circle follows the mouse. Don't forget the `redraw()` or the scene will not be updated. Question: what happens if you drag the mouse too fast? Why is that? And just for laughs: remove the conditions on line [48] and see what happens if you start interacting with the visualization...
+So what changed? We now define a variable (a float) called `circlePosition` at the top and set its initial value to 50 on line [8]. At the start of the `draw()` function [13-17], we also draw a line that will serve as a guide as well as the actual circle. Furthermore, we change lines [21-24] to refer to the `circlePosition` instead of `mouseX`. Note that that includes using +/- 2 instead of +/- 25 as a buffer, and using the minimum and maximum values of the line (i.e. 50 and 150) instead of those of the mouse in the map functions. Finally, we write the `mouseDragged()` function at the bottom (lines [45-52]). A "mouse-drag" in Processing-speak means: pressing the mouse button, then moving the mouse to another position, and finally releasing the mouse button. The `mouseDragged()` function looks a lot like the `mouseClicked()` function in script 10. We want to make sure that we are on top of the circle when we start dragging (both horizontally [46] and vertically [47]). Also, we need to make sure that we cannot drag the circle further than the minimum or maximum value [48]. If the situation complies to these three conditions, we change the `circlePosition` to `mouseX`, which basically means that the circle follows the mouse. Don't forget the `redraw()` or the scene will not be updated. Question: what happens if you drag the mouse too fast? Why is that? And just for laughs: remove the conditions on line [48] and see what happens if you start interacting with the visualization...
 
 
 # Whereto from here?
