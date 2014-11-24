@@ -1,349 +1,29 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<style>
-body {
-  font-family: Helvetica, arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: white;
-  padding: 30px; }
-
-body > *:first-child {
-  margin-top: 0 !important; }
-body > *:last-child {
-  margin-bottom: 0 !important; }
-
-a {
-  color: #4183C4; }
-a.absent {
-  color: #cc0000; }
-a.anchor {
-  display: block;
-  padding-left: 30px;
-  margin-left: -30px;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 20px 0 10px;
-  padding: 0;
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
-  cursor: text;
-  position: relative; }
-
-h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
-  text-decoration: none; }
-
-h1 tt, h1 code {
-  font-size: inherit; }
-
-h2 tt, h2 code {
-  font-size: inherit; }
-
-h3 tt, h3 code {
-  font-size: inherit; }
-
-h4 tt, h4 code {
-  font-size: inherit; }
-
-h5 tt, h5 code {
-  font-size: inherit; }
-
-h6 tt, h6 code {
-  font-size: inherit; }
-
-h1 {
-  font-size: 28px;
-  color: black; }
-
-h2 {
-  font-size: 24px;
-  border-bottom: 1px solid #cccccc;
-  color: black; }
-
-h3 {
-  font-size: 18px; }
-
-h4 {
-  font-size: 16px; }
-
-h5 {
-  font-size: 14px; }
-
-h6 {
-  color: #777777;
-  font-size: 14px; }
-
-p, blockquote, ul, ol, dl, li, table, pre {
-  margin: 15px 0; }
-
-hr {
-  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
-  border: 0 none;
-  color: #cccccc;
-  height: 4px;
-  padding: 0;
-}
-
-body > h2:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-body > h1:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-  body > h1:first-child + h2 {
-    margin-top: 0;
-    padding-top: 0; }
-body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-
-a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
-  margin-top: 0;
-  padding-top: 0; }
-
-h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
-  margin-top: 0; }
-
-li p.first {
-  display: inline-block; }
-li {
-  margin: 0; }
-ul, ol {
-  padding-left: 30px; }
-
-ul :first-child, ol :first-child {
-  margin-top: 0; }
-
-dl {
-  padding: 0; }
-  dl dt {
-    font-size: 14px;
-    font-weight: bold;
-    font-style: italic;
-    padding: 0;
-    margin: 15px 0 5px; }
-    dl dt:first-child {
-      padding: 0; }
-    dl dt > :first-child {
-      margin-top: 0; }
-    dl dt > :last-child {
-      margin-bottom: 0; }
-  dl dd {
-    margin: 0 0 15px;
-    padding: 0 15px; }
-    dl dd > :first-child {
-      margin-top: 0; }
-    dl dd > :last-child {
-      margin-bottom: 0; }
-
-blockquote {
-  border-left: 4px solid #dddddd;
-  padding: 0 15px;
-  color: #777777; }
-  blockquote > :first-child {
-    margin-top: 0; }
-  blockquote > :last-child {
-    margin-bottom: 0; }
-
-table {
-  padding: 0;border-collapse: collapse; }
-  table tr {
-    border-top: 1px solid #cccccc;
-    background-color: white;
-    margin: 0;
-    padding: 0; }
-    table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
-      font-weight: bold;
-      border: 1px solid #cccccc;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr td {
-      border: 1px solid #cccccc;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr th :first-child, table tr td :first-child {
-      margin-top: 0; }
-    table tr th :last-child, table tr td :last-child {
-      margin-bottom: 0; }
-
-img {
-  max-width: 100%; }
-
-span.frame {
-  display: block;
-  overflow: hidden; }
-  span.frame > span {
-    border: 1px solid #dddddd;
-    display: block;
-    float: left;
-    overflow: hidden;
-    margin: 13px 0 0;
-    padding: 7px;
-    width: auto; }
-  span.frame span img {
-    display: block;
-    float: left; }
-  span.frame span span {
-    clear: both;
-    color: #333333;
-    display: block;
-    padding: 5px 0 0; }
-span.align-center {
-  display: block;
-  overflow: hidden;
-  clear: both; }
-  span.align-center > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px auto 0;
-    text-align: center; }
-  span.align-center span img {
-    margin: 0 auto;
-    text-align: center; }
-span.align-right {
-  display: block;
-  overflow: hidden;
-  clear: both; }
-  span.align-right > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px 0 0;
-    text-align: right; }
-  span.align-right span img {
-    margin: 0;
-    text-align: right; }
-span.float-left {
-  display: block;
-  margin-right: 13px;
-  overflow: hidden;
-  float: left; }
-  span.float-left span {
-    margin: 13px 0 0; }
-span.float-right {
-  display: block;
-  margin-left: 13px;
-  overflow: hidden;
-  float: right; }
-  span.float-right > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px auto 0;
-    text-align: right; }
-
-code, tt {
-  margin: 0 2px;
-  padding: 0 5px;
-  white-space: nowrap;
-  border: 1px solid #eaeaea;
-  background-color: #f8f8f8;
-  border-radius: 3px; }
-
-pre code {
-  margin: 0;
-  padding: 0;
-  white-space: pre;
-  border: none;
-  background: transparent; }
-
-.highlight pre {
-  background-color: #f8f8f8;
-  border: 1px solid #cccccc;
-  font-size: 13px;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px; }
-
-pre {
-  background-color: #f8f8f8;
-  border: 1px solid #cccccc;
-  font-size: 13px;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px; }
-  pre code, pre tt {
-    background-color: transparent;
-    border: none; }
-
-sup {
-    font-size: 0.83em;
-    vertical-align: super;
-    line-height: 0;
-}
-* {
-	-webkit-print-color-adjust: exact;
-}
-@media screen and (min-width: 914px) {
-    body {
-        width: 854px;
-        margin:0 auto;
-    }
-}
-@media print {
-	table, pre {
-		page-break-inside: avoid;
-	}
-	pre {
-		word-wrap: break-word;
-	}
-}
-</style>
-<title><a id="databases"></a> Databases</title>
-
-</head>
-<body>
 <p><strong>Table of Contents</strong></p>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li><a href="#relational-databases">Relational databases</a></li>
 <li><a href="#schema">Developing the database schema</a>
-
-<ol>
-<li><a href="#normal-forms">Normal forms</a>
-
-<ol>
+<ol style="list-style-type: decimal">
+<li><a href="#normal-forms">Normal forms</a></li>
 <li><a href="#first-normal-form">First normal form</a></li>
 <li><a href="#second-normal-form">Second normal form</a></li>
 <li><a href="#third-normal-form">Third normal form</a></li>
-</ol>
-</li>
 <li><a href="#best-practices">Other best practices</a></li>
-</ol>
-</li>
+</ol></li>
 <li><a href="#sql">SQL - Structured Query Language</a></li>
 <li><a href="#getting-data-in">Getting data in</a>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li><a href="#insert-into">INSERT INTO</a></li>
 <li><a href="#import">Importing a datafile</a></li>
 <li><a href="#scripted-import">Using scripting</a></li>
-</ol>
-</li>
+</ol></li>
 <li><a href="#getting-data-out">Getting data out</a>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li><a href="#single-tables">Single tables</a></li>
 <li><a href="#combining-tables">Combining tables</a></li>
 <li><a href="#join">JOIN</a></li>
-</ol>
-</li>
+</ol></li>
 <li><a href="#additional-functions">Additional functions</a>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li><a href="#null">NULL</a></li>
 <li><a href="#and-or-in">AND, OR, IN</a></li>
 <li><a href="#distinct">DISTINCT</a></li>
@@ -355,108 +35,85 @@ sup {
 <li><a href="#like">LIKE</a></li>
 <li><a href="#limit">LIMIT</a></li>
 <li><a href="#subqueries">Subqueries</a></li>
-</ol>
-</li>
+</ol></li>
 <li><a href="#drawbacks">Drawbacks of RDBMS</a>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li><a href="#scalability">Scalability</a></li>
 <li><a href="#modeling">Modeling</a></li>
-</ol>
-</li>
+</ol></li>
 <li><a href="#perl-dbi">Perl-DBI</a></li>
 <li><a href="#exercises">Exercises</a></li>
 </ol>
-
-
-<h1><a id="databases"></a> Databases</h1>
-
+<h1 id="databases"><span class="header-section-number">1</span> <a id="databases"></a> Databases</h1>
 <p>Jan Aerts; March 4, 2013</p>
-
 <p><em>(Part of the content of this lecture is taken from the database lectures from the yearly Programming for Biology course at CSHL, and the EasySoft tutorial at http://bit.ly/x2yNDb)</em></p>
-
 <p>Data management is critical in any science, including biology. In this session, we will focus on relational (SQL) databases (RDBMS) as these are the most common. If time permits we might venture into the world of NoSQL databases (<em>e.g.</em> MongoDB) to allow storing of huge datasets.</p>
-
 <p>For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI (for future reference). Document-oriented and other NoSQL databases (such as MongoDB) can often also be accessed through either an interactive shell and/or APIs (application programming interfaces) in languages such as perl, ruby, java, clojure, ...</p>
-
-<h2><a id="database-types"></a> Types of databases</h2>
-
+<h2 id="types-of-databases"><span class="header-section-number">1.1</span> <a id="database-types"></a> Types of databases</h2>
 <p>There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of tables that contain rows (which represent instance data) and columns (representing properties of that data). Any table can be thought of as an Excel-sheet.</p>
-
-<h1><a id="relational-databases"></a> Relational databases</h1>
-
+<h1 id="relational-databases"><span class="header-section-number">2</span> <a id="relational-databases"></a> Relational databases</h1>
 <p>Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use <strong>SQLite3</strong>. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). <code>sqlite3 my_db.sqlite</code> is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...</p>
-
-<h2><a id="schema"></a> Developing the database schema</h2>
-
+<h2 id="developing-the-database-schema"><span class="header-section-number">2.1</span> <a id="schema"></a> Developing the database schema</h2>
 <p>For the purpose of this lecture, let's say you want to store individuals and their genotypes. In Excel, you could create a sheet that looks like this:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">individual </th>
-<th align="left"> ethnicity </th>
-<th align="left"> rs12345 </th>
-<th align="left"> rs12345_amb </th>
-<th align="left"> chr_12345 </th>
-<th align="left"> pos_12345 </th>
-<th align="left"> rs98765 </th>
-<th align="left"> rs98765_amb </th>
-<th align="left"> chr_98765 </th>
-<th align="left"> pos_98765 </th>
-<th align="left"> rs28465 </th>
-<th align="left"> rs28465_amb </th>
-<th align="left"> chr_28465 </th>
-<th align="left"> pos_28465</th>
+<tr class="header">
+<th align="left">individual</th>
+<th align="left">ethnicity</th>
+<th align="left">rs12345</th>
+<th align="left">rs12345_amb</th>
+<th align="left">chr_12345</th>
+<th align="left">pos_12345</th>
+<th align="left">rs98765</th>
+<th align="left">rs98765_amb</th>
+<th align="left">chr_98765</th>
+<th align="left">pos_98765</th>
+<th align="left">rs28465</th>
+<th align="left">rs28465_amb</th>
+<th align="left">chr_28465</th>
+<th align="left">pos_28465</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">individual_A </td>
-<td align="left"> caucasian </td>
-<td align="left"> A/A </td>
-<td align="left"> A </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345 </td>
-<td align="left"> A/G </td>
-<td align="left"> R </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765 </td>
-<td align="left"> G/T </td>
-<td align="left"> K </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">A/A</td>
+<td align="left">A</td>
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">A/G</td>
+<td align="left">R</td>
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">G/T</td>
+<td align="left">K</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
-<tr>
-<td align="left">individual_B </td>
-<td align="left"> caucasian </td>
-<td align="left"> A/C </td>
-<td align="left"> M </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345 </td>
-<td align="left"> G/G </td>
-<td align="left"> G </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765 </td>
-<td align="left"> G/G </td>
-<td align="left"> G </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">A/C</td>
+<td align="left">M</td>
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>So let's create a relational database to store this data.</p>
-
 <p><code>jan@evopserver ~ $ sqlite3 test.sqlite</code></p>
-
 <p>We can get help using .help:</p>
-
 <p><code>sqlite&gt; .help</code></p>
-
 <p>We first create a table, and insert that data (we'll come back to the exact syntax later):</p>
-
 <pre><code>sqlite&gt; CREATE TABLE genotypes (individual STRING,
                                 ethnicity STRING,
                                 rs12345 STRING,
@@ -474,154 +131,130 @@ sup {
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, chr_12345, pos_12345,
                                                       rs98765, rs98765_amb, chr_98765, pos_98765,
                                                       rs28465, rs28465_amb, chr_28465, pos_28465)
-                       VALUES ('individual_A','caucasian','A/A','A','1',12345,
-                                                          'A/G','R','1',98765,
-                                                          'G/T','K','5',28465);
+                       VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;,&#39;A/A&#39;,&#39;A&#39;,&#39;1&#39;,12345,
+                                                          &#39;A/G&#39;,&#39;R&#39;,&#39;1&#39;,98765,
+                                                          &#39;G/T&#39;,&#39;K&#39;,&#39;5&#39;,28465);
 
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, chr_12345, pos_12345,
                                                       rs98765, rs98765_amb, chr_98765, pos_98765,
                                                       rs28465, rs28465_amb, chr_28465, pos_28465)
-                       VALUES ('individual_A','caucasian','A/C','M','1',12345,
-                                                          'G/G','G','1',98765,
-                                                          'G/G','G','5',28465);
-</code></pre>
-
+                       VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;,&#39;A/C&#39;,&#39;M&#39;,&#39;1&#39;,12345,
+                                                          &#39;G/G&#39;,&#39;G&#39;,&#39;1&#39;,98765,
+                                                          &#39;G/G&#39;,&#39;G&#39;,&#39;5&#39;,28465);</code></pre>
 <p>(Note that every SQL command is ended with a <strong>semi-colon</strong>...) This created a new table called genotypes; we can quickly check that everything is loaded (we'll come back to getting data out later):</p>
-
 <pre><code>sqlite&gt; .mode column
 sqlite&gt; .headers on
-sqlite&gt; SELECT * FROM genotypes;
-</code></pre>
-
+sqlite&gt; SELECT * FROM genotypes;</code></pre>
 <p>Done! For every new SNP we just add a new column, right? Wrong...</p>
-
-<h3><a id="normal-forms"></a>Normal forms</h3>
-
-<p>There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the "normal forms".</p>
-
-<h4><a id="first-normal-form"></a>First normal form</h4>
-
+<h3 id="normal-forms"><span class="header-section-number">2.1.1</span> <a id="normal-forms"></a>Normal forms</h3>
+<p>There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the &quot;normal forms&quot;.</p>
+<h4 id="first-normal-form"><span class="header-section-number">2.1.1.1</span> <a id="first-normal-form"></a>First normal form</h4>
 <p>To get to the first normal form:</p>
-
 <ul>
 <li><strong>Eliminate duplicative columns</strong> from the same table</li>
 <li>Create separate tables for each group of <strong>related data</strong> and identify each row with a unique column (the primary key)</li>
 </ul>
-
-
 <p>The columns rs123451, rs98765 and rs28465 are duplicates; they describe exactly the same type of thing (albeit different instances). According to the first rule of the first normal form, we need to eliminate these. And we can do that by creating new records (rows) for each SNP. In addition, each row should have a <strong>unique key</strong>. Best practices tell us to use autoincrementing integers, the <strong>primary key should contain no information in itself</strong>.</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> individual </th>
-<th align="left"> ethnicity </th>
-<th align="left"> snp </th>
-<th align="left"> genotype </th>
-<th align="left"> genotype_amb </th>
-<th align="left"> chromosome </th>
-<th align="left"> position</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">individual</th>
+<th align="left">ethnicity</th>
+<th align="left">snp</th>
+<th align="left">genotype</th>
+<th align="left">genotype_amb</th>
+<th align="left">chromosome</th>
+<th align="left">position</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs12345 </td>
-<td align="left"> A/A </td>
-<td align="left"> A </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs12345</td>
+<td align="left">A/A</td>
+<td align="left">A</td>
+<td align="left">1</td>
+<td align="left">12345</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs98765 </td>
-<td align="left"> A/G </td>
-<td align="left"> R </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs98765</td>
+<td align="left">A/G</td>
+<td align="left">R</td>
+<td align="left">1</td>
+<td align="left">98765</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs28465 </td>
-<td align="left"> G/T </td>
-<td align="left"> K </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs28465</td>
+<td align="left">G/T</td>
+<td align="left">K</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
-<tr>
-<td align="left">4 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs12345 </td>
-<td align="left"> A/C </td>
-<td align="left"> M </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345</td>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs12345</td>
+<td align="left">A/C</td>
+<td align="left">M</td>
+<td align="left">1</td>
+<td align="left">12345</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs98765 </td>
-<td align="left"> G/G </td>
-<td align="left"> G </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs98765</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
+<td align="left">1</td>
+<td align="left">98765</td>
 </tr>
-<tr>
-<td align="left">6 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian </td>
-<td align="left"> rs28465 </td>
-<td align="left"> G/G </td>
-<td align="left"> G </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs28465</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>To generate this table:</p>
-
 <pre><code>sqlite&gt; DROP TABLE genotypes;
 sqlite&gt; CREATE TABLE genotypes (id INTEGER PRIMARY KEY, individual STRING, ethnicity STRING, snp STRING,
                                 genotype STRING, genotype_amb STRING, chromosome STRING, position INTEGER);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_A','caucasian','rs12345','A/A','A','1',12345);
+                       VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;,&#39;rs12345&#39;,&#39;A/A&#39;,&#39;A&#39;,&#39;1&#39;,12345);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_A','caucasian','rs98765','A/G','R','1',98765);
+                       VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;,&#39;rs98765&#39;,&#39;A/G&#39;,&#39;R&#39;,&#39;1&#39;,98765);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_A','caucasian','rs28465','G/T','K','1',28465);
+                       VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;,&#39;rs28465&#39;,&#39;G/T&#39;,&#39;K&#39;,&#39;1&#39;,28465);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_B','caucasian','rs12345','A/C','M','1',12345);
+                       VALUES (&#39;individual_B&#39;,&#39;caucasian&#39;,&#39;rs12345&#39;,&#39;A/C&#39;,&#39;M&#39;,&#39;1&#39;,12345);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_B','caucasian','rs98765','G/G','G','1',98765);
+                       VALUES (&#39;individual_B&#39;,&#39;caucasian&#39;,&#39;rs98765&#39;,&#39;G/G&#39;,&#39;G&#39;,&#39;1&#39;,98765);
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
-                       VALUES ('individual_B','caucasian','rs28465','G/G','G','1',28465);
-</code></pre>
-
+                       VALUES (&#39;individual_B&#39;,&#39;caucasian&#39;,&#39;rs28465&#39;,&#39;G/G&#39;,&#39;G&#39;,&#39;1&#39;,28465);</code></pre>
 <p>The fact that <code>id</code> is defined as INTEGER PRIMARY KEY makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for id automatically takes care of everything.</p>
-
-<h4><a id="second-normal-form"></a>Second normal form</h4>
-
+<h4 id="second-normal-form"><span class="header-section-number">2.1.1.2</span> <a id="second-normal-form"></a>Second normal form</h4>
 <p>There is <strong>still a lot of duplication</strong> in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:</p>
-
 <ul>
 <li><strong>Remove subsets of data that apply to multiple rows</strong> of a table and place them in separate tables.</li>
 <li><strong>Create relationships between these new tables</strong> and their predecessors through the use of <strong>foreign keys</strong>.</li>
 </ul>
-
-
 <p>So how could we do that for the table above? Each row contains <strong>3 different types of things</strong>: information about an individual (i.c. name and ethnicity), a SNP (i.c. the accession number, chromosome and position), and a genotype linking those two together (the genotype column, and the column containing the IUPAC ambiguity code for that genotype). To get to the second normal form, we need to put each of these in a separate table:</p>
-
 <ul>
 <li>The name of each table should be <strong>plural</strong> (not mandatory, but good practice).</li>
 <li>Each table should have a <strong>primary key</strong>, ideally named <code>id</code>. Different tables can contain columns that have the same name; column names should be unique within a table, but can occur across tables.</li>
@@ -629,689 +262,483 @@ sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype
 <li>In the genotypes table, individuals and SNPs are linked by referring to their primary keys (as used in the individuals and snps tables). Again best practice: if a <strong>foreign key</strong> refers to the id column in the individuals table, it should be named <strong>individual_id</strong> (note the singular).</li>
 <li>The foreign keys individual_id and snp_id in the genotypes table must be of the same type as the id columns in the individuals and snps tables, respectively.</li>
 </ul>
-
-
-<p><img src="primary_foreign_keys.png" alt="Primary and foreign keys" /></p>
-
+<div class="figure">
+<img src="primary_foreign_keys.png" alt="Primary and foreign keys" /><p class="caption">Primary and foreign keys</p>
+</div>
 <p>The <code>individuals</code> table:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> name </th>
-<th align="left"> ethnicity</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">ethnicity</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>The <code>snps</code> table:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> accession </th>
-<th align="left"> chromosome </th>
-<th align="left"> position</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">accession</th>
+<th align="left">chromosome</th>
+<th align="left">position</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> rs12345 </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">rs12345</td>
+<td align="left">1</td>
+<td align="left">12345</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> rs98765 </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">rs98765</td>
+<td align="left">1</td>
+<td align="left">98765</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> rs28465 </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">rs28465</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>The <code>genotypes</code> table:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> individual_id </th>
-<th align="left"> snp_id </th>
-<th align="left"> genotype </th>
-<th align="left"> genotype_amb</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">individual_id</th>
+<th align="left">snp_id</th>
+<th align="left">genotype</th>
+<th align="left">genotype_amb</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 1 </td>
-<td align="left"> 1 </td>
-<td align="left"> A/A </td>
-<td align="left"> A</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">A/A</td>
+<td align="left">A</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> 1 </td>
-<td align="left"> 2 </td>
-<td align="left"> A/G </td>
-<td align="left"> R</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">A/G</td>
+<td align="left">R</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> 1 </td>
-<td align="left"> 3 </td>
-<td align="left"> G/T </td>
-<td align="left"> K</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">G/T</td>
+<td align="left">K</td>
 </tr>
-<tr>
-<td align="left">4 </td>
-<td align="left"> 2 </td>
-<td align="left"> 1 </td>
-<td align="left"> A/C </td>
-<td align="left"> M</td>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">A/C</td>
+<td align="left">M</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> 2 </td>
-<td align="left"> 2 </td>
-<td align="left"> G/G </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">6 </td>
-<td align="left"> 2 </td>
-<td align="left"> 3 </td>
-<td align="left"> G/G </td>
-<td align="left"> G</td>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">G/G</td>
+<td align="left">G</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>To generate these tables:</p>
-
 <pre><code>sqlite&gt; DROP TABLE individuals;
 sqlite&gt; DROP TABLE snps;
 sqlite&gt; DROP TABLE genotypes;
 sqlite&gt; CREATE TABLE individuals (id INTEGER PRIMARY KEY, name STRING, ethnicity STRING);
 sqlite&gt; CREATE TABLE snps (id INTEGER PRIMARY KEY, accession STRING, chromosome STRING, position INTEGER);
 sqlite&gt; CREATE TABLE genotypes (id INTEGER PRIMARY KEY, individual_id INTEGER, snp_id INTEGER, genotype STRING, genotype_amb STRING);
-sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES ('individual_A','caucasian');
-sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES ('individual_B','caucasian');
-sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs12345','1',12345);
-sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs98765','1',98765);
-sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs28465','5',28465);
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,1,'A/A','A');
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,2,'A/G','R');
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,3,'G/T','K');
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,1,'A/C','M');
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,2,'G/G','G');
-sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,'G/G','G');
-</code></pre>
-
-<h4><a id="third-normal-form"></a>Third normal form</h4>
-
+sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES (&#39;individual_A&#39;,&#39;caucasian&#39;);
+sqlite&gt; INSERT INTO individuals (name, ethnicity) VALUES (&#39;individual_B&#39;,&#39;caucasian&#39;);
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES (&#39;rs12345&#39;,&#39;1&#39;,12345);
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES (&#39;rs98765&#39;,&#39;1&#39;,98765);
+sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES (&#39;rs28465&#39;,&#39;5&#39;,28465);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,1,&#39;A/A&#39;,&#39;A&#39;);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,2,&#39;A/G&#39;,&#39;R&#39;);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,3,&#39;G/T&#39;,&#39;K&#39;);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,1,&#39;A/C&#39;,&#39;M&#39;);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,2,&#39;G/G&#39;,&#39;G&#39;);
+sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,&#39;G/G&#39;,&#39;G&#39;);</code></pre>
+<h4 id="third-normal-form"><span class="header-section-number">2.1.1.3</span> <a id="third-normal-form"></a>Third normal form</h4>
 <p>In the third normal form, we try to <strong>eliminate unnecessary data</strong> from our database; data that could be <strong>calculated</strong> based on other things that are present. In our example table genotypes, the genotype and genotype_amb columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final <code>individuals</code> table would look like this:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> name </th>
-<th align="left"> ethnicity</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">ethnicity</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>The <code>snps</code> table:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> accession </th>
-<th align="left"> chromosome </th>
-<th align="left"> position</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">accession</th>
+<th align="left">chromosome</th>
+<th align="left">position</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> rs12345 </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">rs12345</td>
+<td align="left">1</td>
+<td align="left">12345</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> rs98765 </td>
-<td align="left"> 1 </td>
-<td align="left"> 98765</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">rs98765</td>
+<td align="left">1</td>
+<td align="left">98765</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> rs28465 </td>
-<td align="left"> 5 </td>
-<td align="left"> 28465</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">rs28465</td>
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>The <code>genotypes</code> table:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> individual_id </th>
-<th align="left"> snp_id </th>
-<th align="left"> genotype_amb</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">individual_id</th>
+<th align="left">snp_id</th>
+<th align="left">genotype_amb</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 1 </td>
-<td align="left"> 1 </td>
-<td align="left"> A</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">A</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> 1 </td>
-<td align="left"> 2 </td>
-<td align="left"> R</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">R</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> 1 </td>
-<td align="left"> 3 </td>
-<td align="left"> K</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">K</td>
 </tr>
-<tr>
-<td align="left">4 </td>
-<td align="left"> 2 </td>
-<td align="left"> 1 </td>
-<td align="left"> M</td>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">M</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> 2 </td>
-<td align="left"> 2 </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">6 </td>
-<td align="left"> 2 </td>
-<td align="left"> 3 </td>
-<td align="left"> G</td>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">G</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>To know what your database schema looks like, you can issue the <code>.schema</code> command in sqlite3. <code>.tables</code> gives you a list of the tables that are defined.</p>
-
-<h3><a id="best-practices"></a>Other best practices</h3>
-
+<h3 id="other-best-practices"><span class="header-section-number">2.1.2</span> <a id="best-practices"></a>Other best practices</h3>
 <p>There are some additional guidelines that you can use in creating your database schema, although different people use different guidelines. What I do:</p>
-
 <ul>
 <li><strong>No capitals</strong> in table or column names</li>
 <li>Every <strong>table name</strong> is <strong>plural</strong> (e.g. <code>genes</code>)</li>
 <li>The <strong>primary key</strong> of each table should be <code>id</code></li>
-<li>Any <strong>foreign key</strong> should be the <strong>singular of the table name, plus "_id"</strong>. So for example, a genotypes table can have a sample_id column which refers to the id column of the samples table.</li>
+<li>Any <strong>foreign key</strong> should be the **singular of the table name, plus &quot;_id&quot;**. So for example, a genotypes table can have a sample_id column which refers to the id column of the samples table.</li>
 </ul>
-
-
-<p>In some cases, I digress from the rule of "every table name is plural", especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called <code>sample2snp</code>.</p>
-
-<h2><a id="sql"></a>Structured Query Language</h2>
-
+<p>In some cases, I digress from the rule of &quot;every table name is plural&quot;, especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called <code>sample2snp</code>.</p>
+<h2 id="structured-query-language"><span class="header-section-number">2.2</span> <a id="sql"></a>Structured Query Language</h2>
 <p>Any interacting with data in RDBMS can happen through the Structured Query Language (SQL): create tables, insert data, search data, ... There are two subparts of SQL:</p>
-
 <p><strong><em>DDL - Data Definition Language:</em></strong></p>
-
 <pre><code>CREATE DATABASE test;
 CREATE TABLE snps (id INT PRIMARY KEY AUTOINCREMENT, accession STRING, chromosome STRING, position INTEGER);
 ALTER TABLE...
-DROP TABLE snps;
-</code></pre>
-
+DROP TABLE snps;</code></pre>
 <p>For examples: see above.</p>
-
 <p><strong><em>DML - Data Manipulation Language:</em></strong></p>
-
 <pre><code>SELECT
 UPDATE
 INSERT
-DELETE
-</code></pre>
-
+DELETE</code></pre>
 <p>Some additional functions are:</p>
-
 <pre><code>DISTINCT
 COUNT(*)
 COUNT(DISTINCT column)
 MAX(), MIN(), AVG()
 GROUP BY
-UNION, INTERSECT
-</code></pre>
-
+UNION, INTERSECT</code></pre>
 <p>We'll look closer at getting data into a database and then querying it, using these four SQL commands.</p>
-
-<h2><a id="getting-data-in"></a>Getting data in</h2>
-
-<h3><a id="insert-into"></a>INSERT INTO</h3>
-
+<h2 id="getting-data-in"><span class="header-section-number">2.3</span> <a id="getting-data-in"></a>Getting data in</h2>
+<h3 id="insert-into"><span class="header-section-number">2.3.1</span> <a id="insert-into"></a>INSERT INTO</h3>
 <p>There are several ways to load data into a database. The method used above is the most straightforward but inadequate if you have to load a large amount of data.</p>
-
 <p>It's basically:</p>
-
 <pre><code>sqlite&gt; INSERT INTO &lt;table_name&gt; (&lt;column_1&gt;, &lt;column_2&gt;, &lt;column_3&gt;)
-                          VALUES (&lt;value_1&gt;, &lt;value_2&gt;, &lt;value_3&gt;);
-</code></pre>
-
-<h3><a id="import"></a>Importing a datafile</h3>
-
+                          VALUES (&lt;value_1&gt;, &lt;value_2&gt;, &lt;value_3&gt;);</code></pre>
+<h3 id="importing-a-datafile"><span class="header-section-number">2.3.2</span> <a id="import"></a>Importing a datafile</h3>
 <p>But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a <strong>comma-separated file</strong> straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (e.g. called <code>data.csv</code>) that looks like this:</p>
-
 <pre><code>individual_C,african
 individual_D,african
-individual_C,asian
-</code></pre>
-
+individual_C,asian</code></pre>
 <p>SQLite contains a <code>.import</code> command to load this type of data. Syntax: <code>.import &lt;file&gt; &lt;table&gt;</code>. So you could issue:</p>
-
-<pre><code>sqlite&gt; .separator ','
-sqlite&gt; .import data.csv individuals
-</code></pre>
-
+<pre><code>sqlite&gt; .separator &#39;,&#39;
+sqlite&gt; .import data.csv individuals</code></pre>
 <p>Aargh... We get an <strong>error</strong>!</p>
-
-<pre><code>Error: data.tsv line 1: expected 3 columns of data but found 2
-</code></pre>
-
+<pre><code>Error: data.tsv line 1: expected 3 columns of data but found 2</code></pre>
 <p>This is because the table contains an <strong>ID column</strong> that is used as primary key and that increments automatically. Unfortunately, SQLite cannot work around this issue automatically. One option is to add the new IDs to the text file and import that new file. But we don't want that, because it screws with some internal counters (SQLite keeps a counter whenever it autoincrements a column, but this counter is not adjusted if you hardwire the ID). A possible <strong>workaround</strong> is to create a temporary table (e.g. <code>individuals_tmp</code>) without the id column, import the data in that table, and then copy the data from that temporary table to the real individuals.</p>
-
 <pre><code>sqlite&gt; .schema individuals
 sqlite&gt; CREATE TABLE individuals_tmp (name STRING, ethnicity STRING);
-sqlite&gt; .separator ','
+sqlite&gt; .separator &#39;,&#39;
 sqlite&gt; .import data.csv individuals_tmp
 sqlite&gt; INSERT INTO individuals (name, ethnicity) SELECT * FROM individuals_tmp;
-sqlite&gt; DROP TABLE individuals_tmp;
-</code></pre>
-
+sqlite&gt; DROP TABLE individuals_tmp;</code></pre>
 <p>Your <code>individuals</code> table should now look like this (using <code>SELECT * FROM individuals;</code>):</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> name </th>
-<th align="left"> ethnicity</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">ethnicity</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> individual_A </td>
-<td align="left"> caucasian</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> individual_B </td>
-<td align="left"> caucasian</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
 </tr>
-<tr>
-<td align="left">3 </td>
-<td align="left"> individual_C </td>
-<td align="left"> african</td>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">individual_C</td>
+<td align="left">african</td>
 </tr>
-<tr>
-<td align="left">4 </td>
-<td align="left"> individual_D </td>
-<td align="left"> african</td>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">individual_D</td>
+<td align="left">african</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> individual_E </td>
-<td align="left"> asian</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">individual_E</td>
+<td align="left">asian</td>
 </tr>
 </tbody>
 </table>
-
-
-<h3><a id="scripted-import"></a>Using scripting</h3>
-
+<h3 id="using-scripting"><span class="header-section-number">2.3.3</span> <a id="scripted-import"></a>Using scripting</h3>
 <p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead…) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
-
-<h2><a id="getting-data-out"></a>Getting data out</h2>
-
-<h3><a id="single-tables"></a>Single tables</h3>
-
+<h2 id="getting-data-out"><span class="header-section-number">2.4</span> <a id="getting-data-out"></a>Getting data out</h2>
+<h3 id="single-tables"><span class="header-section-number">2.4.1</span> <a id="single-tables"></a>Single tables</h3>
 <p>It is very simple to query a single table. The <strong>basic syntax</strong> is:</p>
-
-<pre><code>SELECT &lt;column_name1, column_name2&gt; FROM &lt;table_name&gt; WHERE &lt;conditions&gt;;
-</code></pre>
-
-<p>If you want to see <strong>all columns</strong>, you can use <strong>"*"</strong> instead of a list of column names, and you can leave out the WHERE clause. The <strong>simplest query</strong> is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>. So the <code>&lt;column_name1, column_name2&gt;</code> defines slices the table vertically while the WHERE clause slices it horizontally.</p>
-
+<pre><code>SELECT &lt;column_name1, column_name2&gt; FROM &lt;table_name&gt; WHERE &lt;conditions&gt;;</code></pre>
+<p>If you want to see <strong>all columns</strong>, you can use **&quot;*&quot;<strong> instead of a list of column names, and you can leave out the WHERE clause. The </strong>simplest query** is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>. So the <code>&lt;column_name1, column_name2&gt;</code> defines slices the table vertically while the WHERE clause slices it horizontally.</p>
 <p>Data can be filtered using a <code>WHERE</code> clause. For example:</p>
-
-<pre><code>SELECT * FROM individuals WHERE ethnicity = 'african';
-SELECT * FROM individuals WHERE ethnicity = 'african' OR ethnicity = 'caucasian';
-SELECT * FROM individuals WHERE ethnicity IN ('african', 'caucasian');
-SELECT * FROM individuals WHERE ethnicity != 'asian';
-</code></pre>
-
+<pre><code>SELECT * FROM individuals WHERE ethnicity = &#39;african&#39;;
+SELECT * FROM individuals WHERE ethnicity = &#39;african&#39; OR ethnicity = &#39;caucasian&#39;;
+SELECT * FROM individuals WHERE ethnicity IN (&#39;african&#39;, &#39;caucasian&#39;);
+SELECT * FROM individuals WHERE ethnicity != &#39;asian&#39;;</code></pre>
 <p>You often just want to see a <strong>small subset of data</strong> just to make sure that you're looking at the right thing. In that case: add a <code>LIMIT</code> clause to the end of your query. Please <em>always</em> do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.</p>
-
 <pre><code>SELECT * FROM individuals LIMIT 5;
-SELECT * FROM individuals WHERE ethnicity = 'caucasian' LIMIT 1;
-</code></pre>
-
+SELECT * FROM individuals WHERE ethnicity = &#39;caucasian&#39; LIMIT 1;</code></pre>
 <p>If you just want know the <strong>number of records</strong> that would match your query, use <code>COUNT(*)</code>:</p>
-
-<pre><code>SELECT COUNT(*) FROM individuals WHERE ethnicity = 'african';
-</code></pre>
-
+<pre><code>SELECT COUNT(*) FROM individuals WHERE ethnicity = &#39;african&#39;;</code></pre>
 <p>Using the <code>GROUP BY</code> clause you can <strong>aggregate</strong> data. For example:</p>
-
-<pre><code>SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;
-</code></pre>
-
-<h3><a id="combining-tables"></a>Combining tables</h3>
-
+<pre><code>SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;</code></pre>
+<h3 id="combining-tables"><span class="header-section-number">2.4.2</span> <a id="combining-tables"></a>Combining tables</h3>
 <p>In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:</p>
-
-<pre><code>SELECT snp_id, genotype_amb FROM genotypes;
-</code></pre>
-
+<pre><code>SELECT snp_id, genotype_amb FROM genotypes;</code></pre>
 <p>This isn't very informative, because we get the uninformative numbers for SNPs instead of SNP accession numbers. To run a query across tables, we have to call both tables in the FROM clause:</p>
-
-<pre><code>SELECT snps.accession, genotypes.genotype_amb FROM snps, genotypes WHERE snps.id = genotypes.snp_id;
-</code></pre>
-
+<pre><code>SELECT snps.accession, genotypes.genotype_amb FROM snps, genotypes WHERE snps.id = genotypes.snp_id;</code></pre>
 <p>What happens here?</p>
-
 <ul>
 <li>Both the snps and genotypes tables are referenced in the FROM clause.</li>
 <li>In the SELECT clause, we tell the query what columns to return. We <strong>prepend the column names with the table name</strong>, to know what column we actually mean (snps.id is a different column from individuals.id).</li>
 <li><strong>In the WHERE clause, we actually provide the link between the 2 tables</strong>: the value for snp_id in the genotypes table should correspond with the id column in the snps table. What do you think would happen if we wouldn't provide this WHERE clause? How many records would be returned?</li>
 </ul>
-
-
 <p>Having to type the table names in front of the column names can become tiresome. We can however create <strong>aliases</strong> like this:</p>
-
-<pre><code>SELECT s.accession, g.genotype_amb FROM snps s, genotypes g WHERE s.id = g.snp_id;
-</code></pre>
-
+<pre><code>SELECT s.accession, g.genotype_amb FROM snps s, genotypes g WHERE s.id = g.snp_id;</code></pre>
 <p>Now how do we get a list of individuals with their genotypes for all SNPs?:</p>
-
 <pre><code>SELECT i.name, s.accession, g.genotype_amb
 FROM individuals i, snps s, genotypes g
 WHERE i.id = g.individual_id
-AND s.id = g.snp_id;
-</code></pre>
-
-<h3><a id="join"></a>JOIN</h3>
-
+AND s.id = g.snp_id;</code></pre>
+<h3 id="join"><span class="header-section-number">2.4.3</span> <a id="join"></a>JOIN</h3>
 <p>Sometimes, though, we have to join tables in a different way. Suppose that our snps table contains SNPs that are nowhere mentioned in the genotypes table, but we still want to have them mentioned in our output:</p>
-
-<pre><code>sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES ('rs11223','2',11223);
-</code></pre>
-
+<pre><code>sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES (&#39;rs11223&#39;,&#39;2&#39;,11223);</code></pre>
 <p>If we run the following query:</p>
-
 <pre><code>sqlite&gt; SELECT s.accession, s.chromosome, s.position, g.genotype_amb
    ...&gt; FROM snps s, genotypes g
    ...&gt; WHERE s.id = g.snp_id
-   ...&gt; ORDER BY s.accession, g.genotype_amb;
-</code></pre>
-
+   ...&gt; ORDER BY s.accession, g.genotype_amb;</code></pre>
 <p>We get the following output:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">chromosome </th>
-<th align="left"> position </th>
-<th align="left"> accession </th>
-<th align="left"> genotype_amb</th>
+<tr class="header">
+<th align="left">chromosome</th>
+<th align="left">position</th>
+<th align="left">accession</th>
+<th align="left">genotype_amb</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 12345 </td>
-<td align="left"> rs12345 </td>
-<td align="left"> A</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">rs12345</td>
+<td align="left">A</td>
 </tr>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 12345 </td>
-<td align="left"> rs12345 </td>
-<td align="left"> M</td>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">rs12345</td>
+<td align="left">M</td>
 </tr>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 98765 </td>
-<td align="left"> rs98765 </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">rs98765</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 98765 </td>
-<td align="left"> rs98765 </td>
-<td align="left"> R</td>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">rs98765</td>
+<td align="left">R</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> 28465 </td>
-<td align="left"> rs28465 </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">28465</td>
+<td align="left">rs28465</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> 28465 </td>
-<td align="left"> rs28465 </td>
-<td align="left"> K</td>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">28465</td>
+<td align="left">rs28465</td>
+<td align="left">K</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>But we actually want to have rs11223 in the list as well. Using this approach, we can't because of the <code>WHERE s.id = g.snp_id</code> clause. The solution to this is to use an <strong>explicit join</strong>. To make things complicated, there are several types: inner and outer joins. In principle, an inner join gives the result of the intersect between two tables, while an outer join gives the results of the union. What we've been doing up to now is look at the intersection, so the approach we used above is equivalent to an inner join:</p>
-
 <pre><code>sqlite&gt; SELECT s.accession, g.genotype_amb
    ...&gt; FROM snps s INNER JOIN genotypes g ON s.id = g.snp_id
-   ...&gt; ORDER BY s.accession, g.genotype_amb;
-</code></pre>
-
+   ...&gt; ORDER BY s.accession, g.genotype_amb;</code></pre>
 <p>gives:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">accession </th>
-<th align="left"> genotype_amb</th>
+<tr class="header">
+<th align="left">accession</th>
+<th align="left">genotype_amb</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">rs12345 </td>
-<td align="left"> A</td>
+<tr class="odd">
+<td align="left">rs12345</td>
+<td align="left">A</td>
 </tr>
-<tr>
-<td align="left">rs12345 </td>
-<td align="left"> M</td>
+<tr class="even">
+<td align="left">rs12345</td>
+<td align="left">M</td>
 </tr>
-<tr>
-<td align="left">rs28465 </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">rs28465</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">rs28465 </td>
-<td align="left"> K</td>
+<tr class="even">
+<td align="left">rs28465</td>
+<td align="left">K</td>
 </tr>
-<tr>
-<td align="left">rs98765 </td>
-<td align="left"> G</td>
+<tr class="odd">
+<td align="left">rs98765</td>
+<td align="left">G</td>
 </tr>
-<tr>
-<td align="left">rs98765 </td>
-<td align="left"> R</td>
+<tr class="even">
+<td align="left">rs98765</td>
+<td align="left">R</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>A <strong>left outer join</strong> returns all records from the left table, and will include any matches from the right table:</p>
-
 <pre><code>sqlite&gt; SELECT s.accession, g.genotype_amb
    ...&gt; FROM snps s LEFT OUTER JOIN genotypes g ON s.id = g.snp_id
-   ...&gt; ORDER BY s.accession, g.genotype_amb;
-</code></pre>
-
+   ...&gt; ORDER BY s.accession, g.genotype_amb;</code></pre>
 <p>gives:</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">accession </th>
-<th align="left"> genotype_amb</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">rs11223 </td>
-<td></td>
-</tr>
-<tr>
-<td align="left">rs12345 </td>
-<td align="left"> A</td>
-</tr>
-<tr>
-<td align="left">rs12345 </td>
-<td align="left"> M</td>
-</tr>
-<tr>
-<td align="left">rs28465 </td>
-<td align="left"> G</td>
-</tr>
-<tr>
-<td align="left">rs28465 </td>
-<td align="left"> K</td>
-</tr>
-<tr>
-<td align="left">rs98765 </td>
-<td align="left"> G</td>
-</tr>
-<tr>
-<td align="left">rs98765 </td>
-<td align="left"> R</td>
-</tr>
-</tbody>
-</table>
-
-
+<p>accession | genotype_amb :---------|:------------ rs11223 |<br />rs12345 | A rs12345 | M rs28465 | G rs28465 | K rs98765 | G rs98765 | R</p>
 <p>(Notice the extra line for rs11223!)</p>
-
 <p>A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.</p>
-
-<h2><a id="additional-functions"></a>Additional functions</h2>
-
-<h3><a id="null"></a>NULL</h3>
-
+<h2 id="additional-functions"><span class="header-section-number">2.5</span> <a id="additional-functions"></a>Additional functions</h2>
+<h3 id="null"><span class="header-section-number">2.5.1</span> <a id="null"></a>NULL</h3>
 <p>What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?</p>
-
-<table>
-<thead>
-<tr>
-<th align="left">snp-id </th>
-<th align="left"> gene</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">rs1234 </td>
-<td align="left"> gene_A</td>
-</tr>
-<tr>
-<td align="left">rs2345 </td>
-<td align="left"> gene_A</td>
-</tr>
-<tr>
-<td align="left">rs3456 </td>
-<td align="left"> gene_B</td>
-</tr>
-<tr>
-<td align="left">rs4567 </td>
-<td></td>
-</tr>
-<tr>
-<td align="left">rs6789 </td>
-<td align="left"> gene_C</td>
-</tr>
-<tr>
-<td align="left">rs7890 </td>
-<td align="left"> gene_C</td>
-</tr>
-</tbody>
-</table>
-
-
-<p>We cannot <code>SELECT * FROM snps WHERE gene = "";</code> because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue <code>SELECT * FROM snps WHERE gene IS NULL;</code> or to get the rest <code>SELECT * FROM snps WHERE GENE IS NOT NULL;</code>. Note that it is <code>IS NULL</code> and <strong>not</strong> <code>= NULL</code>...</p>
-
-<h3><a id="and-or-in"></a>AND, OR, IN</h3>
-
+<p>snp-id | gene :------|:---- rs1234 | gene_A rs2345 | gene_A rs3456 | gene_B rs4567 | rs6789 | gene_C rs7890 | gene_C</p>
+<p>We cannot <code>SELECT * FROM snps WHERE gene = &quot;&quot;;</code> because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue <code>SELECT * FROM snps WHERE gene IS NULL;</code> or to get the rest <code>SELECT * FROM snps WHERE GENE IS NOT NULL;</code>. Note that it is <code>IS NULL</code> and <strong>not</strong> <code>= NULL</code>...</p>
+<h3 id="and-or-in"><span class="header-section-number">2.5.2</span> <a id="and-or-in"></a>AND, OR, IN</h3>
 <p>Your queries might need to <strong>combine different conditions</strong>:</p>
-
-<pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' AND position &lt; 40000;
-sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' OR chromosome = '5';
-sqlite&gt; SELECT * FROM snps WHERE chromosome IN ('1','5');
-</code></pre>
-
-<h3><a id="distinct"></a>DISTINCT</h3>
-
+<pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; AND position &lt; 40000;
+sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; OR chromosome = &#39;5&#39;;
+sqlite&gt; SELECT * FROM snps WHERE chromosome IN (&#39;1&#39;,&#39;5&#39;);</code></pre>
+<h3 id="distinct"><span class="header-section-number">2.5.3</span> <a id="distinct"></a>DISTINCT</h3>
 <p>Whenever you want the <strong>unique values</strong> in a column: use DISTINCT in the SELECT clause:</p>
-
 <pre><code>sqlite&gt; SELECT genotype_amb FROM genotypes;
 genotype_amb
 A
@@ -1326,323 +753,226 @@ A
 G
 K
 M
-R
-</code></pre>
-
+R</code></pre>
 <p>DISTINCT automatically sorts the results.</p>
-
-<h3><a id="order-by"></a>ORDER BY</h3>
-
+<h3 id="order-by"><span class="header-section-number">2.5.4</span> <a id="order-by"></a>ORDER BY</h3>
 <pre><code>sqlite&gt; SELECT * FROM snps ORDER BY chromosome;
-sqlite&gt; SELECT * FROM snps ORDER BY accession DESC;
-</code></pre>
-
-<h3><a id="count"></a>COUNT</h3>
-
+sqlite&gt; SELECT * FROM snps ORDER BY accession DESC;</code></pre>
+<h3 id="count"><span class="header-section-number">2.5.5</span> <a id="count"></a>COUNT</h3>
 <p>For when you want to count things:</p>
-
-<pre><code>sqlite&gt; SELECT COUNT(*) FROM genotypes WHERE genotype_amb = 'G';
-</code></pre>
-
-<h3><a id="max-min-avg"></a>MAX(), MIN(), AVG()</h3>
-
+<pre><code>sqlite&gt; SELECT COUNT(*) FROM genotypes WHERE genotype_amb = &#39;G&#39;;</code></pre>
+<h3 id="max-min-avg"><span class="header-section-number">2.5.6</span> <a id="max-min-avg"></a>MAX(), MIN(), AVG()</h3>
 <p>...act as you would expect (only works with numbers, obviously):</p>
-
-<pre><code>sqlite&gt; SELECT MAX(position) FROM snps;
-</code></pre>
-
-<h3><a id="group-by"></a>GROUP BY</h3>
-
+<pre><code>sqlite&gt; SELECT MAX(position) FROM snps;</code></pre>
+<h3 id="group-by"><span class="header-section-number">2.5.7</span> <a id="group-by"></a>GROUP BY</h3>
 <p>GROUP BY can be very useful in that it first <strong>aggregates dat</strong>a. It is often used together with COUNT, MAX, MIN or AVG:</p>
-
 <pre><code>sqlite&gt; SELECT genotype_amb, COUNT(*) FROM genotypes GROUP BY genotype_amb;
 sqlite&gt; SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c 
 DESC;
-sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER BY chromosome;
-</code></pre>
-
+sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER BY chromosome;</code></pre>
 <table>
 <thead>
-<tr>
-<th align="left">genotype_amb </th>
-<th align="left"> c</th>
+<tr class="header">
+<th align="left">genotype_amb</th>
+<th align="left">c</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">G </td>
-<td align="left"> 2</td>
+<tr class="odd">
+<td align="left">G</td>
+<td align="left">2</td>
 </tr>
-<tr>
-<td align="left">A </td>
-<td align="left"> 1</td>
+<tr class="even">
+<td align="left">A</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td align="left">K </td>
-<td align="left"> 1</td>
+<tr class="odd">
+<td align="left">K</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td align="left">M </td>
-<td align="left"> 1</td>
+<tr class="even">
+<td align="left">M</td>
+<td align="left">1</td>
 </tr>
-<tr>
-<td align="left">R </td>
-<td align="left"> 1</td>
+<tr class="odd">
+<td align="left">R</td>
+<td align="left">1</td>
 </tr>
 </tbody>
 </table>
-
-
 <table>
 <thead>
-<tr>
-<th align="left">chromosome </th>
-<th align="left"> MAX(position)</th>
+<tr class="header">
+<th align="left">chromosome</th>
+<th align="left">MAX(position)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> 98765</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">98765</td>
 </tr>
-<tr>
-<td align="left">2 </td>
-<td align="left"> 11223</td>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">11223</td>
 </tr>
-<tr>
-<td align="left">5 </td>
-<td align="left"> 28465</td>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">28465</td>
 </tr>
 </tbody>
 </table>
-
-
-<h3><a id="union-intersect"></a>UNION, INTERSECT</h3>
-
+<h3 id="union-intersect"><span class="header-section-number">2.5.8</span> <a id="union-intersect"></a>UNION, INTERSECT</h3>
 <p>It is sometimes hard to get the exact rows back that you need using the WHERE clause. In such cases, it might be possible to construct the output based on taking the <strong>union or intersection</strong> of two or more different queries:</p>
-
-<pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = '1';
+<pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39;;
 sqlite&gt; SELECT * FROM snps WHERE position &lt; 40000;
-sqlite&gt; SELECT * FROM snps WHERE chromosome = '1' INTERSECT SELECT * FROM snps WHERE position &lt; 40000;
-</code></pre>
-
+sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; INTERSECT SELECT * FROM snps WHERE position &lt; 40000;</code></pre>
 <table>
 <thead>
-<tr>
-<th align="left">id </th>
-<th align="left"> accession </th>
-<th align="left"> chromosome </th>
-<th align="left"> position</th>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">accession</th>
+<th align="left">chromosome</th>
+<th align="left">position</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1 </td>
-<td align="left"> rs12345 </td>
-<td align="left"> 1 </td>
-<td align="left"> 12345</td>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">rs12345</td>
+<td align="left">1</td>
+<td align="left">12345</td>
 </tr>
 </tbody>
 </table>
-
-
-<h3><a id="like"></a>LIKE</h3>
-
+<h3 id="like"><span class="header-section-number">2.5.9</span> <a id="like"></a>LIKE</h3>
 <p>Sometimes you want to make fuzzy matches. What if you're not sure if the ethnicity has a capital or not?</p>
-
-<pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity = 'African';
-</code></pre>
-
+<pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity = &#39;African&#39;;</code></pre>
 <p>returns no results...</p>
-
-<pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity LIKE '%frican';
-</code></pre>
-
-<h3><a id="limit"></a>LIMIT</h3>
-
+<pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity LIKE &#39;%frican&#39;;</code></pre>
+<h3 id="limit"><span class="header-section-number">2.5.10</span> <a id="limit"></a>LIMIT</h3>
 <p>If you only want to get the first 10 results back (e.g. to find out if your complicated query does what it should do without running the whole actual query), use LIMIT:</p>
-
-<pre><code>sqlite&gt;&gt; SELECT * FROM snps LIMIT 2;
-</code></pre>
-
-<h3><a id="subqueries"></a>Subqueries</h3>
-
+<pre><code>sqlite&gt;&gt; SELECT * FROM snps LIMIT 2;</code></pre>
+<h3 id="subqueries"><span class="header-section-number">2.5.11</span> <a id="subqueries"></a>Subqueries</h3>
 <p>As we mentioned in the beginning, the general setup of a SELECT is:</p>
-
 <pre><code>SELECT &lt;column_names&gt;
 FROM &lt;table&gt;
-WHERE &lt;condition&gt;;
-</code></pre>
-
+WHERE &lt;condition&gt;;</code></pre>
 <p>But as you've seen in the examples above, the <strong>output from any SQL query is itself basically a table</strong>. So we can actually <strong>use that output table to run another SELECT</strong>. For example:</p>
-
 <pre><code>sqlite&gt; SELECT *
    ...&gt; FROM (
    ...&gt;        SELECT *
    ...&gt;        FROM snps
-   ...&gt;        WHERE chromosome IN ('1','5'))
-   ...&gt; WHERE position &lt; 40000;
-</code></pre>
-
+   ...&gt;        WHERE chromosome IN (&#39;1&#39;,&#39;5&#39;))
+   ...&gt; WHERE position &lt; 40000;</code></pre>
 <p>Of course, you can use UNION and INTERSECT in the subquery as well...</p>
-
 <p>Another example:</p>
-
 <pre><code>sqlite&gt; SELECT COUNT(*)
    ...&gt; FROM (
    ...&gt;        SELECT DISTINCT genotype_amb
-   ...&gt;        FROM genotypes);
-</code></pre>
-
-<h2><a id="ensembl"></a>Public bioinformatics databases</h2>
-
+   ...&gt;        FROM genotypes);</code></pre>
+<h2 id="public-bioinformatics-databases"><span class="header-section-number">2.6</span> <a id="ensembl"></a>Public bioinformatics databases</h2>
 <p>Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.</p>
-
 <p>To access the last release of human from Ensembl: <code>mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37</code>. To get an overview of the tables that we can query: <code>show tables</code>.</p>
-
-<h2><a id="drawbacks"></a>Drawbacks of relational databases</h2>
-
+<h2 id="drawbacks-of-relational-databases"><span class="header-section-number">2.7</span> <a id="drawbacks"></a>Drawbacks of relational databases</h2>
 <p>Relational databases are great. They can be a big help in storing and organizing your data. But they are not the ideal solution in all situations.</p>
-
-<h3><a id="scalability"></a>Scalability</h3>
-
+<h3 id="scalability"><span class="header-section-number">2.7.1</span> <a id="scalability"></a>Scalability</h3>
 <p>Relational databases are only scalable in a limited way. The fact that you try to normalize your data (see <a href="#normal-forms">here</a>) means that your data is distributed over different tables. Any query on that data often requires extensive joins. This is OK, until you have tables with millions of rows. A join can in that case a <em>very</em> long time to run.</p>
-
 <p>[Although outside of the scope of this lecture.] One solution sometimes used is to go for a star-schema rather than a fully normalized schema. Or using a NoSQL database management system that is horizontally scalable (document-oriented, column-oriented or graph databases).</p>
-
-<h3><a id="modeling"></a>Modeling</h3>
-
+<h3 id="modeling"><span class="header-section-number">2.7.2</span> <a id="modeling"></a>Modeling</h3>
 <p>Some types of information are difficult to model when using a relational paradigm. In a relational database, different records can be linked across tables using foreign keys. If you're however really interested in the relations themselved (<em>e.g.</em> social graphs, protein-protein-interaction, …) you are much better of to use a real graph database (<em>e.g.</em> neo4j) instead of a relational database. In a graph database finding all neighbours-of-neighbours in a graph of 50 members (basically) takes as long as in a graph with 50 million members.</p>
-
-<h2><a id="perl-dbi"></a>Perl-DBI (for future reference)</h2>
-
+<h2 id="perl-dbi-for-future-reference"><span class="header-section-number">2.8</span> <a id="perl-dbi"></a>Perl-DBI (for future reference)</h2>
 <p>Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (e.g. Class::DBI, DBIx::Class, and Rose::DB::Object). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO DBI.</p>
-
 <p>Why would you want to access a database from within Perl? SQL is already a very strong language, so why add the difficulty of another layer on top of that? Actually, SQL can do a lot, but not everything. It has no support for control flow (while, foreach, ...; except in PL/SQL) and conditional branches (if, else). In addition, most programs that make use of a database are written in some other language like Perl. From Perl the programmer does the interaction with the user, with files, and so on. Perl also provides the program logic. And the interaction with the database is typically to execute some database commands, such as fetching data from the database and processing it using Perl's capabilities. The logic of the program may depend on the data found in the database, but it is Perl, not SQL, that provides most of this logic.</p>
-
-<h3>DBI and DBD</h3>
-
+<h3 id="dbi-and-dbd"><span class="header-section-number">2.8.1</span> DBI and DBD</h3>
 <p>In Perl, a set of modules have been written that allow interaction with relational databases. DataBase Independent (DBI) is a module that handles most of the interaction from the program code; DataBase Dependent (or DataBase Driver; DBD) is a set of modules, different for each particular DBMS, that handles actually communicating with the DBMS.</p>
-
 <p>To use a MySQL database from Perl you need first to have MySQL installed and properly configured. This is not a Perl job, but a database administration job: you have to get MySQL and install it on your system and set up the appropriate user accounts and permissions.</p>
-
 <p>Then you have to install the Perl DBD driver for MySQL, as well as the Perl DBI module. The combination of MySQL (the DBMS), DBD (the particular driver for your DBMS), and DBI (the Perl interface to the DBI and DBMS), is what gives you the actual connection from Perl to the database, and enables you to send SQL statements to the database and retrieve results.</p>
-
-<h4>Installing DBI and DBD</h4>
-
+<h4 id="installing-dbi-and-dbd"><span class="header-section-number">2.8.1.1</span> Installing DBI and DBD</h4>
 <pre><code>perl -MCPAN -e shell
 cpan&gt; install DBI
-cpan&gt; install DBD::SQLite
-</code></pre>
-
-<h3>Connecting to a database</h3>
-
+cpan&gt; install DBD::SQLite</code></pre>
+<h3 id="connecting-to-a-database"><span class="header-section-number">2.8.2</span> Connecting to a database</h3>
 <p>First thing we need is a database handle that we can use to pipe everything through:</p>
-
 <pre><code>#!/usr/bin/perl
 use strict;
 use warnings;
 use DBI;
 
-my $dbh = DBI-&gt;connect("dbi:SQLite:dbname=test.sqlite",     #DataSource Name DSN
-                       "",                                  #username
-                       "",                                  #password
+my $dbh = DBI-&gt;connect(&quot;dbi:SQLite:dbname=test.sqlite&quot;,     #DataSource Name DSN
+                       &quot;&quot;,                                  #username
+                       &quot;&quot;,                                  #password
                        {AutoCommit =&gt; 1, RaiseError =&gt; 1})  #options
-          or die $DBI::errstr;
-</code></pre>
-
-<h3>Do something</h3>
-
+          or die $DBI::errstr;</code></pre>
+<h3 id="do-something"><span class="header-section-number">2.8.3</span> Do something</h3>
 <p>The simplest way to do something in a database from Perl is to use do. It lets you do anything to the database that you could do in plain SQL. It doesn't really interact with you Perl program if you're selecting records, though:</p>
-
 <pre><code>$dbh-&gt;do(&lt;&lt;EOSQL)
   INSERT INTO snps (accession, chromosome, position)
-  VALUES ('rs99887', '7', 99887);
-EOSQL
-</code></pre>
-
-<h3>Slurp data from database</h3>
-
+  VALUES (&#39;rs99887&#39;, &#39;7&#39;, 99887);
+EOSQL</code></pre>
+<h3 id="slurp-data-from-database"><span class="header-section-number">2.8.4</span> Slurp data from database</h3>
 <p>In getting data from a database, we can run a query and retrieve all data in one large array using select_arrayref:</p>
-
-<pre><code>my @snps = @{$dbh-&gt;selectall_arrayref(&lt;&lt;'EOSQL')};
+<pre><code>my @snps = @{$dbh-&gt;selectall_arrayref(&lt;&lt;&#39;EOSQL&#39;)};
   SELECT accession, chromosome, position
   FROM snps
-  WHERE chromosome = '1'
+  WHERE chromosome = &#39;1&#39;
 EOSQL
 
 for my $snp (@snps) {
   my ($acc, $chr, $pos) = @$snp;
   #do something with this data...
-}
-</code></pre>
-
-<p><code>@snps</code> holds all data that matches the query, so will be large. Every element in @snps is an array reference.</p>
-
-<h3>Getting data one at a time</h3>
-
+}</code></pre>
+<p><code>@snps</code> holds all data that matches the query, so will be large. Every element in <span class="citation">@snps</span> is an array reference.</p>
+<h3 id="getting-data-one-at-a-time"><span class="header-section-number">2.8.5</span> Getting data one at a time</h3>
 <p>But if you except to get a large dataset back, loading everything at once into memory is dangerous. In that case (or anytime, actually) you can use one-at-a-time selects:</p>
-
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
   SELECT accession, chromosome, position
   FROM snps
-  WHERE chromosome = '1';
+  WHERE chromosome = &#39;1&#39;;
 EOSQL
 
 $sth-&gt;execute();
 while (my $snp = $sth-&gt;fetchrow_arrayref) {
   my ($acc, $chr, $pos) = @$snp;
   #do something with this data...
-}
-</code></pre>
-
+}</code></pre>
 <p>This approach works in 3 steps: first you prepare the dataset by specifying the query, then you execute it, and finally you call the fetchrow_array method until it returns undef.</p>
-
-<h3>Using parameters</h3>
-
+<h3 id="using-parameters"><span class="header-section-number">2.8.6</span> Using parameters</h3>
 <p>In the example above, we hard-coded that the query should be for chromosome 1. What if you want to make that a variable? What if we don't know yet at that point which chromosome to look for? To solve this problem, we can use placeholders:</p>
-
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
   SELECT accession, chromosome, position
   FROM snps
   WHERE chromosome = ?;
 EOSQL
 
-my @numbers = ('1','5');
+my @numbers = (&#39;1&#39;,&#39;5&#39;);
 foreach my $c (@numbers) {
-  print "Now querying for chromosome ", $c, "\n";
+  print &quot;Now querying for chromosome &quot;, $c, &quot;\n&quot;;
   $sth-&gt;execute($c);
   while (my $snp = $sth-&gt;fetchrow_arrayref) {
     my ($acc, $chr, $pos) = @$snp;
-    print $acc, "-", $chr, "-", $pos, "\n";
+    print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
   }
-}
-</code></pre>
-
+}</code></pre>
 <p>In case you want to have two or more variables, just define them in the order that they appear in the SQL query:</p>
-
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
   SELECT accession, chromosome, position
   FROM snps
   WHERE chromosome = ?
   AND position &lt; ?;
 EOSQL
 
-$sth-&gt;execute('1', 40000);
+$sth-&gt;execute(&#39;1&#39;, 40000);
 while (my $snp = $sth-&gt;fetchrow_arrayref) {
   my ($acc, $chr, $pos) = @$snp;
-  print $acc, "-", $chr, "-", $pos, "\n";
-}
-</code></pre>
-
-<h3>Binding variables</h3>
-
+  print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
+}</code></pre>
+<h3 id="binding-variables"><span class="header-section-number">2.8.7</span> Binding variables</h3>
 <p>Another method for accessing the results from a query, is to bind columns to a variable, and then use fetch:</p>
-
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;'EOSQL');
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
   SELECT accession, chromosome, position
   FROM snps
-  WHERE chromosome = '1';
+  WHERE chromosome = &#39;1&#39;;
 EOSQL
 
 $sth-&gt;execute();
@@ -1650,29 +980,18 @@ my ($acc, $chr, $pos);
 $sth-&gt;bind_columns(\$acc, \$chr, \$pos);
 while ($sth-&gt;fetch) {
   #do something with acc, chr and pos
-}
-</code></pre>
-
-<h2><a id="exercises"></a>Exercises</h2>
-
-<h3>Database schema normalization</h3>
-
+}</code></pre>
+<h2 id="exercises"><span class="header-section-number">2.9</span> <a id="exercises"></a>Exercises</h2>
+<h3 id="database-schema-normalization"><span class="header-section-number">2.9.1</span> Database schema normalization</h3>
 <p>We'll use two files on the server that were used in previous lectures as well:</p>
-
 <ul>
 <li>Database-Intro/AffyAnnotation.clean</li>
 <li>Database-Intro/RMAvalues0.05.txt</li>
 </ul>
-
-
 <p>The RMAvalues0.05.txt file contains expression values for different individuals for a huge number of probesets. The AffyAnnotation.cleaned file has annotations for these probesets. We need to create a (normalized) database schema.</p>
-
 <p>In groups of 2, please draw a database scheme which we can discuss afterwards.</p>
-
-<h3>When not to use RDBMS</h3>
-
-<p>Suppose you want to model a social graph. People have names, and know other people. Every "know" is reciprocal (so if I know you then you know me). The data might look like this:</p>
-
+<h3 id="when-not-to-use-rdbms"><span class="header-section-number">2.9.2</span> When not to use RDBMS</h3>
+<p>Suppose you want to model a social graph. People have names, and know other people. Every &quot;know&quot; is reciprocal (so if I know you then you know me). The data might look like this:</p>
 <pre><code>Tim knows Terry
 Tom knows Terry
 Terry knows Gerry
@@ -1680,78 +999,65 @@ Gerry knows Rik
 Gerry knows James
 James knows John
 Fred knows James
-Frits knows Fred
-</code></pre>
-
+Frits knows Fred</code></pre>
 <p>In table format:</p>
-
 <table>
 <thead>
-<tr>
-<th align="left">knower </th>
-<th align="left"> knowee</th>
+<tr class="header">
+<th align="left">knower</th>
+<th align="left">knowee</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">Tim </td>
-<td align="left"> Terry</td>
+<tr class="odd">
+<td align="left">Tim</td>
+<td align="left">Terry</td>
 </tr>
-<tr>
-<td align="left">Tom </td>
-<td align="left"> Terry</td>
+<tr class="even">
+<td align="left">Tom</td>
+<td align="left">Terry</td>
 </tr>
-<tr>
-<td align="left">Terry </td>
-<td align="left"> Gerry</td>
+<tr class="odd">
+<td align="left">Terry</td>
+<td align="left">Gerry</td>
 </tr>
-<tr>
-<td align="left">Gerry </td>
-<td align="left"> Rik</td>
+<tr class="even">
+<td align="left">Gerry</td>
+<td align="left">Rik</td>
 </tr>
-<tr>
-<td align="left">Gerry </td>
-<td align="left"> James</td>
+<tr class="odd">
+<td align="left">Gerry</td>
+<td align="left">James</td>
 </tr>
-<tr>
-<td align="left">James </td>
-<td align="left"> John</td>
+<tr class="even">
+<td align="left">James</td>
+<td align="left">John</td>
 </tr>
-<tr>
-<td align="left">Fred </td>
-<td align="left"> James</td>
+<tr class="odd">
+<td align="left">Fred</td>
+<td align="left">James</td>
 </tr>
-<tr>
-<td align="left">Frits </td>
-<td align="left"> Fred</td>
+<tr class="even">
+<td align="left">Frits</td>
+<td align="left">Fred</td>
 </tr>
 </tbody>
 </table>
-
-
 <p>Given that you <em>really</em> want to have this in a relational database, how would you find out who are the friends of the friends of James?</p>
-
-<h3>Querying data - SQL</h3>
-
+<h3 id="querying-data---sql"><span class="header-section-number">2.9.3</span> Querying data - SQL</h3>
 <p>Get the data ready:</p>
-
-<ol>
+<ol style="list-style-type: decimal">
 <li>Copy the file Database-Intro/exercise.sqlite to your own workspace.</li>
 <li>Create a new sqlite database: <code>sqlite3 database-exercise</code></li>
 <li>Import the database dump: <code>.restore exercise.sqlite</code></li>
 </ol>
-
-
 <p>Some questions to answer:</p>
-
 <ul>
 <li>Find out what the different tables are in the database, and what they look like.</li>
 <li>How many genes have no location?</li>
 <li>How many distinct omim genes are mentioned in the gene table?</li>
 <li>What is the gene with the most probesets?</li>
-<li>Run a query on the database that returns the results shown below. Columns should be:
-
-<ul>
+<li>Run a query on the database that returns the results shown below. Columns should be:</li>
 <li>probeset name</li>
 <li>gene symbol of the gene containing that probe</li>
 <li>location of that gene</li>
@@ -1760,12 +1066,7 @@ Frits knows Fred
 <li>sample name</li>
 <li>expression value for that sample for that probe</li>
 </ul>
-</li>
-</ul>
-
-
 <p>Output should look like this:</p>
-
 <pre><code>name        symbol      location    ensembl          omim        name        value           
 ----------  ----------  ----------  ---------------  ----------  ----------  ----------------
 1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human1      6.75378974247776
@@ -1777,11 +1078,6 @@ Frits knows Fred
 1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp3      6.75378974247776
 1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp4      6.75378974247776
 1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human1      8.41163999867383
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383
-</code></pre>
-
-<h3>Querying data - Perl/DBI</h3>
-
+1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383</code></pre>
+<h3 id="querying-data---perldbi"><span class="header-section-number">2.9.4</span> Querying data - Perl/DBI</h3>
 <p>Same questions, but now do this from within perl.</p>
-</body>
-</html>
