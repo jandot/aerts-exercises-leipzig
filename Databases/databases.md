@@ -912,14 +912,20 @@ while ($sth->fetch) {
 
 ### Database schema normalization ###
 
-We'll use two files on the server that were used in previous lectures as well:
+In this exercise, we will define a schema to store polymorphism data and actually load it in a database. The data is stored in `Databases/exercises/genotypes/genotypes.csv`. Each line in this file represents a polymorphism, and has the following columns:
 
-* Database-Intro/AffyAnnotation.clean
-* Database-Intro/RMAvalues0.05.txt
+* chromosome
+* position
+* genotype sample 1
+* genotype sample 2
+* genotype sample 3
+* genotype sample 4
+* genotype sample 5
+* genotype sample 6
 
-The RMAvalues0.05.txt file contains expression values for different individuals for a huge number of probesets. The AffyAnnotation.cleaned file has annotations for these probesets. We need to create a (normalized) database schema.
+Samples 1, 2 and 3 are repetitions of the same individual (individual_1); samples 4, 5 and 6 are from individual_2.
 
-In groups of 2, please draw a database scheme which we can discuss afterwards...
+In groups of 2, draw a database scheme which we can discuss afterwards...
 
 ### When not to use RDBMS ###
 
@@ -954,42 +960,69 @@ Given that you _really_ want to have this in a relational database, how would yo
 
 ### Querying data - SQL ###
 
+This exercise is based on the data we looked at in the first exercise, but there are some differences.
+
 Get the data ready:
 
-1. Copy the file Databases/exercises//exercise.sqlite to your own workspace.
-1. Create a new sqlite database: `sqlite3 database-exercise`
-1. Import the database dump: `.restore exercise.sqlite`
+1. Copy the file Databases/exercises/genotypes/genotypes.sqlite to your own workspace.
+1. In your own workspace, open the database using `sqlite3 genotypes.sqlite`
 
 Some questions to answer:
 
 * Find out what the different tables are in the database, and what they look like.
-* How many genes have no location?
-* How many distinct omim genes are mentioned in the gene table?
-* What is the gene with the most probesets?
-* Run a query on the database that returns the results shown below. Columns should be:
-    * probeset name
-    * gene symbol of the gene containing that probe
-    * location of that gene
-    * ensembl ID of that gene
-    * omim id of that gene
+* How many samples does each individual have?
+* How many genotypes do we have for each sample?
+* What is the variation for which we have the least genotypes?
+* Create a view in the database that returns the results as shown below. Columns should be:
+    * individual name
     * sample name
-    * expression value for that sample for that probe
-
-Output should look like this:
+    * variation chromosome
+    * variation position
+    * genotype
 
 ```
-name        symbol      location    ensembl          omim        name        value           
-----------  ----------  ----------  ---------------  ----------  ----------  ----------------
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human1      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human2      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human3      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human4      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp1      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp2      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp3      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp4      6.75378974247776
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human1      8.41163999867383
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383
+name          name        chromosome  position    genotype  
+------------  ----------  ----------  ----------  ----------
+individual_1  sample_1    21          33031822    GG        
+individual_1  sample_2    21          33031822    GG        
+individual_1  sample_3    21          33031822    GT        
+individual_2  sample_4    21          33031822    GG        
+individual_2  sample_5    21          33031822    GT        
+individual_1  sample_1    21          33031927    CG        
+individual_1  sample_2    21          33031927    CG        
+```
+
+* More advanced: Create a view in the database that returns the results as shown below. This is the same as the previous exercise, but w now include the gene name. Important: also variations that are *not* in genes should be included. Columns should be:
+    * individual name
+    * sample name
+    * gene name
+    * variation chromosome
+    * variation position
+    * genotype
+
+```
+i.name        s.name      g.name      v.chromosome  v.position  e.genotype
+------------  ----------  ----------  ------------  ----------  ----------
+...    
+individual_2  sample_4                21            33032895    GG        
+individual_2  sample_5                21            33032895    GG        
+individual_1  sample_1                21            33032896    GT        
+individual_1  sample_2                21            33032896    TT        
+individual_1  sample_3                21            33032896    GT        
+individual_2  sample_4                21            33032896    GG        
+individual_2  sample_5                21            33032896    GG        
+individual_1  sample_1    gene_1      21            33032988    AC        
+individual_1  sample_2    gene_1      21            33032988    AC        
+individual_1  sample_3    gene_1      21            33032988    CC        
+individual_2  sample_4    gene_1      21            33032988    AA        
+individual_2  sample_5    gene_1      21            33032988    AC        
+individual_1  sample_1    gene_1      21            33033001    CG        
+individual_1  sample_2    gene_1      21            33033001    CG        
+individual_1  sample_3    gene_1      21            33033001    CG        
+individual_2  sample_4    gene_1      21            33033001    CC        
+individual_2  sample_5    gene_1      21            33033001    CC        
+individual_1  sample_1    gene_1      21            33033026    AG
+...     
 ```
 
 ### Querying data - Perl/DBI ###
