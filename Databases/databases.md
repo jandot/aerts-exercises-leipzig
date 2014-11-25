@@ -3,9 +3,9 @@
 1. [Relational databases](#relational-databases)
 1. [Developing the database schema](#schema)
     1. [Normal forms](#normal-forms)
-       1. [First normal form](#first-normal-form)
-       1. [Second normal form](#second-normal-form)
-       1. [Third normal form](#third-normal-form)
+        1. [First normal form](#first-normal-form)
+        1. [Second normal form](#second-normal-form)
+        1. [Third normal form](#third-normal-form)
     1. [Other best practices](#best-practices)
 1. [SQL - Structured Query Language](#sql)
 1. [Getting data in](#getting-data-in)
@@ -13,9 +13,11 @@
     1. [Importing a datafile](#import)
     1. [Using scripting](#scripted-import)
 1. [Getting data out](#getting-data-out)
-    1. [Single tables](#single-tables)
-    1. [Combining tables](#combining-tables)
-    1. [JOIN](#join)
+    1. [Queries](#queries)
+        1. [Single tables](#single-tables)
+        1. [Combining tables](#combining-tables)
+        1. [JOIN](#join)
+    1. [Export to file](#export)
 1. [Additional functions](#additional-functions)
     1. [NULL](#null)
     1. [AND, OR, IN](#and-or-in)
@@ -355,11 +357,13 @@ id | name | ethnicity
 
 ### <a id="scripted-import"></a>Using scripting ###
 
-There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead…) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.
+There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead...) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.
 
 ## <a id="getting-data-out"></a>Getting data out ##
 
-### <a id="single-tables"></a>Single tables ###
+### <a id="queries"></a>Queries ###
+
+#### <a id="single-tables"></a>Single tables ####
 
 It is very simple to query a single table. The **basic syntax** is:
 
@@ -367,7 +371,7 @@ It is very simple to query a single table. The **basic syntax** is:
 SELECT <column_name1, column_name2> FROM <table_name> WHERE <conditions>;
 ```
 
-If you want to see **all columns**, you can use **"*"** instead of a list of column names, and you can leave out the WHERE clause. The **simplest query** is therefore `SELECT * FROM <table_name>;`. So the `<column_name1, column_name2>` defines slices the table vertically while the WHERE clause slices it horizontally.
+If you want to see **all columns**, you can use "*" instead of a list of column names, and you can leave out the WHERE clause. The **simplest query** is therefore `SELECT * FROM <table_name>;`. So the `<column_name1, column_name2>` defines slices the table vertically while the WHERE clause slices it horizontally.
 
 Data can be filtered using a `WHERE` clause. For example:
 
@@ -378,7 +382,7 @@ SELECT * FROM individuals WHERE ethnicity IN ('african', 'caucasian');
 SELECT * FROM individuals WHERE ethnicity != 'asian';
 ```
 
-You often just want to see a **small subset of data** just to make sure that you're looking at the right thing. In that case: add a `LIMIT` clause to the end of your query. Please *always* do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.
+You often just want to see a **small subset of data** just to make sure that you're looking at the right thing. In that case: add a `LIMIT` clause to the end of your query, which has the same effect as using `head` on the linux command-line. Please *always* do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.
 
 ```
 SELECT * FROM individuals LIMIT 5;
@@ -397,7 +401,7 @@ Using the `GROUP BY` clause you can **aggregate** data. For example:
 SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;
 ```
 
-### <a id="combining-tables"></a>Combining tables ###
+#### <a id="combining-tables"></a>Combining tables ####
 
 In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:
 
@@ -432,7 +436,18 @@ WHERE i.id = g.individual_id
 AND s.id = g.snp_id;
 ```
 
-### <a id="join"></a>JOIN ###
+Output looks like this:
+
+name | accession | genotype_amb
+:-----------|:---------|:------------
+individual_A | rs12345 | A           
+individual_A | rs98765 | R           
+individual_A | rs28465 | K           
+individual_B | rs12345 | M           
+individual_B | rs98765 | G           
+individual_B | rs28465 | G  
+
+#### <a id="join"></a>JOIN ####
 
 Sometimes, though, we have to join tables in a different way. Suppose that our snps table contains SNPs that are nowhere mentioned in the genotypes table, but we still want to have them mentioned in our output:
 
@@ -502,6 +517,19 @@ rs98765 | R |
 (Notice the extra line for rs11223!)
 
 A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.
+
+### <a id="export"></a>Export to file ###
+
+Often you will want to export the output you get from an SQL-query to a file (e.g. CSV) on your operating system so that you can use that data for external analysis in R or for visualization. This is easy to do. Suppose that we want to export the first 5 lines of the snps table into a file called `5_snps.csv`. You do that like this:
+
+```
+sqlite> .header on
+sqlite> .mode csv
+sqlite> .once 5_snps.csv
+sqlite> SELECT * FROM snps LIMIT 5;
+```
+
+If you now exit the sqlite prompt (with `.quit`), you should see a file in the directory where you were that is called `5_snps.csv`.
 
 ## <a id="additional-functions"></a>Additional functions ##
 
@@ -583,8 +611,7 @@ GROUP BY can be very useful in that it first **aggregates dat**a. It is often us
 
 ```
 sqlite> SELECT genotype_amb, COUNT(*) FROM genotypes GROUP BY genotype_amb;
-sqlite> SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c 
-DESC;
+sqlite> SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c DESC;
 sqlite> SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER BY chromosome;
 ```
 
@@ -681,17 +708,28 @@ To access the last release of human from Ensembl: `mysql -h ensembldb.ensembl.or
 By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP `rs12345` in `individual_A` we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:
 
 ```
-SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype, g.genotype_amb
+SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype_amb
 FROM individuals i, snps s, genotypes g
 WHERE i.id = g.individual_id
 AND s.id = g.snp_id;
 ```
 
+Output looks like this:
+
+name | ethnicity | accession | chromosome | position | genotype_amb
+:------------|:----------|:----------|:----------|:----------|:----
+individual_A | caucasian | rs12345 | 1 | 12345 | A           
+individual_A | caucasian | rs98765 | 1 | 98765 | R           
+individual_A | caucasian | rs28465 | 5 | 28465 | K           
+individual_B | caucasian | rs12345 | 1 | 12345 | M           
+individual_B | caucasian | rs98765 | 1 | 98765 | G           
+individual_B | caucasian | rs28465 | 5 | 28465 | G     
+
 There is however a way to make this easier: you can create **views** on the data. This basically saves the whole query and gives it a name. You do this by adding `CREATE VIEW some_name AS` to the front of the query, like this:
 
 ```
 CREATE VIEW v_genotypes AS
-SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype, g.genotype_amb
+SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype_amb
 FROM individuals i, snps s, genotypes g
 WHERE i.id = g.individual_id
 AND s.id = g.snp_id;
@@ -881,7 +919,7 @@ We'll use two files on the server that were used in previous lectures as well:
 
 The RMAvalues0.05.txt file contains expression values for different individuals for a huge number of probesets. The AffyAnnotation.cleaned file has annotations for these probesets. We need to create a (normalized) database schema.
 
-In groups of 2, please draw a database scheme which we can discuss afterwards.
+In groups of 2, please draw a database scheme which we can discuss afterwards...
 
 ### When not to use RDBMS ###
 
@@ -918,7 +956,7 @@ Given that you _really_ want to have this in a relational database, how would yo
 
 Get the data ready:
 
-1. Copy the file Database-Intro/exercise.sqlite to your own workspace.
+1. Copy the file Databases/exercises//exercise.sqlite to your own workspace.
 1. Create a new sqlite database: `sqlite3 database-exercise`
 1. Import the database dump: `.restore exercise.sqlite`
 
@@ -929,13 +967,13 @@ Some questions to answer:
 * How many distinct omim genes are mentioned in the gene table?
 * What is the gene with the most probesets?
 * Run a query on the database that returns the results shown below. Columns should be:
-  * probeset name
-  * gene symbol of the gene containing that probe
-  * location of that gene
-  * ensembl ID of that gene
-  * omim id of that gene
-  * sample name
-  * expression value for that sample for that probe
+    * probeset name
+    * gene symbol of the gene containing that probe
+    * location of that gene
+    * ensembl ID of that gene
+    * omim id of that gene
+    * sample name
+    * expression value for that sample for that probe
 
 Output should look like this:
 
