@@ -1,44 +1,5 @@
-**Table of Contents**
 
-1. [Relational databases](#relational-databases)
-1. [Developing the database schema](#schema)
-    1. [Normal forms](#normal-forms)
-        1. [First normal form](#first-normal-form)
-        1. [Second normal form](#second-normal-form)
-        1. [Third normal form](#third-normal-form)
-    1. [Other best practices](#best-practices)
-1. [SQL - Structured Query Language](#sql)
-1. [Getting data in](#getting-data-in)
-    1. [INSERT INTO](#insert-into)
-    1. [Importing a datafile](#import)
-    1. [Using scripting](#scripted-import)
-1. [Getting data out](#getting-data-out)
-    1. [Queries](#queries)
-        1. [Single tables](#single-tables)
-        1. [Combining tables](#combining-tables)
-        1. [JOIN](#join)
-    1. [Export to file](#export)
-1. [Additional functions](#additional-functions)
-    1. [NULL](#null)
-    1. [AND, OR, IN](#and-or-in)
-    1. [DISTINCT](#distinct)
-    1. [ORDER BY](#order-by)
-    1. [COUNT](#count)
-    1. [MAX-MIN-AVG](#max-min-avg)
-    1. [GROUP BY](#group-by)
-    1. [UNION, INTERSECT](#union-intersect)
-    1. [LIKE](#like)
-    1. [LIMIT](#limit)
-    1. [Subqueries](#subqueries)
-1. [Views](#views)
-1. [Drawbacks of RDBMS](#drawbacks)
-    1. [Scalability](#scalability)
-    1. [Modeling](#modeling)
-1. [Perl-DBI](#perl-dbi)
-1. [Exercises](#exercises)
-
-
-# <a id="databases"></a> Databases #
+# Databases #
 Jan Aerts; March 4, 2013
 
 _(Part of the content of this lecture is taken from the database lectures from the yearly Programming for Biology course at CSHL, and the EasySoft tutorial at http://bit.ly/x2yNDb)_
@@ -47,13 +8,13 @@ Data management is critical in any science, including biology. In this session, 
 
 For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI (for future reference). Document-oriented and other NoSQL databases (such as MongoDB) can often also be accessed through either an interactive shell and/or APIs (application programming interfaces) in languages such as perl, ruby, java, clojure, ...
 
-## <a id="database-types"></a> Types of databases ##
+## Types of databases ##
 There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of tables that contain rows (which represent instance data) and columns (representing properties of that data). Any table can be thought of as an Excel-sheet.
 
-# <a id="relational-databases"></a> Relational databases #
+# Relational databases #
 Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use **SQLite3**. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). `sqlite3 my_db.sqlite` is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...
 
-## <a id="schema"></a> Developing the database schema ##
+## Developing the database schema ##
 
 For the purpose of this lecture, let's say you want to store individuals and their genotypes. In Excel, you could create a sheet that looks like this:
  
@@ -64,11 +25,15 @@ individual_B | caucasian | A/C | M | 1 | 12345 | G/G | G | 1 | 98765 | G/G | G |
 
 So let's create a relational database to store this data.
 
-`jan@evopserver ~ $ sqlite3 test.sqlite`
+```
+jan@evopserver ~ $ sqlite3 test.sqlite
+```
 
 We can get help using .help:
 
-`sqlite> .help`
+```
+sqlite> .help
+```
 
 We first create a table, and insert that data (we'll come back to the exact syntax later):
 
@@ -111,11 +76,11 @@ sqlite> SELECT * FROM genotypes;
 
 Done! For every new SNP we just add a new column, right? Wrong...
 
-### <a id="normal-forms"></a>Normal forms ###
+### Normal forms ###
 
 There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the "normal forms".
 
-#### <a id="first-normal-form"></a>First normal form ####
+#### First normal form ####
 
 To get to the first normal form:
 
@@ -155,7 +120,7 @@ sqlite> INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_am
 
 The fact that `id` is defined as INTEGER PRIMARY KEY makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for id automatically takes care of everything.
 
-#### <a id="second-normal-form"></a>Second normal form ####
+#### Second normal form ####
 
 There is **still a lot of duplication** in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:
 
@@ -220,7 +185,7 @@ sqlite> INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VA
 sqlite> INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,'G/G','G');
 ```
 
-#### <a id="third-normal-form"></a>Third normal form ####
+#### Third normal form ####
 
 In the third normal form, we try to **eliminate unnecessary data** from our database; data that could be **calculated** based on other things that are present. In our example table genotypes, the genotype and genotype_amb columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final `individuals` table would look like this:
 
@@ -250,7 +215,7 @@ id | individual_id | snp_id | genotype_amb
 
 To know what your database schema looks like, you can issue the `.schema` command in sqlite3. `.tables` gives you a list of the tables that are defined.
 
-### <a id="best-practices"></a>Other best practices ###
+### Other best practices ###
 
 There are some additional guidelines that you can use in creating your database schema, although different people use different guidelines. What I do:
 
@@ -261,7 +226,24 @@ There are some additional guidelines that you can use in creating your database 
 
 In some cases, I digress from the rule of "every table name is plural", especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called `sample2snp`.
 
-## <a id="sql"></a>Structured Query Language ##
+### Schema exercise ###
+
+In this exercise, we will define a schema to store polymorphism data and actually load it in a database. The data is stored in `Databases/exercises/genotypes/genotypes.csv`. Each line in this file represents a polymorphism, and has the following columns:
+
+* chromosome
+* position
+* genotype sample 1
+* genotype sample 2
+* genotype sample 3
+* genotype sample 4
+* genotype sample 5
+* genotype sample 6
+
+Samples 1, 2 and 3 are repetitions of the same individual (individual_1); samples 4, 5 and 6 are from individual_2.
+
+In groups of 2, draw a database scheme which we can discuss afterwards...
+
+## SQL - Structured Query Language ##
 
 Any interacting with data in RDBMS can happen through the Structured Query Language (SQL): create tables, insert data, search data, ... There are two subparts of SQL:
 
@@ -298,9 +280,9 @@ UNION, INTERSECT
 
 We'll look closer at getting data into a database and then querying it, using these four SQL commands.
 
-## <a id="getting-data-in"></a>Getting data in ##
+### Getting data in ###
 
-### <a id="insert-into"></a>INSERT INTO ###
+#### INSERT INTO ####
 
 There are several ways to load data into a database. The method used above is the most straightforward but inadequate if you have to load a large amount of data.
 
@@ -311,7 +293,7 @@ sqlite> INSERT INTO <table_name> (<column_1>, <column_2>, <column_3>)
                           VALUES (<value_1>, <value_2>, <value_3>);
 ```
 
-### <a id="import"></a>Importing a datafile ###
+#### Importing a datafile ####
 
 But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a **comma-separated file** straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (e.g. called `data.csv`) that looks like this:
 
@@ -355,15 +337,15 @@ id | name | ethnicity
 4 | individual_D | african
 5 | individual_E | asian
 
-### <a id="scripted-import"></a>Using scripting ###
+#### Using scripting ####
 
 There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead...) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.
 
-## <a id="getting-data-out"></a>Getting data out ##
+### Getting data out ###
 
-### <a id="queries"></a>Queries ###
+#### Queries ####
 
-#### <a id="single-tables"></a>Single tables ####
+##### Single tables #####
 
 It is very simple to query a single table. The **basic syntax** is:
 
@@ -401,7 +383,7 @@ Using the `GROUP BY` clause you can **aggregate** data. For example:
 SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;
 ```
 
-#### <a id="combining-tables"></a>Combining tables ####
+##### Combining tables #####
 
 In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:
 
@@ -447,7 +429,7 @@ individual_B | rs12345 | M
 individual_B | rs98765 | G           
 individual_B | rs28465 | G  
 
-#### <a id="join"></a>JOIN ####
+##### JOIN #####
 
 Sometimes, though, we have to join tables in a different way. Suppose that our snps table contains SNPs that are nowhere mentioned in the genotypes table, but we still want to have them mentioned in our output:
 
@@ -518,7 +500,7 @@ rs98765 | R |
 
 A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.
 
-### <a id="export"></a>Export to file ###
+#### Export to file ####
 
 Often you will want to export the output you get from an SQL-query to a file (e.g. CSV) on your operating system so that you can use that data for external analysis in R or for visualization. This is easy to do. Suppose that we want to export the first 5 lines of the snps table into a file called `5_snps.csv`. You do that like this:
 
@@ -531,9 +513,9 @@ sqlite> SELECT * FROM snps LIMIT 5;
 
 If you now exit the sqlite prompt (with `.quit`), you should see a file in the directory where you were that is called `5_snps.csv`.
 
-## <a id="additional-functions"></a>Additional functions ##
+### Additional functions ###
 
-### <a id="null"></a>NULL ###
+#### NULL ####
 
 What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?
 
@@ -548,7 +530,7 @@ rs7890 | gene_C |
 
 We cannot `SELECT * FROM snps WHERE gene = "";` because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue `SELECT * FROM snps WHERE gene IS NULL;` or to get the rest `SELECT * FROM snps WHERE GENE IS NOT NULL;`. Note that it is `IS NULL` and **not** `= NULL`... 
 
-### <a id="and-or-in"></a>AND, OR, IN ###
+#### AND, OR, IN ####
 
 Your queries might need to **combine different conditions**:
 
@@ -558,7 +540,7 @@ sqlite> SELECT * FROM snps WHERE chromosome = '1' OR chromosome = '5';
 sqlite> SELECT * FROM snps WHERE chromosome IN ('1','5');
 ```
 
-### <a id="distinct"></a>DISTINCT ###
+#### DISTINCT ####
 
 Whenever you want the **unique values** in a column: use DISTINCT in the SELECT clause:
 
@@ -582,14 +564,14 @@ R
 
 DISTINCT automatically sorts the results.
 
-### <a id="order-by"></a>ORDER BY ###
+#### ORDER BY ####
 
 ```
 sqlite> SELECT * FROM snps ORDER BY chromosome;
 sqlite> SELECT * FROM snps ORDER BY accession DESC;
 ```
 
-### <a id="count"></a>COUNT ###
+#### COUNT ####
 
 For when you want to count things:
 
@@ -597,7 +579,7 @@ For when you want to count things:
 sqlite> SELECT COUNT(*) FROM genotypes WHERE genotype_amb = 'G';
 ```
 
-### <a id="max-min-avg"></a>MAX(), MIN(), AVG() ###
+#### MAX(), MIN(), AVG() ####
 
 ...act as you would expect (only works with numbers, obviously):
 
@@ -605,7 +587,7 @@ sqlite> SELECT COUNT(*) FROM genotypes WHERE genotype_amb = 'G';
 sqlite> SELECT MAX(position) FROM snps;
 ```
 
-### <a id="group-by"></a>GROUP BY ###
+#### GROUP BY ####
 
 GROUP BY can be very useful in that it first **aggregates dat**a. It is often used together with COUNT, MAX, MIN or AVG:
 
@@ -629,7 +611,7 @@ chromosome | MAX(position)
 2 | 11223
 5 | 28465
 
-### <a id="union-intersect"></a>UNION, INTERSECT ###
+#### UNION, INTERSECT ####
 
 It is sometimes hard to get the exact rows back that you need using the WHERE clause. In such cases, it might be possible to construct the output based on taking the **union or intersection** of two or more different queries:
 
@@ -643,7 +625,7 @@ id | accession | chromosome | position
 :--|:----------|:-----------|:--------
 1 | rs12345 | 1 | 12345
 
-### <a id="like"></a>LIKE ###
+#### LIKE ####
 
 Sometimes you want to make fuzzy matches. What if you're not sure if the ethnicity has a capital or not?
 
@@ -657,7 +639,7 @@ returns no results...
 sqlite> SELECT * FROM individuals WHERE ethnicity LIKE '%frican';
 ```
 
-### <a id="limit"></a>LIMIT ###
+#### LIMIT ####
 
 If you only want to get the first 10 results back (e.g. to find out if your complicated query does what it should do without running the whole actual query), use LIMIT:
 
@@ -665,7 +647,7 @@ If you only want to get the first 10 results back (e.g. to find out if your comp
 sqlite>> SELECT * FROM snps LIMIT 2;
 ```
 
-### <a id="subqueries"></a>Subqueries ###
+#### Subqueries ####
 
 As we mentioned in the beginning, the general setup of a SELECT is:
 
@@ -697,13 +679,13 @@ sqlite> SELECT COUNT(*)
    ...>        FROM genotypes);
 ```
 
-## <a id="ensembl"></a>Public bioinformatics databases ##
+### Public bioinformatics databases ###
 
 Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.
 
 To access the last release of human from Ensembl: `mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37`. To get an overview of the tables that we can query: `show tables`.
 
-## <a id="views"></a>Views ##
+### Views ###
 
 By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP `rs12345` in `individual_A` we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:
 
@@ -747,21 +729,117 @@ The difference with an actual table is, however, that the result of the view is 
 
 Note: to make sure that I can tell by the name if something is a table or a view, I always add a `v_` in front of the name that I give to the view.
 
-## <a id="drawbacks"></a>Drawbacks of relational databases ##
+### SQL exercises ###
+
+Get the data ready:
+
+1. Copy the file Databases/exercises/genotypes/genotypes.sqlite to your own workspace.
+1. In your own workspace, open the database using `sqlite3 genotypes.sqlite`
+
+Some questions to answer:
+
+* Find out what the different tables are in the database, and what they look like.
+* How many samples does each individual have?
+* How many genotypes do we have for each sample?
+* What is the variation for which we have the least genotypes?
+* Create a view in the database that returns the results as shown below. Columns should be:
+    * individual name
+    * sample name
+    * variation chromosome
+    * variation position
+    * genotype
+
+```
+name          name        chromosome  position    genotype  
+------------  ----------  ----------  ----------  ----------
+individual_1  sample_1    21          33031822    GG        
+individual_1  sample_2    21          33031822    GG        
+individual_1  sample_3    21          33031822    GT        
+individual_2  sample_4    21          33031822    GG        
+individual_2  sample_5    21          33031822    GT        
+individual_1  sample_1    21          33031927    CG        
+individual_1  sample_2    21          33031927    CG        
+```
+
+* More advanced: Create a view in the database that returns the results as shown below. This is the same as the previous exercise, but w now include the gene name. Important: also variations that are *not* in genes should be included. Columns should be:
+    * individual name
+    * sample name
+    * gene name
+    * variation chromosome
+    * variation position
+    * genotype
+
+```
+i.name        s.name      g.name      v.chromosome  v.position  e.genotype
+------------  ----------  ----------  ------------  ----------  ----------
+...    
+individual_2  sample_4                21            33032895    GG        
+individual_2  sample_5                21            33032895    GG        
+individual_1  sample_1                21            33032896    GT        
+individual_1  sample_2                21            33032896    TT        
+individual_1  sample_3                21            33032896    GT        
+individual_2  sample_4                21            33032896    GG        
+individual_2  sample_5                21            33032896    GG        
+individual_1  sample_1    gene_1      21            33032988    AC        
+individual_1  sample_2    gene_1      21            33032988    AC        
+individual_1  sample_3    gene_1      21            33032988    CC        
+individual_2  sample_4    gene_1      21            33032988    AA        
+individual_2  sample_5    gene_1      21            33032988    AC        
+individual_1  sample_1    gene_1      21            33033001    CG        
+individual_1  sample_2    gene_1      21            33033001    CG        
+individual_1  sample_3    gene_1      21            33033001    CG        
+individual_2  sample_4    gene_1      21            33033001    CC        
+individual_2  sample_5    gene_1      21            33033001    CC        
+individual_1  sample_1    gene_1      21            33033026    AG
+...     
+```
+
+## Drawbacks of relational databases ##
 
 Relational databases are great. They can be a big help in storing and organizing your data. But they are not the ideal solution in all situations.
 
-### <a id="scalability"></a>Scalability ###
+### Scalability ###
 
 Relational databases are only scalable in a limited way. The fact that you try to normalize your data (see [here](#normal-forms)) means that your data is distributed over different tables. Any query on that data often requires extensive joins. This is OK, until you have tables with millions of rows. A join can in that case a _very_ long time to run.
 
 [Although outside of the scope of this lecture.] One solution sometimes used is to go for a star-schema rather than a fully normalized schema. Or using a NoSQL database management system that is horizontally scalable (document-oriented, column-oriented or graph databases).
 
-### <a id="modeling"></a>Modeling ###
+### Modeling ###
 
 Some types of information are difficult to model when using a relational paradigm. In a relational database, different records can be linked across tables using foreign keys. If you're however really interested in the relations themselved (_e.g._ social graphs, protein-protein-interaction, …) you are much better of to use a real graph database (_e.g._ neo4j) instead of a relational database. In a graph database finding all neighbours-of-neighbours in a graph of 50 members (basically) takes as long as in a graph with 50 million members.
 
-## <a id="perl-dbi"></a>Perl-DBI (for future reference)##
+### Drawback exercise ###
+
+Suppose you want to model a social graph. People have names, and know other people. Every "know" is reciprocal (so if I know you then you know me). The data might look like this:
+
+```
+Tim knows Terry
+Tom knows Terry
+Terry knows Gerry
+Gerry knows Rik
+Gerry knows James
+James knows John
+Fred knows James
+Frits knows Fred
+```
+
+In table format:
+
+knower | knowee
+:------|:------
+Tim | Terry
+Tom | Terry
+Terry | Gerry
+Gerry | Rik
+Gerry | James
+James | John
+Fred | James
+Frits | Fred
+
+
+Given that you _really_ want to have this in a relational database, how would you find out who are the friends of the friends of James?
+
+## Perl-DBI (for future reference) ##
 
 Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (e.g. Class::DBI, DBIx::Class, and Rose::DB::Object). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO DBI.
 
@@ -908,123 +986,6 @@ while ($sth->fetch) {
 }
 ```
 
-## <a id="exercises"></a>Exercises ##
+### Perl-DBI exercises ###
 
-### Database schema normalization ###
-
-In this exercise, we will define a schema to store polymorphism data and actually load it in a database. The data is stored in `Databases/exercises/genotypes/genotypes.csv`. Each line in this file represents a polymorphism, and has the following columns:
-
-* chromosome
-* position
-* genotype sample 1
-* genotype sample 2
-* genotype sample 3
-* genotype sample 4
-* genotype sample 5
-* genotype sample 6
-
-Samples 1, 2 and 3 are repetitions of the same individual (individual_1); samples 4, 5 and 6 are from individual_2.
-
-In groups of 2, draw a database scheme which we can discuss afterwards...
-
-### When not to use RDBMS ###
-
-Suppose you want to model a social graph. People have names, and know other people. Every "know" is reciprocal (so if I know you then you know me). The data might look like this:
-
-```
-Tim knows Terry
-Tom knows Terry
-Terry knows Gerry
-Gerry knows Rik
-Gerry knows James
-James knows John
-Fred knows James
-Frits knows Fred
-```
-
-In table format:
-
-knower | knowee
-:------|:------
-Tim | Terry
-Tom | Terry
-Terry | Gerry
-Gerry | Rik
-Gerry | James
-James | John
-Fred | James
-Frits | Fred
-
-
-Given that you _really_ want to have this in a relational database, how would you find out who are the friends of the friends of James?
-
-### Querying data - SQL ###
-
-This exercise is based on the data we looked at in the first exercise, but there are some differences.
-
-Get the data ready:
-
-1. Copy the file Databases/exercises/genotypes/genotypes.sqlite to your own workspace.
-1. In your own workspace, open the database using `sqlite3 genotypes.sqlite`
-
-Some questions to answer:
-
-* Find out what the different tables are in the database, and what they look like.
-* How many samples does each individual have?
-* How many genotypes do we have for each sample?
-* What is the variation for which we have the least genotypes?
-* Create a view in the database that returns the results as shown below. Columns should be:
-    * individual name
-    * sample name
-    * variation chromosome
-    * variation position
-    * genotype
-
-```
-name          name        chromosome  position    genotype  
-------------  ----------  ----------  ----------  ----------
-individual_1  sample_1    21          33031822    GG        
-individual_1  sample_2    21          33031822    GG        
-individual_1  sample_3    21          33031822    GT        
-individual_2  sample_4    21          33031822    GG        
-individual_2  sample_5    21          33031822    GT        
-individual_1  sample_1    21          33031927    CG        
-individual_1  sample_2    21          33031927    CG        
-```
-
-* More advanced: Create a view in the database that returns the results as shown below. This is the same as the previous exercise, but w now include the gene name. Important: also variations that are *not* in genes should be included. Columns should be:
-    * individual name
-    * sample name
-    * gene name
-    * variation chromosome
-    * variation position
-    * genotype
-
-```
-i.name        s.name      g.name      v.chromosome  v.position  e.genotype
-------------  ----------  ----------  ------------  ----------  ----------
-...    
-individual_2  sample_4                21            33032895    GG        
-individual_2  sample_5                21            33032895    GG        
-individual_1  sample_1                21            33032896    GT        
-individual_1  sample_2                21            33032896    TT        
-individual_1  sample_3                21            33032896    GT        
-individual_2  sample_4                21            33032896    GG        
-individual_2  sample_5                21            33032896    GG        
-individual_1  sample_1    gene_1      21            33032988    AC        
-individual_1  sample_2    gene_1      21            33032988    AC        
-individual_1  sample_3    gene_1      21            33032988    CC        
-individual_2  sample_4    gene_1      21            33032988    AA        
-individual_2  sample_5    gene_1      21            33032988    AC        
-individual_1  sample_1    gene_1      21            33033001    CG        
-individual_1  sample_2    gene_1      21            33033001    CG        
-individual_1  sample_3    gene_1      21            33033001    CG        
-individual_2  sample_4    gene_1      21            33033001    CC        
-individual_2  sample_5    gene_1      21            33033001    CC        
-individual_1  sample_1    gene_1      21            33033026    AG
-...     
-```
-
-### Querying data - Perl/DBI ###
-
-Same questions, but now do this from within perl.
+Same questions as for the SQL part, but now do this from within perl.

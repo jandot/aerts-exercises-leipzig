@@ -1,0 +1,15 @@
+pre {
+    border: 1px dotted gray;
+    background-color: #ececec;
+    color: #1111111;
+    padding: 0.5em;
+}
+
+tr, td {
+	font-family: courier;
+	font-size: 90%;
+}
+
+h1, h2, h3, h4, h5 {
+	font-variant: small-caps;
+}
