@@ -9,6 +9,17 @@
 SELECT * FROM genes LIMIT 2;
 ```
 
+* What is the genotype for the variation at chromosomal position 33036950 for sample with name sample_2?
+
+```
+SELECT g.genotype
+FROM genotypes g, samples s, variations v
+WHERE g.variation_id = v.id
+AND g.sample_id = s.id
+AND s.name = 'sample_2'
+AND v.position = 33036950;
+```
+
 * How many samples does each individual have?
 
 ```
@@ -32,6 +43,13 @@ GROUP BY i.name;
 SELECT sample_id, count(*)
 FROM genotypes
 GROUP BY sample_id;
+```
+
+* Which genotypes are present in the database?
+
+```
+SELECT DISTINCT genotype
+FROM genotypes;
 ```
 
 * What is the variation for which we have the least genotypes?

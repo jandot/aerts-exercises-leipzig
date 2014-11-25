@@ -739,8 +739,10 @@ Get the data ready:
 Some questions to answer:
 
 * Find out what the different tables are in the database, and what they look like.
+* What is the genotype for the variation at chromosomal position 33036950 for sample with name sample_2?
 * How many samples does each individual have?
 * How many genotypes do we have for each sample?
+* Which genotypes are present in the database?
 * What is the variation for which we have the least genotypes?
 * Create a view in the database that returns the results as shown below. Columns should be:
     * individual name
