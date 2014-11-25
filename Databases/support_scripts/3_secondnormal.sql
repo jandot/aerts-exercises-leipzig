@@ -1,0 +1,17 @@
+DROP TABLE individuals;
+DROP TABLE snps;
+DROP TABLE genotypes;
+CREATE TABLE individuals (id INTEGER PRIMARY KEY, name STRING, ethnicity STRING);
+CREATE TABLE snps (id INTEGER PRIMARY KEY, accession STRING, chromosome STRING, position INTEGER);
+CREATE TABLE genotypes (id INTEGER PRIMARY KEY, individual_id INTEGER, snp_id INTEGER, genotype STRING, genotype_amb STRING);
+INSERT INTO individuals (name, ethnicity) VALUES ('individual_A','caucasian');
+INSERT INTO individuals (name, ethnicity) VALUES ('individual_B','caucasian');
+INSERT INTO snps (accession, chromosome, position) VALUES ('rs12345','1',12345);
+INSERT INTO snps (accession, chromosome, position) VALUES ('rs98765','1',98765);
+INSERT INTO snps (accession, chromosome, position) VALUES ('rs28465','5',28465);
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,1,'A/A','A');
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,2,'A/G','R');
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (1,3,'G/T','K');
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,1,'A/C','M');
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,2,'G/G','G');
+INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,'G/G','G');
