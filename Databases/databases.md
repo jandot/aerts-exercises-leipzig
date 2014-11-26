@@ -228,20 +228,41 @@ In some cases, I digress from the rule of "every table name is plural", especial
 
 ### Schema exercise ###
 
-In this exercise, we will define a schema to store polymorphism data and actually load it in a database. The data is stored in `Databases/exercises/genotypes/genotypes.csv`. Each line in this file represents a polymorphism, and has the following columns:
+In this exercise, we will define a schema to store expression data.
 
-* chromosome
-* position
-* genotype sample 1
-* genotype sample 2
-* genotype sample 3
-* genotype sample 4
-* genotype sample 5
-* genotype sample 6
+The data is stored in two files: `Databases/exercises/RMAvalues0.05.txt` and `Databases/exercises/AffyAnnotation.clean`. The expression of a gene is measured using different probesets (see Figure). 
+Each line in the RMAvalues file contains the expression values for a single probeset for all individuals. Each line in the AffyAnnotation file contains annotations for the probesets (which gene, location, etc).
 
-Samples 1, 2 and 3 are repetitions of the same individual (individual_1); samples 4, 5 and 6 are from individual_2.
+![Probeset data](probesets.png)
 
-In groups of 2, draw a database scheme which we can discuss afterwards...
+Columns in RMAvalues0.05.txt:
+
+* probeset
+* human1
+* human2
+* human3
+* human4
+* chimp1
+* chimp2
+* chimp3
+* chimp4
+
+Columns in AffyAnnotation.clean:
+
+* probeset
+* gene_symbol
+* chromosomal_location
+* ensembl
+* omim
+* go_biological_process
+* go_cellular_component
+* go_molecular_function
+
+Question: design a normalized database schema to store this data. Which tables would it contain? What would the columns be? How are the tables linked to each other?
+
+*Tip*: The fact that the data is stored in 2 files is completely irrelevant. The question you have to ask yourself: what *types* of things are present in these files combined?
+
+*Note*: This database will be used later in the R exercise.
 
 ## SQL - Structured Query Language ##
 
@@ -729,72 +750,65 @@ The difference with an actual table is, however, that the result of the view is 
 
 Note: to make sure that I can tell by the name if something is a table or a view, I always add a `v_` in front of the name that I give to the view.
 
+#### Pivot tables ####
+
+In some cases, you want to violate the 1st normal form, and have different columns represent the same type of data. A typical example is when you want to analyze your data in R using a dataframe. Let's say we have expression values for different genes in different individuals. Being good programmers, we saved this data in the database like this:
+
+individual | gene | expression
+:----------|:-----|:----------
+individual_A | gene_A | 2819
+individual_A | gene_B | 1028
+individual_A | gene_C | 3827
+individual_B | gene_A | 1928
+individual_B | gene_B | 999
+individual_B | gene_C | 1992
+
+In R, you will however probably want a dataframe that looks like this:
+
+gene | individual_A | individual_B
+:----|:-------------|:------------
+gene_A | 2819 | 1928
+gene_B | 1028 | 999
+gene_C | 3827 | 1992
+
+This is called a *pivot table*, and there are several ways to create these in SQLite. The method presented here is taken from http://bduggan.github.io/virtual-pivot-tables-opensqlcamp2009-talk/. To create such table (and store it in a view), you have to use `group_concat` and `group_by`:
+
+```
+CREATE VIEW v_pivot_expressions AS
+SELECT gene,
+       GROUP_CONCAT(CASE WHEN individual = 'individual_A' THEN expression ELSE NULL END) AS individual_A,
+       GROUP_CONCAT(CASE WHEN individual = 'individual_B' THEN expression ELSE NULL END) AS individual_B
+FROM expressions
+GROUP BY gene;
+```
+
 ### SQL exercises ###
 
 Get the data ready:
 
-1. Copy the file Databases/exercises/genotypes/genotypes.sqlite to your own workspace.
-1. In your own workspace, open the database using `sqlite3 genotypes.sqlite`
+1. Copy the file Databases/exercises/expressions/probesets.sqlite to your own workspace.
+1. In your own workspace, open the database using `sqlite3 probesets.sqlite`
 
 Some questions to answer:
 
 * Find out what the different tables are in the database, and what they look like.
-* What is the genotype for the variation at chromosomal position 33036950 for sample with name sample_2?
-* How many samples does each individual have?
-* How many genotypes do we have for each sample?
-* Which genotypes are present in the database?
-* What is the variation for which we have the least genotypes?
-* Create a view in the database that returns the results as shown below. Columns should be:
-    * individual name
-    * sample name
-    * variation chromosome
-    * variation position
-    * genotype
+* How many genes have no location?
+* How many distinct omim genes are mentioned in the gene table?
+* What is the gene with the most probesets?
+* Create a view on the data (called `v_expressions`) that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.
 
-```
-name          name        chromosome  position    genotype  
-------------  ----------  ----------  ----------  ----------
-individual_1  sample_1    21          33031822    GG        
-individual_1  sample_2    21          33031822    GG        
-individual_1  sample_3    21          33031822    GT        
-individual_2  sample_4    21          33031822    GG        
-individual_2  sample_5    21          33031822    GT        
-individual_1  sample_1    21          33031927    CG        
-individual_1  sample_2    21          33031927    CG        
-```
-
-* More advanced: Create a view in the database that returns the results as shown below. This is the same as the previous exercise, but w now include the gene name. Important: also variations that are *not* in genes should be included. Columns should be:
-    * individual name
-    * sample name
-    * gene name
-    * variation chromosome
-    * variation position
-    * genotype
-
-```
-i.name        s.name      g.name      v.chromosome  v.position  e.genotype
-------------  ----------  ----------  ------------  ----------  ----------
-...    
-individual_2  sample_4                21            33032895    GG        
-individual_2  sample_5                21            33032895    GG        
-individual_1  sample_1                21            33032896    GT        
-individual_1  sample_2                21            33032896    TT        
-individual_1  sample_3                21            33032896    GT        
-individual_2  sample_4                21            33032896    GG        
-individual_2  sample_5                21            33032896    GG        
-individual_1  sample_1    gene_1      21            33032988    AC        
-individual_1  sample_2    gene_1      21            33032988    AC        
-individual_1  sample_3    gene_1      21            33032988    CC        
-individual_2  sample_4    gene_1      21            33032988    AA        
-individual_2  sample_5    gene_1      21            33032988    AC        
-individual_1  sample_1    gene_1      21            33033001    CG        
-individual_1  sample_2    gene_1      21            33033001    CG        
-individual_1  sample_3    gene_1      21            33033001    CG        
-individual_2  sample_4    gene_1      21            33033001    CC        
-individual_2  sample_5    gene_1      21            33033001    CC        
-individual_1  sample_1    gene_1      21            33033026    AG
-...     
-```
+name | symbol | location | ensembl | omim | name | value           
+:----|:-------|:---------|:--------|:-----|:-----|:-----
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human1 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human2 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human3 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human4 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp1 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp2 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp3 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp4 | 6.75378974247776
+1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human1 | 8.41163999867383
+1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human2 | 8.41163999867383
 
 ## Drawbacks of relational databases ##
 

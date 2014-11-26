@@ -1,0 +1,142 @@
+<h2 id="schema-exercise">Schema exercise</h2>
+<div class="figure">
+<img src="solution_schema.png" alt="Solution schema" /><p class="caption">Solution schema</p>
+</div>
+<h2 id="sql-exercises">SQL exercises</h2>
+<ul>
+<li>Find out what the different tables are in the database, and what they look like.</li>
+</ul>
+<pre><code>.tables
+.schema
+
+.header on
+.mode column
+SELECT * FROM probesets LIMIT 2;</code></pre>
+<ul>
+<li>How many genes have no location?</li>
+</ul>
+<pre><code>SELECT COUNT(*) FROM genes WHERE location IS NULL;</code></pre>
+<ul>
+<li>How many distinct omim genes are mentioned in the gene table?</li>
+</ul>
+<pre><code>SELECT COUNT(*) FROM (SELECT DISTINCT omim FROM genes);</code></pre>
+<ul>
+<li>What is the gene with the most probesets?</li>
+</ul>
+<pre><code>SELECT gene_id, COUNT(*) AS c FROM probesets GROUP BY gene_id ORDER BY c DESC LIMIT 10;</code></pre>
+<p>=&gt; gene with gene_id 2447 has 34 probesets</p>
+<pre><code>SELECT * FROM genes WHERE id = 2447;</code></pre>
+<ul>
+<li>Create a view on the data (called <code>v_expressions</code>) that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">symbol</th>
+<th align="left">location</th>
+<th align="left">ensembl</th>
+<th align="left">omim</th>
+<th align="left">name</th>
+<th align="left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human1</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human2</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human3</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human4</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp1</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp2</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp3</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp4</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human1</td>
+<td align="left">8.41163999867383</td>
+</tr>
+<tr class="even">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human2</td>
+<td align="left">8.41163999867383</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT p.name, g.symbol, g.location, g.ensembl, g.omim, s.name, e.value
+FROM probesets p, genes g, samples s, expressions e
+WHERE p.gene_id = g.id
+AND e.probeset_id = p.id
+AND e.sample_id = s.id
+LIMIT 10;</code></pre>

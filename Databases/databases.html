@@ -1,59 +1,61 @@
-<p><strong>Table of Contents</strong></p>
-<ol style="list-style-type: decimal">
-<li><a href="#relational-databases">Relational databases</a></li>
-<li><a href="#schema">Developing the database schema</a>
-<ol style="list-style-type: decimal">
-<li><a href="#normal-forms">Normal forms</a></li>
-<li><a href="#first-normal-form">First normal form</a></li>
-<li><a href="#second-normal-form">Second normal form</a></li>
-<li><a href="#third-normal-form">Third normal form</a></li>
-<li><a href="#best-practices">Other best practices</a></li>
-</ol></li>
-<li><a href="#sql">SQL - Structured Query Language</a></li>
-<li><a href="#getting-data-in">Getting data in</a>
-<ol style="list-style-type: decimal">
-<li><a href="#insert-into">INSERT INTO</a></li>
-<li><a href="#import">Importing a datafile</a></li>
-<li><a href="#scripted-import">Using scripting</a></li>
-</ol></li>
-<li><a href="#getting-data-out">Getting data out</a>
-<ol style="list-style-type: decimal">
-<li><a href="#single-tables">Single tables</a></li>
-<li><a href="#combining-tables">Combining tables</a></li>
-<li><a href="#join">JOIN</a></li>
-</ol></li>
-<li><a href="#additional-functions">Additional functions</a>
-<ol style="list-style-type: decimal">
-<li><a href="#null">NULL</a></li>
-<li><a href="#and-or-in">AND, OR, IN</a></li>
-<li><a href="#distinct">DISTINCT</a></li>
-<li><a href="#order-by">ORDER BY</a></li>
-<li><a href="#count">COUNT</a></li>
-<li><a href="#max-min-avg">MAX-MIN-AVG</a></li>
-<li><a href="#group-by">GROUP BY</a></li>
-<li><a href="#union-intersect">UNION, INTERSECT</a></li>
-<li><a href="#like">LIKE</a></li>
-<li><a href="#limit">LIMIT</a></li>
-<li><a href="#subqueries">Subqueries</a></li>
-</ol></li>
-<li><a href="#drawbacks">Drawbacks of RDBMS</a>
-<ol style="list-style-type: decimal">
-<li><a href="#scalability">Scalability</a></li>
-<li><a href="#modeling">Modeling</a></li>
-</ol></li>
-<li><a href="#perl-dbi">Perl-DBI</a></li>
-<li><a href="#exercises">Exercises</a></li>
-</ol>
-<h1 id="databases"><span class="header-section-number">1</span> <a id="databases"></a> Databases</h1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="databases.css" type="text/css" />
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#databases"><span class="toc-section-number">1</span> Databases</a><ul>
+<li><a href="#types-of-databases"><span class="toc-section-number">1.1</span> Types of databases</a></li>
+</ul></li>
+<li><a href="#relational-databases"><span class="toc-section-number">2</span> Relational databases</a><ul>
+<li><a href="#developing-the-database-schema"><span class="toc-section-number">2.1</span> Developing the database schema</a><ul>
+<li><a href="#normal-forms"><span class="toc-section-number">2.1.1</span> Normal forms</a></li>
+<li><a href="#other-best-practices"><span class="toc-section-number">2.1.2</span> Other best practices</a></li>
+<li><a href="#schema-exercise"><span class="toc-section-number">2.1.3</span> Schema exercise</a></li>
+</ul></li>
+<li><a href="#sql---structured-query-language"><span class="toc-section-number">2.2</span> SQL - Structured Query Language</a><ul>
+<li><a href="#getting-data-in"><span class="toc-section-number">2.2.1</span> Getting data in</a></li>
+<li><a href="#getting-data-out"><span class="toc-section-number">2.2.2</span> Getting data out</a></li>
+<li><a href="#additional-functions"><span class="toc-section-number">2.2.3</span> Additional functions</a></li>
+<li><a href="#public-bioinformatics-databases"><span class="toc-section-number">2.2.4</span> Public bioinformatics databases</a></li>
+<li><a href="#views"><span class="toc-section-number">2.2.5</span> Views</a></li>
+<li><a href="#sql-exercises"><span class="toc-section-number">2.2.6</span> SQL exercises</a></li>
+</ul></li>
+<li><a href="#drawbacks-of-relational-databases"><span class="toc-section-number">2.3</span> Drawbacks of relational databases</a><ul>
+<li><a href="#scalability"><span class="toc-section-number">2.3.1</span> Scalability</a></li>
+<li><a href="#modeling"><span class="toc-section-number">2.3.2</span> Modeling</a></li>
+<li><a href="#drawback-exercise"><span class="toc-section-number">2.3.3</span> Drawback exercise</a></li>
+</ul></li>
+<li><a href="#perl-dbi-for-future-reference"><span class="toc-section-number">2.4</span> Perl-DBI (for future reference)</a><ul>
+<li><a href="#dbi-and-dbd"><span class="toc-section-number">2.4.1</span> DBI and DBD</a></li>
+<li><a href="#connecting-to-a-database"><span class="toc-section-number">2.4.2</span> Connecting to a database</a></li>
+<li><a href="#do-something"><span class="toc-section-number">2.4.3</span> Do something</a></li>
+<li><a href="#slurp-data-from-database"><span class="toc-section-number">2.4.4</span> Slurp data from database</a></li>
+<li><a href="#getting-data-one-at-a-time"><span class="toc-section-number">2.4.5</span> Getting data one at a time</a></li>
+<li><a href="#using-parameters"><span class="toc-section-number">2.4.6</span> Using parameters</a></li>
+<li><a href="#binding-variables"><span class="toc-section-number">2.4.7</span> Binding variables</a></li>
+<li><a href="#perl-dbi-exercises"><span class="toc-section-number">2.4.8</span> Perl-DBI exercises</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="databases"><span class="header-section-number">1</span> Databases</h1>
 <p>Jan Aerts; March 4, 2013</p>
 <p><em>(Part of the content of this lecture is taken from the database lectures from the yearly Programming for Biology course at CSHL, and the EasySoft tutorial at http://bit.ly/x2yNDb)</em></p>
 <p>Data management is critical in any science, including biology. In this session, we will focus on relational (SQL) databases (RDBMS) as these are the most common. If time permits we might venture into the world of NoSQL databases (<em>e.g.</em> MongoDB) to allow storing of huge datasets.</p>
 <p>For relational databases, I will discuss the basic concepts (tables, tuples, columns, queries) and explain the different normalizations for data. There will also be an introduction on writing SQL queries as well as accessing a relational database from perl using DBI (for future reference). Document-oriented and other NoSQL databases (such as MongoDB) can often also be accessed through either an interactive shell and/or APIs (application programming interfaces) in languages such as perl, ruby, java, clojure, ...</p>
-<h2 id="types-of-databases"><span class="header-section-number">1.1</span> <a id="database-types"></a> Types of databases</h2>
+<h2 id="types-of-databases"><span class="header-section-number">1.1</span> Types of databases</h2>
 <p>There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of tables that contain rows (which represent instance data) and columns (representing properties of that data). Any table can be thought of as an Excel-sheet.</p>
-<h1 id="relational-databases"><span class="header-section-number">2</span> <a id="relational-databases"></a> Relational databases</h1>
+<h1 id="relational-databases"><span class="header-section-number">2</span> Relational databases</h1>
 <p>Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use <strong>SQLite3</strong>. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). <code>sqlite3 my_db.sqlite</code> is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...</p>
-<h2 id="developing-the-database-schema"><span class="header-section-number">2.1</span> <a id="schema"></a> Developing the database schema</h2>
+<h2 id="developing-the-database-schema"><span class="header-section-number">2.1</span> Developing the database schema</h2>
 <p>For the purpose of this lecture, let's say you want to store individuals and their genotypes. In Excel, you could create a sheet that looks like this:</p>
 <table>
 <thead>
@@ -110,9 +112,9 @@
 </tbody>
 </table>
 <p>So let's create a relational database to store this data.</p>
-<p><code>jan@evopserver ~ $ sqlite3 test.sqlite</code></p>
+<pre><code>jan@evopserver ~ $ sqlite3 test.sqlite</code></pre>
 <p>We can get help using .help:</p>
-<p><code>sqlite&gt; .help</code></p>
+<pre><code>sqlite&gt; .help</code></pre>
 <p>We first create a table, and insert that data (we'll come back to the exact syntax later):</p>
 <pre><code>sqlite&gt; CREATE TABLE genotypes (individual STRING,
                                 ethnicity STRING,
@@ -146,9 +148,9 @@ sqlite&gt; INSERT INTO genotypes (individual, ethnicity, rs12345, rs12345_amb, c
 sqlite&gt; .headers on
 sqlite&gt; SELECT * FROM genotypes;</code></pre>
 <p>Done! For every new SNP we just add a new column, right? Wrong...</p>
-<h3 id="normal-forms"><span class="header-section-number">2.1.1</span> <a id="normal-forms"></a>Normal forms</h3>
+<h3 id="normal-forms"><span class="header-section-number">2.1.1</span> Normal forms</h3>
 <p>There are some good practices in developing relational database schemes which make it easier to work with the data afterwards. Some of these practices are represented in the &quot;normal forms&quot;.</p>
-<h4 id="first-normal-form"><span class="header-section-number">2.1.1.1</span> <a id="first-normal-form"></a>First normal form</h4>
+<h4 id="first-normal-form"><span class="header-section-number">2.1.1.1</span> First normal form</h4>
 <p>To get to the first normal form:</p>
 <ul>
 <li><strong>Eliminate duplicative columns</strong> from the same table</li>
@@ -248,7 +250,7 @@ sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype
 sqlite&gt; INSERT INTO genotypes (individual, ethnicity, snp, genotype, genotype_amb, chromosome, position)
                        VALUES (&#39;individual_B&#39;,&#39;caucasian&#39;,&#39;rs28465&#39;,&#39;G/G&#39;,&#39;G&#39;,&#39;1&#39;,28465);</code></pre>
 <p>The fact that <code>id</code> is defined as INTEGER PRIMARY KEY makes it increment automatically if not defined specifically. So loading data without explicitly specifying the value for id automatically takes care of everything.</p>
-<h4 id="second-normal-form"><span class="header-section-number">2.1.1.2</span> <a id="second-normal-form"></a>Second normal form</h4>
+<h4 id="second-normal-form"><span class="header-section-number">2.1.1.2</span> Second normal form</h4>
 <p>There is <strong>still a lot of duplication</strong> in this data. In record 1 we see that individual_A is of Caucasian ethnicity; a piece of information that is duplicated in records 2 and 3. The same goes for the positions of the SNPs. In records 1 and 4 we can see that the SNP rs12345 is located on chromosome 1 at position 12345. But what if afterwards we find an error in our data, and rs12345 is actually on chromosome 2 instead of 1. In a table as the one above we would have to look up all these records and change the value from 1 to 2. Enter the second normal form:</p>
 <ul>
 <li><strong>Remove subsets of data that apply to multiple rows</strong> of a table and place them in separate tables.</li>
@@ -392,7 +394,7 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,1,&#39;A/C&#39;,&#39;M&#39;);
 sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,2,&#39;G/G&#39;,&#39;G&#39;);
 sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb) VALUES (2,3,&#39;G/G&#39;,&#39;G&#39;);</code></pre>
-<h4 id="third-normal-form"><span class="header-section-number">2.1.1.3</span> <a id="third-normal-form"></a>Third normal form</h4>
+<h4 id="third-normal-form"><span class="header-section-number">2.1.1.3</span> Third normal form</h4>
 <p>In the third normal form, we try to <strong>eliminate unnecessary data</strong> from our database; data that could be <strong>calculated</strong> based on other things that are present. In our example table genotypes, the genotype and genotype_amb columns basically contain the same information, just using a different encoding. We could (should) therefore remove one of these. Our final <code>individuals</code> table would look like this:</p>
 <table>
 <thead>
@@ -496,7 +498,7 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 </tbody>
 </table>
 <p>To know what your database schema looks like, you can issue the <code>.schema</code> command in sqlite3. <code>.tables</code> gives you a list of the tables that are defined.</p>
-<h3 id="other-best-practices"><span class="header-section-number">2.1.2</span> <a id="best-practices"></a>Other best practices</h3>
+<h3 id="other-best-practices"><span class="header-section-number">2.1.2</span> Other best practices</h3>
 <p>There are some additional guidelines that you can use in creating your database schema, although different people use different guidelines. What I do:</p>
 <ul>
 <li><strong>No capitals</strong> in table or column names</li>
@@ -505,7 +507,39 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 <li>Any <strong>foreign key</strong> should be the **singular of the table name, plus &quot;_id&quot;**. So for example, a genotypes table can have a sample_id column which refers to the id column of the samples table.</li>
 </ul>
 <p>In some cases, I digress from the rule of &quot;every table name is plural&quot;, especially if a table is really meant to link to other tables together. A table genotypes which has an id, sample_id, snp_id, and genotype could e.g. also be called <code>sample2snp</code>.</p>
-<h2 id="structured-query-language"><span class="header-section-number">2.2</span> <a id="sql"></a>Structured Query Language</h2>
+<h3 id="schema-exercise"><span class="header-section-number">2.1.3</span> Schema exercise</h3>
+<p>In this exercise, we will define a schema to store expression data.</p>
+<p>The data is stored in two files: <code>Databases/exercises/RMAvalues0.05.txt</code> and <code>Databases/exercises/AffyAnnotation.clean</code>. The expression of a gene is measured using different probesets (see Figure). Each line in the RMAvalues file contains the expression values for a single probeset for all individuals. Each line in the AffyAnnotation file contains annotations for the probesets (which gene, location, etc).</p>
+<div class="figure">
+<img src="probesets.png" alt="Probeset data" /><p class="caption">Probeset data</p>
+</div>
+<p>Columns in RMAvalues0.05.txt:</p>
+<ul>
+<li>probeset</li>
+<li>human1</li>
+<li>human2</li>
+<li>human3</li>
+<li>human4</li>
+<li>chimp1</li>
+<li>chimp2</li>
+<li>chimp3</li>
+<li>chimp4</li>
+</ul>
+<p>Columns in AffyAnnotation.clean:</p>
+<ul>
+<li>probeset</li>
+<li>gene_symbol</li>
+<li>chromosomal_location</li>
+<li>ensembl</li>
+<li>omim</li>
+<li>go_biological_process</li>
+<li>go_cellular_component</li>
+<li>go_molecular_function</li>
+</ul>
+<p>Question: design a normalized database schema to store this data. Which tables would it contain? What would the columns be? How are the tables linked to each other?</p>
+<p><em>Tip</em>: The fact that the data is stored in 2 files is completely irrelevant. The question you have to ask yourself: what <em>types</em> of things are present in these files combined?</p>
+<p><em>Note</em>: This database will be used later in the R exercise.</p>
+<h2 id="sql---structured-query-language"><span class="header-section-number">2.2</span> SQL - Structured Query Language</h2>
 <p>Any interacting with data in RDBMS can happen through the Structured Query Language (SQL): create tables, insert data, search data, ... There are two subparts of SQL:</p>
 <p><strong><em>DDL - Data Definition Language:</em></strong></p>
 <pre><code>CREATE DATABASE test;
@@ -526,13 +560,13 @@ MAX(), MIN(), AVG()
 GROUP BY
 UNION, INTERSECT</code></pre>
 <p>We'll look closer at getting data into a database and then querying it, using these four SQL commands.</p>
-<h2 id="getting-data-in"><span class="header-section-number">2.3</span> <a id="getting-data-in"></a>Getting data in</h2>
-<h3 id="insert-into"><span class="header-section-number">2.3.1</span> <a id="insert-into"></a>INSERT INTO</h3>
+<h3 id="getting-data-in"><span class="header-section-number">2.2.1</span> Getting data in</h3>
+<h4 id="insert-into"><span class="header-section-number">2.2.1.1</span> INSERT INTO</h4>
 <p>There are several ways to load data into a database. The method used above is the most straightforward but inadequate if you have to load a large amount of data.</p>
 <p>It's basically:</p>
 <pre><code>sqlite&gt; INSERT INTO &lt;table_name&gt; (&lt;column_1&gt;, &lt;column_2&gt;, &lt;column_3&gt;)
                           VALUES (&lt;value_1&gt;, &lt;value_2&gt;, &lt;value_3&gt;);</code></pre>
-<h3 id="importing-a-datafile"><span class="header-section-number">2.3.2</span> <a id="import"></a>Importing a datafile</h3>
+<h4 id="importing-a-datafile"><span class="header-section-number">2.2.1.2</span> Importing a datafile</h4>
 <p>But this becomes an issue if you have to load 1,000s of records. Luckily, it's possible to load data from a <strong>comma-separated file</strong> straight into a table. Suppose you want to load 3 more individuals, but don't want to type the insert commands straight into the sql prompt. Create a file (e.g. called <code>data.csv</code>) that looks like this:</p>
 <pre><code>individual_C,african
 individual_D,african
@@ -586,26 +620,27 @@ sqlite&gt; DROP TABLE individuals_tmp;</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="using-scripting"><span class="header-section-number">2.3.3</span> <a id="scripted-import"></a>Using scripting</h3>
-<p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead…) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
-<h2 id="getting-data-out"><span class="header-section-number">2.4</span> <a id="getting-data-out"></a>Getting data out</h2>
-<h3 id="single-tables"><span class="header-section-number">2.4.1</span> <a id="single-tables"></a>Single tables</h3>
+<h4 id="using-scripting"><span class="header-section-number">2.2.1.3</span> Using scripting</h4>
+<p>There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead...) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.</p>
+<h3 id="getting-data-out"><span class="header-section-number">2.2.2</span> Getting data out</h3>
+<h4 id="queries"><span class="header-section-number">2.2.2.1</span> Queries</h4>
+<h5 id="single-tables"><span class="header-section-number">2.2.2.1.1</span> Single tables</h5>
 <p>It is very simple to query a single table. The <strong>basic syntax</strong> is:</p>
 <pre><code>SELECT &lt;column_name1, column_name2&gt; FROM &lt;table_name&gt; WHERE &lt;conditions&gt;;</code></pre>
-<p>If you want to see <strong>all columns</strong>, you can use **&quot;*&quot;<strong> instead of a list of column names, and you can leave out the WHERE clause. The </strong>simplest query** is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>. So the <code>&lt;column_name1, column_name2&gt;</code> defines slices the table vertically while the WHERE clause slices it horizontally.</p>
+<p>If you want to see <strong>all columns</strong>, you can use &quot;*&quot; instead of a list of column names, and you can leave out the WHERE clause. The <strong>simplest query</strong> is therefore <code>SELECT * FROM &lt;table_name&gt;;</code>. So the <code>&lt;column_name1, column_name2&gt;</code> defines slices the table vertically while the WHERE clause slices it horizontally.</p>
 <p>Data can be filtered using a <code>WHERE</code> clause. For example:</p>
 <pre><code>SELECT * FROM individuals WHERE ethnicity = &#39;african&#39;;
 SELECT * FROM individuals WHERE ethnicity = &#39;african&#39; OR ethnicity = &#39;caucasian&#39;;
 SELECT * FROM individuals WHERE ethnicity IN (&#39;african&#39;, &#39;caucasian&#39;);
 SELECT * FROM individuals WHERE ethnicity != &#39;asian&#39;;</code></pre>
-<p>You often just want to see a <strong>small subset of data</strong> just to make sure that you're looking at the right thing. In that case: add a <code>LIMIT</code> clause to the end of your query. Please <em>always</em> do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.</p>
+<p>You often just want to see a <strong>small subset of data</strong> just to make sure that you're looking at the right thing. In that case: add a <code>LIMIT</code> clause to the end of your query, which has the same effect as using <code>head</code> on the linux command-line. Please <em>always</em> do this if you don't know what your table looks like because you don't want to send millions of lines to your screen.</p>
 <pre><code>SELECT * FROM individuals LIMIT 5;
 SELECT * FROM individuals WHERE ethnicity = &#39;caucasian&#39; LIMIT 1;</code></pre>
 <p>If you just want know the <strong>number of records</strong> that would match your query, use <code>COUNT(*)</code>:</p>
 <pre><code>SELECT COUNT(*) FROM individuals WHERE ethnicity = &#39;african&#39;;</code></pre>
 <p>Using the <code>GROUP BY</code> clause you can <strong>aggregate</strong> data. For example:</p>
 <pre><code>SELECT ethnicity, COUNT(*) from individuals GROUP BY ethnicity;</code></pre>
-<h3 id="combining-tables"><span class="header-section-number">2.4.2</span> <a id="combining-tables"></a>Combining tables</h3>
+<h5 id="combining-tables"><span class="header-section-number">2.2.2.1.2</span> Combining tables</h5>
 <p>In the second normal form we separated several aspects of the data in different tables. Ultimately, we want to combine that information of course. This is where the primary and foreign keys come in. Suppose you want to list all different SNPs, with the alleles that have been found in the population:</p>
 <pre><code>SELECT snp_id, genotype_amb FROM genotypes;</code></pre>
 <p>This isn't very informative, because we get the uninformative numbers for SNPs instead of SNP accession numbers. To run a query across tables, we have to call both tables in the FROM clause:</p>
@@ -623,7 +658,49 @@ SELECT * FROM individuals WHERE ethnicity = &#39;caucasian&#39; LIMIT 1;</code><
 FROM individuals i, snps s, genotypes g
 WHERE i.id = g.individual_id
 AND s.id = g.snp_id;</code></pre>
-<h3 id="join"><span class="header-section-number">2.4.3</span> <a id="join"></a>JOIN</h3>
+<p>Output looks like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">accession</th>
+<th align="left">genotype_amb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">rs12345</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="left">individual_A</td>
+<td align="left">rs98765</td>
+<td align="left">R</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">rs28465</td>
+<td align="left">K</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">rs12345</td>
+<td align="left">M</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_B</td>
+<td align="left">rs98765</td>
+<td align="left">G</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">rs28465</td>
+<td align="left">G</td>
+</tr>
+</tbody>
+</table>
+<h5 id="join"><span class="header-section-number">2.2.2.1.3</span> JOIN</h5>
 <p>Sometimes, though, we have to join tables in a different way. Suppose that our snps table contains SNPs that are nowhere mentioned in the genotypes table, but we still want to have them mentioned in our output:</p>
 <pre><code>sqlite&gt; INSERT INTO snps (accession, chromosome, position) VALUES (&#39;rs11223&#39;,&#39;2&#39;,11223);</code></pre>
 <p>If we run the following query:</p>
@@ -724,20 +801,97 @@ AND s.id = g.snp_id;</code></pre>
    ...&gt; FROM snps s LEFT OUTER JOIN genotypes g ON s.id = g.snp_id
    ...&gt; ORDER BY s.accession, g.genotype_amb;</code></pre>
 <p>gives:</p>
-<p>accession | genotype_amb :---------|:------------ rs11223 |<br />rs12345 | A rs12345 | M rs28465 | G rs28465 | K rs98765 | G rs98765 | R</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">accession</th>
+<th align="left">genotype_amb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">rs11223</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">rs12345</td>
+<td align="left">A</td>
+</tr>
+<tr class="odd">
+<td align="left">rs12345</td>
+<td align="left">M</td>
+</tr>
+<tr class="even">
+<td align="left">rs28465</td>
+<td align="left">G</td>
+</tr>
+<tr class="odd">
+<td align="left">rs28465</td>
+<td align="left">K</td>
+</tr>
+<tr class="even">
+<td align="left">rs98765</td>
+<td align="left">G</td>
+</tr>
+<tr class="odd">
+<td align="left">rs98765</td>
+<td align="left">R</td>
+</tr>
+</tbody>
+</table>
 <p>(Notice the extra line for rs11223!)</p>
 <p>A full outer join, finally, return all rows from the left table, and all rows from the right table, matching any rows that should be.</p>
-<h2 id="additional-functions"><span class="header-section-number">2.5</span> <a id="additional-functions"></a>Additional functions</h2>
-<h3 id="null"><span class="header-section-number">2.5.1</span> <a id="null"></a>NULL</h3>
+<h4 id="export-to-file"><span class="header-section-number">2.2.2.2</span> Export to file</h4>
+<p>Often you will want to export the output you get from an SQL-query to a file (e.g. CSV) on your operating system so that you can use that data for external analysis in R or for visualization. This is easy to do. Suppose that we want to export the first 5 lines of the snps table into a file called <code>5_snps.csv</code>. You do that like this:</p>
+<pre><code>sqlite&gt; .header on
+sqlite&gt; .mode csv
+sqlite&gt; .once 5_snps.csv
+sqlite&gt; SELECT * FROM snps LIMIT 5;</code></pre>
+<p>If you now exit the sqlite prompt (with <code>.quit</code>), you should see a file in the directory where you were that is called <code>5_snps.csv</code>.</p>
+<h3 id="additional-functions"><span class="header-section-number">2.2.3</span> Additional functions</h3>
+<h4 id="null"><span class="header-section-number">2.2.3.1</span> NULL</h4>
 <p>What if you want to search for something that is not there? What if you want to search for the SNPs that are not in genes?</p>
-<p>snp-id | gene :------|:---- rs1234 | gene_A rs2345 | gene_A rs3456 | gene_B rs4567 | rs6789 | gene_C rs7890 | gene_C</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">snp-id</th>
+<th align="left">gene</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">rs1234</td>
+<td align="left">gene_A</td>
+</tr>
+<tr class="even">
+<td align="left">rs2345</td>
+<td align="left">gene_A</td>
+</tr>
+<tr class="odd">
+<td align="left">rs3456</td>
+<td align="left">gene_B</td>
+</tr>
+<tr class="even">
+<td align="left">rs4567</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">rs6789</td>
+<td align="left">gene_C</td>
+</tr>
+<tr class="even">
+<td align="left">rs7890</td>
+<td align="left">gene_C</td>
+</tr>
+</tbody>
+</table>
 <p>We cannot <code>SELECT * FROM snps WHERE gene = &quot;&quot;;</code> because that is searching for an empty string which is not the same as a missing value. To get to rs4567 you can issue <code>SELECT * FROM snps WHERE gene IS NULL;</code> or to get the rest <code>SELECT * FROM snps WHERE GENE IS NOT NULL;</code>. Note that it is <code>IS NULL</code> and <strong>not</strong> <code>= NULL</code>...</p>
-<h3 id="and-or-in"><span class="header-section-number">2.5.2</span> <a id="and-or-in"></a>AND, OR, IN</h3>
+<h4 id="and-or-in"><span class="header-section-number">2.2.3.2</span> AND, OR, IN</h4>
 <p>Your queries might need to <strong>combine different conditions</strong>:</p>
 <pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; AND position &lt; 40000;
 sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; OR chromosome = &#39;5&#39;;
 sqlite&gt; SELECT * FROM snps WHERE chromosome IN (&#39;1&#39;,&#39;5&#39;);</code></pre>
-<h3 id="distinct"><span class="header-section-number">2.5.3</span> <a id="distinct"></a>DISTINCT</h3>
+<h4 id="distinct"><span class="header-section-number">2.2.3.3</span> DISTINCT</h4>
 <p>Whenever you want the <strong>unique values</strong> in a column: use DISTINCT in the SELECT clause:</p>
 <pre><code>sqlite&gt; SELECT genotype_amb FROM genotypes;
 genotype_amb
@@ -755,20 +909,19 @@ K
 M
 R</code></pre>
 <p>DISTINCT automatically sorts the results.</p>
-<h3 id="order-by"><span class="header-section-number">2.5.4</span> <a id="order-by"></a>ORDER BY</h3>
+<h4 id="order-by"><span class="header-section-number">2.2.3.4</span> ORDER BY</h4>
 <pre><code>sqlite&gt; SELECT * FROM snps ORDER BY chromosome;
 sqlite&gt; SELECT * FROM snps ORDER BY accession DESC;</code></pre>
-<h3 id="count"><span class="header-section-number">2.5.5</span> <a id="count"></a>COUNT</h3>
+<h4 id="count"><span class="header-section-number">2.2.3.5</span> COUNT</h4>
 <p>For when you want to count things:</p>
 <pre><code>sqlite&gt; SELECT COUNT(*) FROM genotypes WHERE genotype_amb = &#39;G&#39;;</code></pre>
-<h3 id="max-min-avg"><span class="header-section-number">2.5.6</span> <a id="max-min-avg"></a>MAX(), MIN(), AVG()</h3>
+<h4 id="max-min-avg"><span class="header-section-number">2.2.3.6</span> MAX(), MIN(), AVG()</h4>
 <p>...act as you would expect (only works with numbers, obviously):</p>
 <pre><code>sqlite&gt; SELECT MAX(position) FROM snps;</code></pre>
-<h3 id="group-by"><span class="header-section-number">2.5.7</span> <a id="group-by"></a>GROUP BY</h3>
+<h4 id="group-by"><span class="header-section-number">2.2.3.7</span> GROUP BY</h4>
 <p>GROUP BY can be very useful in that it first <strong>aggregates dat</strong>a. It is often used together with COUNT, MAX, MIN or AVG:</p>
 <pre><code>sqlite&gt; SELECT genotype_amb, COUNT(*) FROM genotypes GROUP BY genotype_amb;
-sqlite&gt; SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c 
-DESC;
+sqlite&gt; SELECT genotype_amb, COUNT(*) AS c FROM genotypes GROUP BY genotype_amb ORDER BY c DESC;
 sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER BY chromosome;</code></pre>
 <table>
 <thead>
@@ -822,7 +975,7 @@ sqlite&gt; SELECT chromosome, MAX(position) FROM snps GROUP BY chromosome ORDER 
 </tr>
 </tbody>
 </table>
-<h3 id="union-intersect"><span class="header-section-number">2.5.8</span> <a id="union-intersect"></a>UNION, INTERSECT</h3>
+<h4 id="union-intersect"><span class="header-section-number">2.2.3.8</span> UNION, INTERSECT</h4>
 <p>It is sometimes hard to get the exact rows back that you need using the WHERE clause. In such cases, it might be possible to construct the output based on taking the <strong>union or intersection</strong> of two or more different queries:</p>
 <pre><code>sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39;;
 sqlite&gt; SELECT * FROM snps WHERE position &lt; 40000;
@@ -845,15 +998,15 @@ sqlite&gt; SELECT * FROM snps WHERE chromosome = &#39;1&#39; INTERSECT SELECT * 
 </tr>
 </tbody>
 </table>
-<h3 id="like"><span class="header-section-number">2.5.9</span> <a id="like"></a>LIKE</h3>
+<h4 id="like"><span class="header-section-number">2.2.3.9</span> LIKE</h4>
 <p>Sometimes you want to make fuzzy matches. What if you're not sure if the ethnicity has a capital or not?</p>
 <pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity = &#39;African&#39;;</code></pre>
 <p>returns no results...</p>
 <pre><code>sqlite&gt; SELECT * FROM individuals WHERE ethnicity LIKE &#39;%frican&#39;;</code></pre>
-<h3 id="limit"><span class="header-section-number">2.5.10</span> <a id="limit"></a>LIMIT</h3>
+<h4 id="limit"><span class="header-section-number">2.2.3.10</span> LIMIT</h4>
 <p>If you only want to get the first 10 results back (e.g. to find out if your complicated query does what it should do without running the whole actual query), use LIMIT:</p>
 <pre><code>sqlite&gt;&gt; SELECT * FROM snps LIMIT 2;</code></pre>
-<h3 id="subqueries"><span class="header-section-number">2.5.11</span> <a id="subqueries"></a>Subqueries</h3>
+<h4 id="subqueries"><span class="header-section-number">2.2.3.11</span> Subqueries</h4>
 <p>As we mentioned in the beginning, the general setup of a SELECT is:</p>
 <pre><code>SELECT &lt;column_names&gt;
 FROM &lt;table&gt;
@@ -871,126 +1024,294 @@ WHERE &lt;condition&gt;;</code></pre>
    ...&gt; FROM (
    ...&gt;        SELECT DISTINCT genotype_amb
    ...&gt;        FROM genotypes);</code></pre>
-<h2 id="public-bioinformatics-databases"><span class="header-section-number">2.6</span> <a id="ensembl"></a>Public bioinformatics databases</h2>
+<h3 id="public-bioinformatics-databases"><span class="header-section-number">2.2.4</span> Public bioinformatics databases</h3>
 <p>Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.</p>
 <p>To access the last release of human from Ensembl: <code>mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37</code>. To get an overview of the tables that we can query: <code>show tables</code>.</p>
-<h2 id="drawbacks-of-relational-databases"><span class="header-section-number">2.7</span> <a id="drawbacks"></a>Drawbacks of relational databases</h2>
+<h3 id="views"><span class="header-section-number">2.2.5</span> Views</h3>
+<p>By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP <code>rs12345</code> in <code>individual_A</code> we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:</p>
+<pre><code>SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype_amb
+FROM individuals i, snps s, genotypes g
+WHERE i.id = g.individual_id
+AND s.id = g.snp_id;</code></pre>
+<p>Output looks like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">ethnicity</th>
+<th align="left">accession</th>
+<th align="left">chromosome</th>
+<th align="left">position</th>
+<th align="left">genotype_amb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs12345</td>
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs98765</td>
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">R</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">caucasian</td>
+<td align="left">rs28465</td>
+<td align="left">5</td>
+<td align="left">28465</td>
+<td align="left">K</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs12345</td>
+<td align="left">1</td>
+<td align="left">12345</td>
+<td align="left">M</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs98765</td>
+<td align="left">1</td>
+<td align="left">98765</td>
+<td align="left">G</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">caucasian</td>
+<td align="left">rs28465</td>
+<td align="left">5</td>
+<td align="left">28465</td>
+<td align="left">G</td>
+</tr>
+</tbody>
+</table>
+<p>There is however a way to make this easier: you can create <strong>views</strong> on the data. This basically saves the whole query and gives it a name. You do this by adding <code>CREATE VIEW some_name AS</code> to the front of the query, like this:</p>
+<pre><code>CREATE VIEW v_genotypes AS
+SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype_amb
+FROM individuals i, snps s, genotypes g
+WHERE i.id = g.individual_id
+AND s.id = g.snp_id;</code></pre>
+<p>You can think of this as if you had made a new table with the name <code>v_genotypes</code> that you can use just like any other table, for example:</p>
+<pre><code>SELECT *
+FROM v_genotypes g
+WHERE g.genotype_amb = &#39;R&#39;;</code></pre>
+<p>The difference with an actual table is, however, that the result of the view is actually not stored itself. Whenever you do <code>SELECT * FROM v_genotypes</code>, it will actually perform the whole query in the background.</p>
+<p>Note: to make sure that I can tell by the name if something is a table or a view, I always add a <code>v_</code> in front of the name that I give to the view.</p>
+<h4 id="pivot-tables"><span class="header-section-number">2.2.5.1</span> Pivot tables</h4>
+<p>In some cases, you want to violate the 1st normal form, and have different columns represent the same type of data. A typical example is when you want to analyze your data in R using a dataframe. Let's say we have expression values for different genes in different individuals. Being good programmers, we saved this data in the database like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">individual</th>
+<th align="left">gene</th>
+<th align="left">expression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">gene_A</td>
+<td align="left">2819</td>
+</tr>
+<tr class="even">
+<td align="left">individual_A</td>
+<td align="left">gene_B</td>
+<td align="left">1028</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_A</td>
+<td align="left">gene_C</td>
+<td align="left">3827</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">gene_A</td>
+<td align="left">1928</td>
+</tr>
+<tr class="odd">
+<td align="left">individual_B</td>
+<td align="left">gene_B</td>
+<td align="left">999</td>
+</tr>
+<tr class="even">
+<td align="left">individual_B</td>
+<td align="left">gene_C</td>
+<td align="left">1992</td>
+</tr>
+</tbody>
+</table>
+<p>In R, you will however probably want a dataframe that looks like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene</th>
+<th align="left">individual_A</th>
+<th align="left">individual_B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gene_A</td>
+<td align="left">2819</td>
+<td align="left">1928</td>
+</tr>
+<tr class="even">
+<td align="left">gene_B</td>
+<td align="left">1028</td>
+<td align="left">999</td>
+</tr>
+<tr class="odd">
+<td align="left">gene_C</td>
+<td align="left">3827</td>
+<td align="left">1992</td>
+</tr>
+</tbody>
+</table>
+<p>This is called a <em>pivot table</em>, and there are several ways to create these in SQLite. The method presented here is taken from http://bduggan.github.io/virtual-pivot-tables-opensqlcamp2009-talk/. To create such table (and store it in a view), you have to use <code>group_concat</code> and <code>group_by</code>:</p>
+<pre><code>CREATE VIEW v_pivot_expressions AS
+SELECT gene,
+       GROUP_CONCAT(CASE WHEN individual = &#39;individual_A&#39; THEN expression ELSE NULL END) AS individual_A,
+       GROUP_CONCAT(CASE WHEN individual = &#39;individual_B&#39; THEN expression ELSE NULL END) AS individual_B
+FROM expressions
+GROUP BY gene;</code></pre>
+<h3 id="sql-exercises"><span class="header-section-number">2.2.6</span> SQL exercises</h3>
+<p>Get the data ready:</p>
+<ol style="list-style-type: decimal">
+<li>Copy the file Databases/exercises/expressions/probesets.sqlite to your own workspace.</li>
+<li>In your own workspace, open the database using <code>sqlite3 probesets.sqlite</code></li>
+</ol>
+<p>Some questions to answer:</p>
+<ul>
+<li>Find out what the different tables are in the database, and what they look like.</li>
+<li>How many genes have no location?</li>
+<li>How many distinct omim genes are mentioned in the gene table?</li>
+<li>What is the gene with the most probesets?</li>
+<li>Create a view on the data (called <code>v_expressions</code>) that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">symbol</th>
+<th align="left">location</th>
+<th align="left">ensembl</th>
+<th align="left">omim</th>
+<th align="left">name</th>
+<th align="left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human1</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human2</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human3</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human4</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp1</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp2</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp3</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp4</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="odd">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human1</td>
+<td align="left">8.41163999867383</td>
+</tr>
+<tr class="even">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human2</td>
+<td align="left">8.41163999867383</td>
+</tr>
+</tbody>
+</table>
+<h2 id="drawbacks-of-relational-databases"><span class="header-section-number">2.3</span> Drawbacks of relational databases</h2>
 <p>Relational databases are great. They can be a big help in storing and organizing your data. But they are not the ideal solution in all situations.</p>
-<h3 id="scalability"><span class="header-section-number">2.7.1</span> <a id="scalability"></a>Scalability</h3>
+<h3 id="scalability"><span class="header-section-number">2.3.1</span> Scalability</h3>
 <p>Relational databases are only scalable in a limited way. The fact that you try to normalize your data (see <a href="#normal-forms">here</a>) means that your data is distributed over different tables. Any query on that data often requires extensive joins. This is OK, until you have tables with millions of rows. A join can in that case a <em>very</em> long time to run.</p>
 <p>[Although outside of the scope of this lecture.] One solution sometimes used is to go for a star-schema rather than a fully normalized schema. Or using a NoSQL database management system that is horizontally scalable (document-oriented, column-oriented or graph databases).</p>
-<h3 id="modeling"><span class="header-section-number">2.7.2</span> <a id="modeling"></a>Modeling</h3>
+<h3 id="modeling"><span class="header-section-number">2.3.2</span> Modeling</h3>
 <p>Some types of information are difficult to model when using a relational paradigm. In a relational database, different records can be linked across tables using foreign keys. If you're however really interested in the relations themselved (<em>e.g.</em> social graphs, protein-protein-interaction, …) you are much better of to use a real graph database (<em>e.g.</em> neo4j) instead of a relational database. In a graph database finding all neighbours-of-neighbours in a graph of 50 members (basically) takes as long as in a graph with 50 million members.</p>
-<h2 id="perl-dbi-for-future-reference"><span class="header-section-number">2.8</span> <a id="perl-dbi"></a>Perl-DBI (for future reference)</h2>
-<p>Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (e.g. Class::DBI, DBIx::Class, and Rose::DB::Object). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO DBI.</p>
-<p>Why would you want to access a database from within Perl? SQL is already a very strong language, so why add the difficulty of another layer on top of that? Actually, SQL can do a lot, but not everything. It has no support for control flow (while, foreach, ...; except in PL/SQL) and conditional branches (if, else). In addition, most programs that make use of a database are written in some other language like Perl. From Perl the programmer does the interaction with the user, with files, and so on. Perl also provides the program logic. And the interaction with the database is typically to execute some database commands, such as fetching data from the database and processing it using Perl's capabilities. The logic of the program may depend on the data found in the database, but it is Perl, not SQL, that provides most of this logic.</p>
-<h3 id="dbi-and-dbd"><span class="header-section-number">2.8.1</span> DBI and DBD</h3>
-<p>In Perl, a set of modules have been written that allow interaction with relational databases. DataBase Independent (DBI) is a module that handles most of the interaction from the program code; DataBase Dependent (or DataBase Driver; DBD) is a set of modules, different for each particular DBMS, that handles actually communicating with the DBMS.</p>
-<p>To use a MySQL database from Perl you need first to have MySQL installed and properly configured. This is not a Perl job, but a database administration job: you have to get MySQL and install it on your system and set up the appropriate user accounts and permissions.</p>
-<p>Then you have to install the Perl DBD driver for MySQL, as well as the Perl DBI module. The combination of MySQL (the DBMS), DBD (the particular driver for your DBMS), and DBI (the Perl interface to the DBI and DBMS), is what gives you the actual connection from Perl to the database, and enables you to send SQL statements to the database and retrieve results.</p>
-<h4 id="installing-dbi-and-dbd"><span class="header-section-number">2.8.1.1</span> Installing DBI and DBD</h4>
-<pre><code>perl -MCPAN -e shell
-cpan&gt; install DBI
-cpan&gt; install DBD::SQLite</code></pre>
-<h3 id="connecting-to-a-database"><span class="header-section-number">2.8.2</span> Connecting to a database</h3>
-<p>First thing we need is a database handle that we can use to pipe everything through:</p>
-<pre><code>#!/usr/bin/perl
-use strict;
-use warnings;
-use DBI;
-
-my $dbh = DBI-&gt;connect(&quot;dbi:SQLite:dbname=test.sqlite&quot;,     #DataSource Name DSN
-                       &quot;&quot;,                                  #username
-                       &quot;&quot;,                                  #password
-                       {AutoCommit =&gt; 1, RaiseError =&gt; 1})  #options
-          or die $DBI::errstr;</code></pre>
-<h3 id="do-something"><span class="header-section-number">2.8.3</span> Do something</h3>
-<p>The simplest way to do something in a database from Perl is to use do. It lets you do anything to the database that you could do in plain SQL. It doesn't really interact with you Perl program if you're selecting records, though:</p>
-<pre><code>$dbh-&gt;do(&lt;&lt;EOSQL)
-  INSERT INTO snps (accession, chromosome, position)
-  VALUES (&#39;rs99887&#39;, &#39;7&#39;, 99887);
-EOSQL</code></pre>
-<h3 id="slurp-data-from-database"><span class="header-section-number">2.8.4</span> Slurp data from database</h3>
-<p>In getting data from a database, we can run a query and retrieve all data in one large array using select_arrayref:</p>
-<pre><code>my @snps = @{$dbh-&gt;selectall_arrayref(&lt;&lt;&#39;EOSQL&#39;)};
-  SELECT accession, chromosome, position
-  FROM snps
-  WHERE chromosome = &#39;1&#39;
-EOSQL
-
-for my $snp (@snps) {
-  my ($acc, $chr, $pos) = @$snp;
-  #do something with this data...
-}</code></pre>
-<p><code>@snps</code> holds all data that matches the query, so will be large. Every element in <span class="citation">@snps</span> is an array reference.</p>
-<h3 id="getting-data-one-at-a-time"><span class="header-section-number">2.8.5</span> Getting data one at a time</h3>
-<p>But if you except to get a large dataset back, loading everything at once into memory is dangerous. In that case (or anytime, actually) you can use one-at-a-time selects:</p>
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
-  SELECT accession, chromosome, position
-  FROM snps
-  WHERE chromosome = &#39;1&#39;;
-EOSQL
-
-$sth-&gt;execute();
-while (my $snp = $sth-&gt;fetchrow_arrayref) {
-  my ($acc, $chr, $pos) = @$snp;
-  #do something with this data...
-}</code></pre>
-<p>This approach works in 3 steps: first you prepare the dataset by specifying the query, then you execute it, and finally you call the fetchrow_array method until it returns undef.</p>
-<h3 id="using-parameters"><span class="header-section-number">2.8.6</span> Using parameters</h3>
-<p>In the example above, we hard-coded that the query should be for chromosome 1. What if you want to make that a variable? What if we don't know yet at that point which chromosome to look for? To solve this problem, we can use placeholders:</p>
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
-  SELECT accession, chromosome, position
-  FROM snps
-  WHERE chromosome = ?;
-EOSQL
-
-my @numbers = (&#39;1&#39;,&#39;5&#39;);
-foreach my $c (@numbers) {
-  print &quot;Now querying for chromosome &quot;, $c, &quot;\n&quot;;
-  $sth-&gt;execute($c);
-  while (my $snp = $sth-&gt;fetchrow_arrayref) {
-    my ($acc, $chr, $pos) = @$snp;
-    print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
-  }
-}</code></pre>
-<p>In case you want to have two or more variables, just define them in the order that they appear in the SQL query:</p>
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
-  SELECT accession, chromosome, position
-  FROM snps
-  WHERE chromosome = ?
-  AND position &lt; ?;
-EOSQL
-
-$sth-&gt;execute(&#39;1&#39;, 40000);
-while (my $snp = $sth-&gt;fetchrow_arrayref) {
-  my ($acc, $chr, $pos) = @$snp;
-  print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
-}</code></pre>
-<h3 id="binding-variables"><span class="header-section-number">2.8.7</span> Binding variables</h3>
-<p>Another method for accessing the results from a query, is to bind columns to a variable, and then use fetch:</p>
-<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
-  SELECT accession, chromosome, position
-  FROM snps
-  WHERE chromosome = &#39;1&#39;;
-EOSQL
-
-$sth-&gt;execute();
-my ($acc, $chr, $pos);
-$sth-&gt;bind_columns(\$acc, \$chr, \$pos);
-while ($sth-&gt;fetch) {
-  #do something with acc, chr and pos
-}</code></pre>
-<h2 id="exercises"><span class="header-section-number">2.9</span> <a id="exercises"></a>Exercises</h2>
-<h3 id="database-schema-normalization"><span class="header-section-number">2.9.1</span> Database schema normalization</h3>
-<p>We'll use two files on the server that were used in previous lectures as well:</p>
-<ul>
-<li>Database-Intro/AffyAnnotation.clean</li>
-<li>Database-Intro/RMAvalues0.05.txt</li>
-</ul>
-<p>The RMAvalues0.05.txt file contains expression values for different individuals for a huge number of probesets. The AffyAnnotation.cleaned file has annotations for these probesets. We need to create a (normalized) database schema.</p>
-<p>In groups of 2, please draw a database scheme which we can discuss afterwards.</p>
-<h3 id="when-not-to-use-rdbms"><span class="header-section-number">2.9.2</span> When not to use RDBMS</h3>
+<h3 id="drawback-exercise"><span class="header-section-number">2.3.3</span> Drawback exercise</h3>
 <p>Suppose you want to model a social graph. People have names, and know other people. Every &quot;know&quot; is reciprocal (so if I know you then you know me). The data might look like this:</p>
 <pre><code>Tim knows Terry
 Tom knows Terry
@@ -1044,40 +1365,107 @@ Frits knows Fred</code></pre>
 </tbody>
 </table>
 <p>Given that you <em>really</em> want to have this in a relational database, how would you find out who are the friends of the friends of James?</p>
-<h3 id="querying-data---sql"><span class="header-section-number">2.9.3</span> Querying data - SQL</h3>
-<p>Get the data ready:</p>
-<ol style="list-style-type: decimal">
-<li>Copy the file Database-Intro/exercise.sqlite to your own workspace.</li>
-<li>Create a new sqlite database: <code>sqlite3 database-exercise</code></li>
-<li>Import the database dump: <code>.restore exercise.sqlite</code></li>
-</ol>
-<p>Some questions to answer:</p>
-<ul>
-<li>Find out what the different tables are in the database, and what they look like.</li>
-<li>How many genes have no location?</li>
-<li>How many distinct omim genes are mentioned in the gene table?</li>
-<li>What is the gene with the most probesets?</li>
-<li>Run a query on the database that returns the results shown below. Columns should be:</li>
-<li>probeset name</li>
-<li>gene symbol of the gene containing that probe</li>
-<li>location of that gene</li>
-<li>ensembl ID of that gene</li>
-<li>omim id of that gene</li>
-<li>sample name</li>
-<li>expression value for that sample for that probe</li>
-</ul>
-<p>Output should look like this:</p>
-<pre><code>name        symbol      location    ensembl          omim        name        value           
-----------  ----------  ----------  ---------------  ----------  ----------  ----------------
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human1      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human2      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human3      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      human4      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp1      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp2      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp3      6.75378974247776
-1007_s_at   DDR1        chr6p21.3   ENSG00000137332  600408      chimp4      6.75378974247776
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human1      8.41163999867383
-1053_at     RFC2        chr7q11.23  ENSG00000049541  600404      human2      8.41163999867383</code></pre>
-<h3 id="querying-data---perldbi"><span class="header-section-number">2.9.4</span> Querying data - Perl/DBI</h3>
-<p>Same questions, but now do this from within perl.</p>
+<h2 id="perl-dbi-for-future-reference"><span class="header-section-number">2.4</span> Perl-DBI (for future reference)</h2>
+<p>Interacting with data from the SQL command line is nice, but sometimes you want to integrate those queries into larger scripts, for example in Perl or Ruby. Here, we'll show how to use the perl DBI. There are some object-relation-mapping packages available for Perl (e.g. Class::DBI, DBIx::Class, and Rose::DB::Object). These are heavily based on Object-Oriented Perl. In this lecture, we'll go underneath all this and use the non-OO DBI.</p>
+<p>Why would you want to access a database from within Perl? SQL is already a very strong language, so why add the difficulty of another layer on top of that? Actually, SQL can do a lot, but not everything. It has no support for control flow (while, foreach, ...; except in PL/SQL) and conditional branches (if, else). In addition, most programs that make use of a database are written in some other language like Perl. From Perl the programmer does the interaction with the user, with files, and so on. Perl also provides the program logic. And the interaction with the database is typically to execute some database commands, such as fetching data from the database and processing it using Perl's capabilities. The logic of the program may depend on the data found in the database, but it is Perl, not SQL, that provides most of this logic.</p>
+<h3 id="dbi-and-dbd"><span class="header-section-number">2.4.1</span> DBI and DBD</h3>
+<p>In Perl, a set of modules have been written that allow interaction with relational databases. DataBase Independent (DBI) is a module that handles most of the interaction from the program code; DataBase Dependent (or DataBase Driver; DBD) is a set of modules, different for each particular DBMS, that handles actually communicating with the DBMS.</p>
+<p>To use a MySQL database from Perl you need first to have MySQL installed and properly configured. This is not a Perl job, but a database administration job: you have to get MySQL and install it on your system and set up the appropriate user accounts and permissions.</p>
+<p>Then you have to install the Perl DBD driver for MySQL, as well as the Perl DBI module. The combination of MySQL (the DBMS), DBD (the particular driver for your DBMS), and DBI (the Perl interface to the DBI and DBMS), is what gives you the actual connection from Perl to the database, and enables you to send SQL statements to the database and retrieve results.</p>
+<h4 id="installing-dbi-and-dbd"><span class="header-section-number">2.4.1.1</span> Installing DBI and DBD</h4>
+<pre><code>perl -MCPAN -e shell
+cpan&gt; install DBI
+cpan&gt; install DBD::SQLite</code></pre>
+<h3 id="connecting-to-a-database"><span class="header-section-number">2.4.2</span> Connecting to a database</h3>
+<p>First thing we need is a database handle that we can use to pipe everything through:</p>
+<pre><code>#!/usr/bin/perl
+use strict;
+use warnings;
+use DBI;
+
+my $dbh = DBI-&gt;connect(&quot;dbi:SQLite:dbname=test.sqlite&quot;,     #DataSource Name DSN
+                       &quot;&quot;,                                  #username
+                       &quot;&quot;,                                  #password
+                       {AutoCommit =&gt; 1, RaiseError =&gt; 1})  #options
+          or die $DBI::errstr;</code></pre>
+<h3 id="do-something"><span class="header-section-number">2.4.3</span> Do something</h3>
+<p>The simplest way to do something in a database from Perl is to use do. It lets you do anything to the database that you could do in plain SQL. It doesn't really interact with you Perl program if you're selecting records, though:</p>
+<pre><code>$dbh-&gt;do(&lt;&lt;EOSQL)
+  INSERT INTO snps (accession, chromosome, position)
+  VALUES (&#39;rs99887&#39;, &#39;7&#39;, 99887);
+EOSQL</code></pre>
+<h3 id="slurp-data-from-database"><span class="header-section-number">2.4.4</span> Slurp data from database</h3>
+<p>In getting data from a database, we can run a query and retrieve all data in one large array using select_arrayref:</p>
+<pre><code>my @snps = @{$dbh-&gt;selectall_arrayref(&lt;&lt;&#39;EOSQL&#39;)};
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = &#39;1&#39;
+EOSQL
+
+for my $snp (@snps) {
+  my ($acc, $chr, $pos) = @$snp;
+  #do something with this data...
+}</code></pre>
+<p><code>@snps</code> holds all data that matches the query, so will be large. Every element in <span class="citation">@snps</span> is an array reference.</p>
+<h3 id="getting-data-one-at-a-time"><span class="header-section-number">2.4.5</span> Getting data one at a time</h3>
+<p>But if you except to get a large dataset back, loading everything at once into memory is dangerous. In that case (or anytime, actually) you can use one-at-a-time selects:</p>
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = &#39;1&#39;;
+EOSQL
+
+$sth-&gt;execute();
+while (my $snp = $sth-&gt;fetchrow_arrayref) {
+  my ($acc, $chr, $pos) = @$snp;
+  #do something with this data...
+}</code></pre>
+<p>This approach works in 3 steps: first you prepare the dataset by specifying the query, then you execute it, and finally you call the fetchrow_array method until it returns undef.</p>
+<h3 id="using-parameters"><span class="header-section-number">2.4.6</span> Using parameters</h3>
+<p>In the example above, we hard-coded that the query should be for chromosome 1. What if you want to make that a variable? What if we don't know yet at that point which chromosome to look for? To solve this problem, we can use placeholders:</p>
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = ?;
+EOSQL
+
+my @numbers = (&#39;1&#39;,&#39;5&#39;);
+foreach my $c (@numbers) {
+  print &quot;Now querying for chromosome &quot;, $c, &quot;\n&quot;;
+  $sth-&gt;execute($c);
+  while (my $snp = $sth-&gt;fetchrow_arrayref) {
+    my ($acc, $chr, $pos) = @$snp;
+    print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
+  }
+}</code></pre>
+<p>In case you want to have two or more variables, just define them in the order that they appear in the SQL query:</p>
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = ?
+  AND position &lt; ?;
+EOSQL
+
+$sth-&gt;execute(&#39;1&#39;, 40000);
+while (my $snp = $sth-&gt;fetchrow_arrayref) {
+  my ($acc, $chr, $pos) = @$snp;
+  print $acc, &quot;-&quot;, $chr, &quot;-&quot;, $pos, &quot;\n&quot;;
+}</code></pre>
+<h3 id="binding-variables"><span class="header-section-number">2.4.7</span> Binding variables</h3>
+<p>Another method for accessing the results from a query, is to bind columns to a variable, and then use fetch:</p>
+<pre><code>my $sth = $dbh-&gt;prepare(&lt;&lt;&#39;EOSQL&#39;);
+  SELECT accession, chromosome, position
+  FROM snps
+  WHERE chromosome = &#39;1&#39;;
+EOSQL
+
+$sth-&gt;execute();
+my ($acc, $chr, $pos);
+$sth-&gt;bind_columns(\$acc, \$chr, \$pos);
+while ($sth-&gt;fetch) {
+  #do something with acc, chr and pos
+}</code></pre>
+<h3 id="perl-dbi-exercises"><span class="header-section-number">2.4.8</span> Perl-DBI exercises</h3>
+<p>Same questions as for the SQL part, but now do this from within perl.</p>
+</body>
+</html>
