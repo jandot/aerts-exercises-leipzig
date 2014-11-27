@@ -5,11 +5,28 @@ pre {
     padding: 0.5em;
 }
 
-tr, td {
+tr, td, th {
 	font-family: courier;
 	font-size: 90%;
+	border: 1px solid black;
 }
 
 h1, h2, h3, h4, h5 {
 	font-variant: small-caps;
+}
+
+h1 {
+	background-color: #74c476;
+}
+
+h2 {
+	background-color: #a1d99b;
+}
+
+h3 {
+	background-color: #c7e9c0;
+}
+
+h4 {
+	background-color: #edf8e9;
 }

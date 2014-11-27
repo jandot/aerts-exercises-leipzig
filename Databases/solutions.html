@@ -1,8 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="databases.css" type="text/css" />
+</head>
+<body>
 <h2 id="schema-exercise">Schema exercise</h2>
 <div class="figure">
 <img src="solution_schema.png" alt="Solution schema" /><p class="caption">Solution schema</p>
 </div>
 <h2 id="sql-exercises">SQL exercises</h2>
+<h3 id="simple-queries">Simple queries</h3>
 <ul>
 <li>Find out what the different tables are in the database, and what they look like.</li>
 </ul>
@@ -13,21 +25,134 @@
 .mode column
 SELECT * FROM probesets LIMIT 2;</code></pre>
 <ul>
+<li>Get 5 rows from the genes table.</li>
+</ul>
+<pre><code>SELECT * FROM genes LIMIT 5;</code></pre>
+<ul>
+<li>Get the row in the genes table with symbol HOXD4.</li>
+</ul>
+<pre><code>SELECT * FROM genes WHERE symbol = &#39;HOXD4&#39;;</code></pre>
+<ul>
+<li>What is the location of gene CCDC65?</li>
+</ul>
+<pre><code>SELECT location FROM genes WHERE symbol = &#39;CCDC65&#39;;</code></pre>
+<h3 id="counts-subqueries-etc">Counts, subqueries, etc</h3>
+<ul>
+<li>How many genes are there in the genes table?</li>
+</ul>
+<pre><code>SELECT COUNT(*) FROM genes;</code></pre>
+<ul>
+<li>How many genes are there on the p-arm of chromosome 16?</li>
+</ul>
+<pre><code>SELECT COUNT(*) FROM genes WHERE location LIKE &#39;chr16p%&#39;;</code></pre>
+<ul>
 <li>How many genes have no location?</li>
 </ul>
 <pre><code>SELECT COUNT(*) FROM genes WHERE location IS NULL;</code></pre>
 <ul>
-<li>How many distinct omim genes are mentioned in the gene table?</li>
+<li>Select the first 5 distinct omim numbers from the genes table.</li>
+</ul>
+<pre><code>SELECT DISTINCT omim
+FROM genes
+LIMIT 5;</code></pre>
+<ul>
+<li>How many distinct omim genes are mentioned in the genes table?</li>
 </ul>
 <pre><code>SELECT COUNT(*) FROM (SELECT DISTINCT omim FROM genes);</code></pre>
 <ul>
-<li>What is the gene with the most probesets?</li>
+<li>What is the gene with the most probesets? You are allowed 2 queries to find out.</li>
 </ul>
 <pre><code>SELECT gene_id, COUNT(*) AS c FROM probesets GROUP BY gene_id ORDER BY c DESC LIMIT 10;</code></pre>
 <p>=&gt; gene with gene_id 2447 has 34 probesets</p>
 <pre><code>SELECT * FROM genes WHERE id = 2447;</code></pre>
 <ul>
-<li>Create a view on the data (called <code>v_expressions</code>) that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.</li>
+<li>What is the maximal expression value in the expressions table?</li>
+</ul>
+<pre><code>SELECT MAX(value) FROM expressions;</code></pre>
+<ul>
+<li>Select the line in the expressions table with the maximum expression value.</li>
+</ul>
+<pre><code>SELECT * FROM expressions e
+WHERE e.value = (
+    SELECT MAX(value) FROM expressions
+);</code></pre>
+<h3 id="joins">Joins</h3>
+<ul>
+<li>Return the names of the first 5 probesets, including the symbols of the genes they are located in. Your output should be similar to this:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+</tr>
+<tr class="even">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+</tr>
+<tr class="odd">
+<td align="left">117_at</td>
+<td align="left">HSPA6</td>
+</tr>
+<tr class="even">
+<td align="left">121_at</td>
+<td align="left">PAX8</td>
+</tr>
+<tr class="odd">
+<td align="left">1255_g_at</td>
+<td align="left">GUCA1A</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT p.name, g.symbol
+FROM probesets p, genes g
+WHERE p.gene_id = g.id
+LIMIT 5;</code></pre>
+<ul>
+<li>Similar to the previous question... Return the names of the first 5 probesets, including the symbols of the genes they are located in. But now give the columns the following titles: &quot;probeset_name&quot; and &quot;gene_symbol&quot;. Your output should be similar to this:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">probeset_name</th>
+<th align="left">gene_symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+</tr>
+<tr class="even">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+</tr>
+<tr class="odd">
+<td align="left">117_at</td>
+<td align="left">HSPA6</td>
+</tr>
+<tr class="even">
+<td align="left">121_at</td>
+<td align="left">PAX8</td>
+</tr>
+<tr class="odd">
+<td align="left">1255_g_at</td>
+<td align="left">GUCA1A</td>
+</tr>
+</tbody>
+</table>
+<pre><code>SELECT p.name AS probeset_name, g.symbol AS gene_symbol
+FROM probesets p, genes g
+WHERE p.gene_id = g.id
+LIMIT 5;</code></pre>
+<ul>
+<li>Get output that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.</li>
 </ul>
 <table>
 <thead>
@@ -58,7 +183,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">human2</td>
-<td align="left">6.75378974247776</td>
+<td align="left">6.93265237339259</td>
 </tr>
 <tr class="odd">
 <td align="left">1007_s_at</td>
@@ -67,7 +192,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">human3</td>
-<td align="left">6.75378974247776</td>
+<td align="left">7.32799071182831</td>
 </tr>
 <tr class="even">
 <td align="left">1007_s_at</td>
@@ -76,7 +201,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">human4</td>
-<td align="left">6.75378974247776</td>
+<td align="left">6.95752478371924</td>
 </tr>
 <tr class="odd">
 <td align="left">1007_s_at</td>
@@ -85,7 +210,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">chimp1</td>
-<td align="left">6.75378974247776</td>
+<td align="left">5.31967484886285</td>
 </tr>
 <tr class="even">
 <td align="left">1007_s_at</td>
@@ -94,7 +219,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">chimp2</td>
-<td align="left">6.75378974247776</td>
+<td align="left">7.35806566868421</td>
 </tr>
 <tr class="odd">
 <td align="left">1007_s_at</td>
@@ -103,7 +228,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">chimp3</td>
-<td align="left">6.75378974247776</td>
+<td align="left">6.82392726516533</td>
 </tr>
 <tr class="even">
 <td align="left">1007_s_at</td>
@@ -112,7 +237,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000137332</td>
 <td align="left">600408</td>
 <td align="left">chimp4</td>
-<td align="left">6.75378974247776</td>
+<td align="left">6.2648525562143</td>
 </tr>
 <tr class="odd">
 <td align="left">1053_at</td>
@@ -130,7 +255,7 @@ SELECT * FROM probesets LIMIT 2;</code></pre>
 <td align="left">ENSG00000049541</td>
 <td align="left">600404</td>
 <td align="left">human2</td>
-<td align="left">8.41163999867383</td>
+<td align="left">8.34711445318181</td>
 </tr>
 </tbody>
 </table>
@@ -140,3 +265,120 @@ WHERE p.gene_id = g.id
 AND e.probeset_id = p.id
 AND e.sample_id = s.id
 LIMIT 10;</code></pre>
+<ul>
+<li>Same as the previous question, but create a view (named &quot;v_expressions&quot;) based on this query. A <code>SELECT * FROM v_expressions LIMIT 10;</code> should give the same output as before.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">symbol</th>
+<th align="left">location</th>
+<th align="left">ensembl</th>
+<th align="left">omim</th>
+<th align="left">name</th>
+<th align="left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human1</td>
+<td align="left">6.75378974247776</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human2</td>
+<td align="left">6.93265237339259</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human3</td>
+<td align="left">7.32799071182831</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">human4</td>
+<td align="left">6.95752478371924</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp1</td>
+<td align="left">5.31967484886285</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp2</td>
+<td align="left">7.35806566868421</td>
+</tr>
+<tr class="odd">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp3</td>
+<td align="left">6.82392726516533</td>
+</tr>
+<tr class="even">
+<td align="left">1007_s_at</td>
+<td align="left">DDR1</td>
+<td align="left">chr6p21.3</td>
+<td align="left">ENSG00000137332</td>
+<td align="left">600408</td>
+<td align="left">chimp4</td>
+<td align="left">6.2648525562143</td>
+</tr>
+<tr class="odd">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human1</td>
+<td align="left">8.41163999867383</td>
+</tr>
+<tr class="even">
+<td align="left">1053_at</td>
+<td align="left">RFC2</td>
+<td align="left">chr7q11.23</td>
+<td align="left">ENSG00000049541</td>
+<td align="left">600404</td>
+<td align="left">human2</td>
+<td align="left">8.34711445318181</td>
+</tr>
+</tbody>
+</table>
+<pre><code>CREATE VIEW v_expressions AS
+SELECT p.name, g.symbol, g.location, g.ensembl, g.omim, s.name, e.value
+FROM probesets p, genes g, samples s, expressions e
+WHERE p.gene_id = g.id
+AND e.probeset_id = p.id
+AND e.sample_id = s.id
+LIMIT 10;</code></pre>
+</body>
+</html>

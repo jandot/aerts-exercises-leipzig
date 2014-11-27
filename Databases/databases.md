@@ -12,7 +12,30 @@ For relational databases, I will discuss the basic concepts (tables, tuples, col
 There is a wide variety of database systems to store data, but the most-used in the relational database management system (RDBMS). These basically consist of tables that contain rows (which represent instance data) and columns (representing properties of that data). Any table can be thought of as an Excel-sheet.
 
 # Relational databases #
-Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each row containing an instance of the data, and each column representing different properties of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use **SQLite3**. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). `sqlite3 my_db.sqlite` is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...
+Relational databases are the most wide-spread paradigm used to store data. They use the concept of tables with each **row** containing an **instance of the data**, and each **column** representing different **properties** of that instance of data. Different implementations exist, include ones by Oracle and MySQL. For many of these (including Oracle and MySQL), you need to run a database server in the background. People (or you) can then connect to that server via a client. In this session, however, we'll use **SQLite3**. This RDBMS is much more lightweight; instead of relying on a database server, it holds all its data in a single file (and is in that respect more like MS Access). `sqlite3 my_db.sqlite` is the only thing you have to do to create a new database-file (named my_db.sqlite). SQLite is used by Firefox, Chrome, Android, Skype, ...
+
+## SQLite ##
+
+The relational database management system (RDBMS) that we will use is **SQLite**. It is very lightweight and easy to set up.
+
+To create a new database that you want to give the name 'new_database.sqlite', just call `sqlite3` with the new database name.
+```
+sqlite3 new_database.sqlite
+```
+The name of that file does not have to end with `.sqlite`, but it helps you to remember that this is an SQLite database. If you add tables and data in that database and quit, the data will automatically be saved.
+
+There are two types of commands that you can run within SQLite: **SQL commands** (the same as in any other relational database management system), and **SQLite-specific commands**. The latter start with a period, and do **not** have a semi-colon at the end, in contrast to SQL commands (see later).
+
+Some useful commands:
+
+* `.help` => Returns a list of the SQL-specific commands
+* `.tables` => Returns a list of tables in the database
+* `.schema` => Returns the schema of all tables
+* `.header on` => Add a header line in any output
+* `.mode column` => Align output data in columns instead of output as comma-separated values
+* `.quit`
+
+In all code snippets that follow below, the `sqlite>` at the front represents the sqlite prompt, and should *not* be typed in...
 
 ## Developing the database schema ##
 
@@ -23,16 +46,10 @@ individual | ethnicity | rs12345 | rs12345_amb | chr_12345 | pos_12345 | rs98765
 individual_A | caucasian | A/A | A | 1 | 12345 | A/G | R | 1 | 98765 | G/T | K | 5 | 28465
 individual_B | caucasian | A/C | M | 1 | 12345 | G/G | G | 1 | 98765 | G/G | G | 5 | 28465
 
-So let's create a relational database to store this data.
+So let's create a relational database to store this data in that exact format.
 
 ```
 jan@evopserver ~ $ sqlite3 test.sqlite
-```
-
-We can get help using .help:
-
-```
-sqlite> .help
 ```
 
 We first create a table, and insert that data (we'll come back to the exact syntax later):
@@ -230,7 +247,7 @@ In some cases, I digress from the rule of "every table name is plural", especial
 
 In this exercise, we will define a schema to store expression data.
 
-The data is stored in two files: `Databases/exercises/RMAvalues0.05.txt` and `Databases/exercises/AffyAnnotation.clean`. The expression of a gene is measured using different probesets (see Figure). 
+The data is stored in two files: `Databases/exercises/expressions/RMAvalues0.05.txt` and `Databases/exercises/expressions/AffyAnnotation.clean`. The expression of a gene is measured using different probesets (see Figure). 
 Each line in the RMAvalues file contains the expression values for a single probeset for all individuals. Each line in the AffyAnnotation file contains annotations for the probesets (which gene, location, etc).
 
 ![Probeset data](probesets.png)
@@ -247,6 +264,16 @@ Columns in RMAvalues0.05.txt:
 * chimp3
 * chimp4
 
+First 5 lines (`head -n5 RMAvalues0.05.txt`):
+
+```
+#probeset  Human1  Human2  Human3  Human4  Chimp1  Chimp2  Chimp3  Chimp4
+1007_s_at  6.7537  6.9326  7.3279  6.9575  5.3196  7.3580  6.8239  6.2648
+1053_at    8.4116  8.3471  8.2438  8.3200  8.8715  8.2700  8.4452  8.4362
+117_at     5.9137  4.9913  5.3139  7.0950  5.3874  5.7601  4.7575  5.1184
+121_at     6.7163  6.6314  6.9975  6.8237  6.6996  6.7241  6.7576  6.6707
+```
+
 Columns in AffyAnnotation.clean:
 
 * probeset
@@ -257,6 +284,16 @@ Columns in AffyAnnotation.clean:
 * go_biological_process
 * go_cellular_component
 * go_molecular_function
+
+First 5 lines (`head -n5 AffyAnnotation.clean`):
+
+```
+#probeset gene_symbol chromosomal_location ensembl          omim    go_biological_process  go_cellular_component  go_molecular_function
+1007_s_at DDR1        chr6p21.3            ENSG00000137332  600408  6468                   5887                   166
+1053_at   RFC2        chr7q11.23           ENSG00000049541  600404  6260                   5634                   166
+117_at    HSPA6       chr1q23              ENSG00000173110  140555  6457                                          166
+121_at    PAX8        chr2q12-q14          ENSG00000125618  167415  6183                   5634                   3700
+```
 
 Question: design a normalized database schema to store this data. Which tables would it contain? What would the columns be? How are the tables linked to each other?
 
@@ -360,7 +397,7 @@ id | name | ethnicity
 
 #### Using scripting ####
 
-There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead...) See Perl-DBI below where we devote a whole section to interfacing Perl to a database.
+There are different ways you can load data into an SQL database from scripting languages (I like to do this using Ruby, but as this is a Perl-oriented course we'll look at that instead...) See Perl-DBI below where we devote a whole section to interfacing Perl to a database. In addition, you will see how to talk to an SQLite database from R in one of the following lectures.
 
 ### Getting data out ###
 
@@ -374,7 +411,7 @@ It is very simple to query a single table. The **basic syntax** is:
 SELECT <column_name1, column_name2> FROM <table_name> WHERE <conditions>;
 ```
 
-If you want to see **all columns**, you can use "*" instead of a list of column names, and you can leave out the WHERE clause. The **simplest query** is therefore `SELECT * FROM <table_name>;`. So the `<column_name1, column_name2>` defines slices the table vertically while the WHERE clause slices it horizontally.
+If you want to see **all columns**, you can use "*" instead of a list of column names, and you can leave out the WHERE clause. The **simplest query** is therefore `SELECT * FROM <table_name>;`. So **the `<column_name1, column_name2>` defines slices the table vertically while the WHERE clause slices it horizontally**.
 
 Data can be filtered using a `WHERE` clause. For example:
 
@@ -706,6 +743,8 @@ Sqlite is a light-weight system for running relational databases. If you want to
 
 To access the last release of human from Ensembl: `mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37`. To get an overview of the tables that we can query: `show tables`.
 
+To access the `hg19` release of the UCSC database (which is also a MySQL database): `mysql --user=genome --host=genome-mysql.cse.ucsc.edu hg19`.
+
 ### Views ###
 
 By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP `rs12345` in `individual_A` we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:
@@ -786,29 +825,81 @@ GROUP BY gene;
 
 Get the data ready:
 
-1. Copy the file Databases/exercises/expressions/probesets.sqlite to your own workspace.
+1. Copy the file Databases/exercises/expressions/probesets.sqlite to your own workspace. Command to use: `cp /homes/orionsan/coevop/lectures/Databases/exercises/expressions/probesets.sqlite ~`
 1. In your own workspace, open the database using `sqlite3 probesets.sqlite`
 
 Some questions to answer:
 
+**Simple queries**
+
+* Get the help information using an SQLite-specific command.
 * Find out what the different tables are in the database, and what they look like.
+* Get 5 rows from the genes table.
+* Get the row in the genes table with symbol HOXD4.
+* What is the location of gene CCDC65?
+
+**Counts, subqueries, etc**
+
+* How many genes are there in the genes table?
+* How many genes are there on the p-arm of chromosome 16?
 * How many genes have no location?
-* How many distinct omim genes are mentioned in the gene table?
-* What is the gene with the most probesets?
-* Create a view on the data (called `v_expressions`) that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.
+* Select the first 5 distinct omim numbers from the genes table.
+* How many distinct omim genes are mentioned in the genes table?
+* What is the gene with the most probesets? You are allowed 2 queries to find out.
+* What is the maximal expression value in the expressions table?
+* Select the line in the expressions table with the maximum expression value.
+
+**Joins**
+
+* Return the names of the first 5 probesets, including the symbols of the genes they are located in. Your output should be similar to this:
+
+name | symbol
+:----|:----
+1007_s_at | DDR1      
+1053_at | RFC2      
+117_at | HSPA6     
+121_at | PAX8      
+1255_g_at | GUCA1A    
+
+* Similar to the previous question... Return the names of the first 5 probesets, including the symbols of the genes they are located in. But now give the columns the following titles: "probeset_name" and "gene_symbol". Your output should be similar to this:
+
+probeset_name | gene_symbol
+:----|:----
+1007_s_at | DDR1      
+1053_at | RFC2      
+117_at | HSPA6     
+121_at | PAX8      
+1255_g_at | GUCA1A    
+
+* Get output that looks like the one below. Columns are: probeset name, gene symbol, location, ensembl, omim, sample name, and expression value.
 
 name | symbol | location | ensembl | omim | name | value           
 :----|:-------|:---------|:--------|:-----|:-----|:-----
 1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human1 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human2 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human3 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human4 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp1 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp2 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp3 | 6.75378974247776
-1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp4 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human2 | 6.93265237339259
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human3 | 7.32799071182831
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human4 | 6.95752478371924
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp1 | 5.31967484886285
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp2 | 7.35806566868421
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp3 | 6.82392726516533
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp4 | 6.2648525562143
 1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human1 | 8.41163999867383
-1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human2 | 8.41163999867383
+1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human2 | 8.34711445318181
+
+* Same as the previous question, but create a view (named "v_expressions") based on this query. A `SELECT * FROM v_expressions LIMIT 10;` should give the same output as before.
+
+name | symbol | location | ensembl | omim | name | value           
+:----|:-------|:---------|:--------|:-----|:-----|:-----
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human1 | 6.75378974247776
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human2 | 6.93265237339259
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human3 | 7.32799071182831
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | human4 | 6.95752478371924
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp1 | 5.31967484886285
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp2 | 7.35806566868421
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp3 | 6.82392726516533
+1007_s_at | DDR1 | chr6p21.3 | ENSG00000137332 | 600408 | chimp4 | 6.2648525562143
+1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human1 | 8.41163999867383
+1053_at | RFC2 | chr7q11.23 | ENSG00000049541 | 600404 | human2 | 8.34711445318181
 
 ## Drawbacks of relational databases ##
 
