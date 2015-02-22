@@ -228,7 +228,7 @@ From this picture, we can deduce many things:
 * There are few domestic flights within Europe.
 * Longer flights (departure airports with larger radius) tend to leave in coastal regions
 
-## Interactivity
+## Interactivity and defining functions
 It is often the interactivity in data visualization that helps gaining insights in that data and finding new hypotheses. Up until now, we have generated static images. How can we add interactivity?
 
 As a first use case, say that we want the radius of the dots to depend on the position of the mouse instead of the distance of the flight: if our mouse is at the left of the image, all dots should be small; if it is at the right, they should be large. We will change the line `float r = map(distance,1,15406,3,15);` to include information on the mouse position.
@@ -243,6 +243,15 @@ void draw() {
   // code that has to be rerun constantly
 }
 ```
+
+A **function definition** (such as `setup` and `draw`) in Java always has the same elements:
+
+1. The **type of return value**
+1. The **name** of the function
+1. The types and names of **parameters**, between parentheses
+1. The **actual code** of the function, between curly braces
+
+Both the `setup()` and the `draw()` functions don't take any parameters, so we just use empty parentheses. Also, they do not return a specific value (an integer, a float, a boolean, ...), so we use the return type `void`.
 
 The `setup()` function is only run once; the `draw()` function is run by default 60 times per second.
 
@@ -645,7 +654,7 @@ class Flight {
     y = map(from_lat,-180,180,height-10,10);
   }
   
-  void showMe() {
+  void drawDepartureAirport() {
     ellipse(x,y,3,3);
   }
 }
@@ -660,13 +669,13 @@ void setup() {
 
 void draw() {
   background(255,255,255);
-  my_flight.showMe();
+  my_flight.drawDepartureAirport();
 }
 ```
 
 For simplicity's sake, we only draw a single flight in this example. So what did we do? We define the `Flight` class in lines 3 to 36. First, we tell Processing which properties a `flight` should have (lines 4 to 13), including the distance, latitudes, longitudes, etc. We also include `x` and `y` here. These are the x- and y-positions on the screen as we used before. Even though these are computed, they are specific for a flight and we can therefore calculate them in the creation method on lines 27-28 and look at them as any other property of a flight.
 
-In the `setup()` method, we create a new object/variable of the class `Flight`, that we give the name `my_flight`. Next, in the `draw()` method, we actually draw the flight (line 46). Notice here that we don't write `ellipse()` or anything drawing-specific here. We write `my_flight.draw()` because *any flight object knows how to draw itself*. The `showMe()` method definition on lines 31 to 33 returns an ellipse whenever that method is called.
+In the `setup()` method, we create a new object/variable of the class `Flight`, that we give the name `my_flight`. Next, in the `draw()` method, we actually draw the flight (line 46). Notice here that we don't write `ellipse()` or anything drawing-specific here. We write `my_flight.draw()` because *any flight object knows how to draw itself*. The `drawDepartureAiport()` method definition on lines 31 to 33 returns an ellipse whenever that method is called.
 
 #### Many flights
 
@@ -707,7 +716,7 @@ class Flight {
     y = map(from_lat,-180,180,height-10,10);
   }
   
-  void showMe() {
+  void drawDepartureAiport() {
     ellipse(x,y,3,3);
   }
 }
@@ -737,7 +746,7 @@ void setup() {
 void draw() {
   background(255,255,255);
   for ( Flight my_flight : flights ) {
-    my_flight.showMe();
+    my_flight.drawDepartureAiport();
   }
 }
 ```
@@ -752,13 +761,363 @@ But these are the really new things:
 * On line 1, we have to `import java.util.*;`. This is because the ArrayList is not part of the core code of Java.
 * On line 4, we create a variable named `flights`, which will be a list containing objects of the class `Flight`. I know, this looks like a very difficult way of writing this, but that's Java...
 * On lines 53 to 57, we create a new object/variable called `thisFlight` of the class `Flight`, and `add` it to the `flights` variable. So when the loop has finished, we have a variable `flights` which contains all the, well, flights.
-* On lines 63 to 65, we loop over all elements of the `flights` array. The `Flight flight : flights` means: take the next element from the `flights` array, give it the variable name `my_flight`, and we're telling it that `my_flight` will be of the class `Flight`. On line 64, we just tell `my_flight` to show itself with `showMe()`.
+* On lines 63 to 65, we loop over all elements of the `flights` array. The `Flight my_flight : flights` means: take the next element from the `flights` array, give it the variable name `my_flight`, and we're telling it that `my_flight` will be of the class `Flight`. On line 64, we just tell `my_flight` to show itself with `drawDepartureAiport()`.
 
 The resulting picture should be the same as that from script 5 (i.e. Figure 6).
 
 ### Using objects to link views
 
-TO BE DONE
+Now that we work with objects, we can start implementing *brushing and linking*. Let's first look at the brushing.
+
+#### Brushing
+
+Let's change the code from script 14 a bit, so that all objects that are in the vicinity (e.g. within 10 pixels) of the mouse position are "active". To do this, we'll (1) add a new function to the `Flight` class, which checks if an object (i.e. flight) is selected/activated or not, and (2) change the `drawDepartureAiport()` function a bit to distinguish between active and inactive objects.
+
+Add the following function to the `Flight` class:
+``` {.java .numberLines}
+boolean visible() {
+  if ( abs(mouseX-x) < 10 && abs(mouseY-y) < 10 ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+```
+
+And change the `drawDepartureAiport()` function to this:
+``` {.java .numberLines}
+void drawDepartureAiport() {
+  if ( visible() ) {
+    fill(255,0,0,25);
+  } else {
+    fill(0,0,255,10);
+  }
+  ellipse(x,y,3,3);
+}
+```
+
+You'll also have to either remove the `noLoop()` from the `setup()` method, or add a `void mouseMoved()` method just like in script 8. (Hint: the section option is better...)
+
+The `visible()` function returns either `true` or `false`, depending on the mouse position. Therefore, we set the type of the function as `boolean`. We can then use that boolean in the `drawDepartureAiport()` function: `if ( visible() ) {}`.
+
+Your resulting code will look like script 15 below. All airports will be in blue, except the ones in the vicinity of the mouse position which will be red.
+
+*Script 15*
+``` {.java .numberLines}
+import java.util.*;
+
+Table table;
+ArrayList<Flight> flights = new ArrayList<Flight>();
+
+class Flight {
+  int distance;
+  float from_long;
+  float from_lat;
+  float to_long;
+  float to_lat;
+  String from_country;
+  String to_country;
+  boolean domestic;
+  float x;
+  float y;
+  
+  Flight(int d,
+         float f_long, float f_lat,
+         float t_long, float t_lat,
+         String f_country, String t_country) {
+    distance = d;
+    from_long = f_long;
+    from_lat = f_lat;
+    to_long = t_long;
+    to_lat = t_lat;
+    from_country = f_country;
+    to_country = t_country;
+    
+    x = map(from_long,-180,180,10,width-10);
+    y = map(from_lat,-180,180,height-10,10);
+  }
+  
+  boolean visible() {
+    if ( abs(mouseX-x) < 10 && abs(mouseY-y) < 10 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  void drawDepartureAiport() {
+    if ( visible() ) {
+      fill(255,0,0,25);
+    } else {
+      fill(0,0,255,10);
+    }
+    ellipse(x,y,3,3);
+  }
+}
+
+void setup() {
+  size(800,800);
+  fill(0,0,255,10);
+  table = loadTable("flights.csv","header");
+  noStroke();
+  noLoop();
+  for ( TableRow row : table.rows() ) {
+    int distance = row.getInt("distance");
+    float from_long = row.getFloat("from_long");
+    float from_lat = row.getFloat("from_lat");
+    float to_long = row.getFloat("to_long");
+    float to_lat = row.getFloat("to_lat");
+    String from_country = row.getString("from_country");
+    String to_country = row.getString("to_country");
+    Flight thisFlight = new Flight(distance,
+                                   from_long, from_lat,
+                                   to_long, to_lat,
+                                   from_country, to_country);
+    flights.add(thisFlight);
+  }
+}  
+
+void draw() {
+  background(255,255,255);
+  for ( Flight my_flight : flights ) {
+    my_flight.drawDepartureAiport();
+  }
+}
+
+void mouseMoved() {
+  redraw();
+}
+```
+
+#### Linking
+
+Now that we have the *brushing* working, let's create a proof of principle for the linking. To make this work, we'll first use a rather useless example, where we draw not one, but two maps of the world. But brushing airports in the first map will highlight them in the second map. We'll make the map a quarter of the size by only using half of the width and half of the height for each. What will we have to change relative to script 15?
+
+* The calculation of `x` and `y` for each airport will have to be changed. Instead of just creating just one x and y for a flight, we now need two: `x1`, `y1`, and `x2`, `y2`. The map function should now not rescale the values from -180 and 180 to (in the case of width) `10` and `(width-10)`, but from `10` to `(width/2 - 10)`. The values for x2 can then range from `(width/2 + 10)` to `(width - 10)`. We do the same for `y1` and `y2`.
+* The `drawDepartureAiport()` function will draw each airport twice. Once using `x1` and `y1`, and once using `x2` and `y2`.
+
+Here's an overview of what we want to look the visualization like. At the top left, we want picture 1; at the bottom right we want picture 2. The `x` positions for picture 1 range from `0` to `width/2`; the `x` positions for picture 2 range from `width/2` to `width`. The same applies for the `y` positions of both.
+
+![Schematic overview of picture placement and position ranges](images/brushinglinking_scheme.png)
+
+So we get the code like this:
+
+*Script 16*
+```{.java .numberLines}
+import java.util.*;
+
+Table table;
+ArrayList<Flight> flights = new ArrayList<Flight>();
+
+class Flight {
+  int distance;
+  float from_long;
+  float from_lat;
+  float to_long;
+  float to_lat;
+  String from_country;
+  String to_country;
+  boolean domestic;
+  float x1;
+  float y1;
+  float x2;
+  float y2;
+  
+  Flight(int d,
+         float f_long, float f_lat,
+         float t_long, float t_lat,
+         String f_country, String t_country) {
+    distance = d;
+    from_long = f_long;
+    from_lat = f_lat;
+    to_long = t_long;
+    to_lat = t_lat;
+    from_country = f_country;
+    to_country = t_country;
+    
+    x1 = map(from_long,-180,180,10,(width/2)-10);
+    y1 = map(from_lat,-180,180,(height/2)-10,10);
+    x2 = map(from_long,-180,180,(width/2) + 10,width-10);
+    y2 = map(from_lat,-180,180,height-10,(height/2)+10);
+  }
+  
+  boolean visible() {
+    if ( abs(mouseX-x1) < 10 && abs(mouseY-y1) < 10 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  void drawDepartureAiport() {
+    if ( visible() ) {
+      fill(255,0,0,25);
+    } else {
+      fill(0,0,255,10);
+    }
+    ellipse(x1,y1,3,3);
+    ellipse(x2,y2,3,3);
+  }
+}
+
+void setup() {
+  size(800,800);
+  fill(0,0,255,10);
+  table = loadTable("flights.csv","header");
+  noStroke();
+  noLoop();
+  for ( TableRow row : table.rows() ) {
+    int distance = row.getInt("distance");
+    float from_long = row.getFloat("from_long");
+    float from_lat = row.getFloat("from_lat");
+    float to_long = row.getFloat("to_long");
+    float to_lat = row.getFloat("to_lat");
+    String from_country = row.getString("from_country");
+    String to_country = row.getString("to_country");
+    Flight thisFlight = new Flight(distance,
+                                   from_long, from_lat,
+                                   to_long, to_lat,
+                                   from_country, to_country);
+    flights.add(thisFlight);
+  }
+}  
+
+void draw() {
+  background(255,255,255);
+  for ( Flight my_flight : flights ) {
+    my_flight.drawDepartureAiport();
+  }
+}
+
+void mouseMoved() {
+  redraw();
+}
+```
+
+The lines in the code that have changed relative to script 15 are: lines 15 to 18, lines 32 to 35 and lines 52-53. You should see an image similar to this (without the annotated text):
+
+![Brushing and linking](images/brushinglinking.png)
+
+This visualization is not really useful. But how about we draw the departure airport in the top-left, and the arrival airport in the bottom-right. Brushing a group of departure airports in the top-left would then highlight the arrival airports in the bottom-right.
+
+To do this, we 
+
+*Script 17*
+``` {.java .numberLines}
+import java.util.*;
+
+Table table;
+ArrayList<Flight> flights = new ArrayList<Flight>();
+
+class Flight {
+  int distance;
+  float from_long;
+  float from_lat;
+  float to_long;
+  float to_lat;
+  String from_country;
+  String to_country;
+  boolean domestic;
+  float x1;
+  float y1;
+  float x2;
+  float y2;
+  
+  Flight(int d,
+         float f_long, float f_lat,
+         float t_long, float t_lat,
+         String f_country, String t_country) {
+    distance = d;
+    from_long = f_long;
+    from_lat = f_lat;
+    to_long = t_long;
+    to_lat = t_lat;
+    from_country = f_country;
+    to_country = t_country;
+    
+    x1 = map(from_long,-180,180,10,(width/2)-10);
+    y1 = map(from_lat,-180,180,(height/2)-10,10);
+    x2 = map(to_long,-180,180,(width/2) + 10,width-10);
+    y2 = map(to_lat,-180,180,height-10,(height/2)+10);
+  }
+  
+  boolean visible() {
+    if ( abs(mouseX-x1) < 10 && abs(mouseY-y1) < 10 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void drawDepartureAirport() {
+    if ( visible() ) {
+      fill(255,0,0,25);
+    } else {
+      fill(0,0,255,10);
+    }
+    ellipse(x1,y1,3,3);
+  }
+  
+  void drawArrivalAirport() {
+    if ( visible() ) {
+      fill(255,0,0,50);
+    } else {
+      fill(0,0,255,1);
+    }
+    ellipse(x2,y2,3,3);
+  }
+  
+  void drawAirports() {
+    drawDepartureAirport();
+    drawArrivalAirport();    
+  }
+}
+
+void setup() {
+  size(800,800);
+  fill(0,0,255,10);
+  table = loadTable("flights.csv","header");
+  noStroke();
+  noLoop();
+  for ( TableRow row : table.rows() ) {
+    int distance = row.getInt("distance");
+    float from_long = row.getFloat("from_long");
+    float from_lat = row.getFloat("from_lat");
+    float to_long = row.getFloat("to_long");
+    float to_lat = row.getFloat("to_lat");
+    String from_country = row.getString("from_country");
+    String to_country = row.getString("to_country");
+    Flight thisFlight = new Flight(distance,
+                                   from_long, from_lat,
+                                   to_long, to_lat,
+                                   from_country, to_country);
+    flights.add(thisFlight);
+  }
+}  
+
+void draw() {
+  background(255,255,255);
+  for ( Flight my_flight : flights ) {
+    my_flight.drawAirports();
+  }
+}
+
+void mouseMoved() {
+  redraw();
+}
+```
+
+Let's see what changed compared to script 16:
+
+* We changed the calculation of `x2` and `y2` to use `to_long` and `to_lat` instead of `from_long` and `from_lat` (lines 34 and 35).
+* We removed the instruction to draw an ellipse at position `(x2,y2)` from the `drawDepartureAirport()` function (lines 46 to 53).
+* We created a new function `drawArrivalAirport()` (lines 55 to 62). We also set the colour in this function to be very transparent (opacity set to `1` instead of `10`), so that it is more clear which of the airports is active.
+* We created a new function `drawAirports()` (lines 64 to 67), which basically just calls the `drawDepartureAirport()` and `drawArrivalAirport()` functions.
+* In the `draw()` function, we replace `my_flight.drawDepartureAirport()` with `my_flight.drawAirports()` so that both plots are made.
+
+The resulting figure should look like this (without the annotated text):
+
+![Brushing and linking between departure and arrival airports](images/brushinglinking2.png)
 
 # Whereto from here?
 
