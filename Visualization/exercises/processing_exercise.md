@@ -1,7 +1,9 @@
 % Hands-on exercise data visualization
 % Jan Aerts, Visual Data Analysis Lab, KU Leuven - http://vda-lab.be
 
-In this exercise, we will use the Processing tool ([http://processing.org](http://processing.org)) to generate visualizations based on a flights dataset. This tutorial holds numerous code snippets that can by copy/pasted and modified for your own purpose.
+In this exercise, we will use the Processing tool ([http://processing.org](http://processing.org)) to generate visualizations based on a flights dataset. This tutorial holds numerous code snippets that can by copy/pasted and modified for your own purpose. The contents of this tutorial is available under the CC-BY license.
+
+![](images/ccby.png)
 
 ![flights](images/flights_double.png)
 
@@ -15,7 +17,7 @@ Processing can be downloaded from [http://processing.org/download/](http://proce
 
 * For Windows: Double-click the zip-file; there should be a `processing.exe` file which is your program.
 * For Mac: Just double-click the downloaded file.
-* For linux: 
+* For linux: Download the `.tgz` file, and run `tar -xvzf that_file.tgz`.
 
 ## A minimal script
 A minimal script is provided below.
@@ -539,7 +541,7 @@ void mouseDragged() {
 
 So what changed? We now define a variable (a float) called `circlePosition` at the top and set its initial value to 50 on line [8]. At the start of the `draw()` function [13-17], we also draw a line that will serve as a guide as well as the actual circle. Furthermore, we change lines [21-24] to refer to the `circlePosition` instead of `mouseX`. Note that that includes using +/- 2 instead of +/- 25 as a buffer, and using the minimum and maximum values of the line (i.e. 50 and 150) instead of those of the mouse in the map functions. Finally, we write the `mouseDragged()` function at the bottom (lines [45-52]). A "mouse-drag" in Processing-speak means: pressing the mouse button, then moving the mouse to another position, and finally releasing the mouse button. The `mouseDragged()` function looks a lot like the `mouseClicked()` function in script 10. We want to make sure that we are on top of the circle when we start dragging (both horizontally [46] and vertically [47]). Also, we need to make sure that we cannot drag the circle further than the minimum or maximum value [48]. If the situation complies to these three conditions, we change the `circlePosition` to `mouseX`, which basically means that the circle follows the mouse. Don't forget the `redraw()` or the scene will not be updated. Question: what happens if you drag the mouse too fast? Why is that? And just for laughs: remove the conditions on line [48] and see what happens if you start interacting with the visualization...
 
-## Linked views
+## Brushing and linking
 
 Very often, you will want to create views that show different aspects of the same data. In our flights case, we might want to have both a map and a histogram of the flight distances. To be able to do this, we will have to look at how to create objects.
 
@@ -765,7 +767,7 @@ But these are the really new things:
 
 The resulting picture should be the same as that from script 5 (i.e. Figure 6).
 
-### Using objects to link views
+### Linking two copies of the departure plots
 
 Now that we work with objects, we can start implementing *brushing and linking*. Let's first look at the brushing.
 
@@ -776,7 +778,7 @@ Let's change the code from script 14 a bit, so that all objects that are in the 
 Add the following function to the `Flight` class:
 ``` {.java .numberLines}
 boolean visible() {
-  if ( abs(mouseX-x) < 10 && abs(mouseY-y) < 10 ) {
+  if ( dist(mouseX, mouseY, x, y) < 10 ) {
     return true;
   } else {
     return false;
@@ -838,7 +840,7 @@ class Flight {
   }
   
   boolean visible() {
-    if ( abs(mouseX-x) < 10 && abs(mouseY-y) < 10 ) {
+    if ( dist(mouseX, mouseY, x, y) < 10 ) {
       return true;
     } else {
       return false;
@@ -898,7 +900,7 @@ Now that we have the *brushing* working, let's create a proof of principle for t
 
 Here's an overview of what we want to look the visualization like. At the top left, we want picture 1; at the bottom right we want picture 2. The `x` positions for picture 1 range from `0` to `width/2`; the `x` positions for picture 2 range from `width/2` to `width`. The same applies for the `y` positions of both.
 
-![Schematic overview of picture placement and position ranges](images/brushinglinking_scheme.png)
+![Schematic overview of picture placement and position ranges](images/figure13.pdf)
 
 So we get the code like this:
 
@@ -942,7 +944,7 @@ class Flight {
   }
   
   boolean visible() {
-    if ( abs(mouseX-x1) < 10 && abs(mouseY-y1) < 10 ) {
+    if ( dist(mouseX, mouseY, x, y) < 10 ) {
       return true;
     } else {
       return false;
@@ -998,9 +1000,9 @@ The lines in the code that have changed relative to script 15 are: lines 15 to 1
 
 ![Brushing and linking](images/brushinglinking.png)
 
-This visualization is not really useful. But how about we draw the departure airport in the top-left, and the arrival airport in the bottom-right. Brushing a group of departure airports in the top-left would then highlight the arrival airports in the bottom-right.
+### Linking departure to arrival airports
 
-To do this, we 
+This visualization is not really useful. But how about we draw the departure airport in the top-left, and the arrival airport in the bottom-right. Brushing a group of departure airports in the top-left would then highlight the arrival airports in the bottom-right.
 
 *Script 17*
 ``` {.java .numberLines}
@@ -1042,7 +1044,7 @@ class Flight {
   }
   
   boolean visible() {
-    if ( abs(mouseX-x1) < 10 && abs(mouseY-y1) < 10 ) {
+    if ( dist(mouseX, mouseY, x, y) < 10 ) {
       return true;
     } else {
       return false;
@@ -1118,6 +1120,174 @@ Let's see what changed compared to script 16:
 The resulting figure should look like this (without the annotated text):
 
 ![Brushing and linking between departure and arrival airports](images/brushinglinking2.png)
+
+### Using a histogram as a filter
+
+As a final version of a brushing-and-linking plot, we'll include a histogram in the picture. By hovering over the different bars in the histogram we can filter airports in the departure and arrival subplots. Let's first look at the code:
+
+*Script 18*
+``` {.java .numberLines}
+import java.util.*;
+
+Table table;
+ArrayList<Flight> flights = new ArrayList<Flight>();
+int activeHistBin;
+Histogram hist;
+
+class Flight {
+  int distance;
+  float from_long;
+  float from_lat;
+  float to_long;
+  float to_lat;
+  String from_country;
+  String to_country;
+  boolean domestic;
+  float x1;
+  float y1;
+  float x2;
+  float y2;
+  
+  Flight(int d,
+         float f_long, float f_lat,
+         float t_long, float t_lat,
+         String f_country, String t_country) {
+    distance = d;
+    from_long = f_long;
+    from_lat = f_lat;
+    to_long = t_long;
+    to_lat = t_lat;
+    from_country = f_country;
+    to_country = t_country;
+    
+    x1 = map(from_long,-180,180,10,(width/2)-10);
+    y1 = map(from_lat,-180,180,(height/2)-10,10);
+    x2 = map(to_long,-180,180,10,(width/2)-10);
+    y2 = map(to_lat,-180,180,height-10,(height/2)+10);
+  }
+  
+  boolean visible() {
+    if ( distance/1000 == activeHistBin ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void drawDepartureAirport() {
+    if ( visible() ) {
+      fill(255,0,0,25);
+    } else {
+      fill(0,0,255,10);
+    }
+    ellipse(x1,y1,3,3);
+  }
+  
+  void drawArrivalAirport() {
+    if ( visible() ) {
+      fill(255,0,0,50);
+    } else {
+      fill(0,0,255,1);
+    }
+    ellipse(x2,y2,3,3);
+  }
+  
+  void drawAirports() {
+    drawDepartureAirport();
+    drawArrivalAirport();    
+  }
+}
+
+class Histogram {
+  // We'll draw the histogram starting at position 50, with
+  // each of the bins being 5 pixels wide.
+  // The histogram will have 16 bins.
+  
+  int[] data = new int[16];
+  
+  Histogram() {
+    for ( TableRow row : table.rows() ) {
+      int distance = row.getInt("distance");
+      int bin = distance/1000;
+      data[bin] += 1;
+    }
+  }
+  
+  int active() {
+    if ( mouseY > 400 && mouseY < 700 && mouseX > (width/2) + 50 && mouseX < (width/2) + 130 ) {
+      return (mouseX - width/2 - 50)/10;      
+    } else {
+      return 17;      
+    }
+  }
+  
+  void show() {
+    float x;
+    float binHeight;
+    
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( i == activeHistBin ) {
+        fill(255,0,0,100);
+      } else {
+        fill(0,0,0,100);
+      }
+      x = width/2 + 50+i*10;
+      binHeight = map(data[i], 0, 26154, 0, -300);
+      rect(x,700,8,binHeight);
+    }
+  }
+}
+
+void setup() {
+  size(800,800);
+  fill(0,0,255,10);
+  table = loadTable("flights.csv","header");
+  noStroke();
+  noLoop();
+  hist = new Histogram();
+  
+  for ( TableRow row : table.rows() ) {
+    int distance = row.getInt("distance");
+    float from_long = row.getFloat("from_long");
+    float from_lat = row.getFloat("from_lat");
+    float to_long = row.getFloat("to_long");
+    float to_lat = row.getFloat("to_lat");
+    String from_country = row.getString("from_country");
+    String to_country = row.getString("to_country");
+    Flight thisFlight = new Flight(distance,
+                                   from_long, from_lat,
+                                   to_long, to_lat,
+                                   from_country, to_country);
+    flights.add(thisFlight);
+  }
+  
+  activeHistBin = 0;
+}  
+
+void draw() {
+  background(255,255,255);
+  noStroke();
+  activeHistBin = hist.active();
+  hist.show();
+  println(activeHistBin);
+  for ( Flight my_flight : flights ) {
+    my_flight.drawAirports();
+  }
+}
+
+void mouseMoved() {
+  redraw();
+}
+```
+
+The approach we take in this plot is the following: if the user hovers over the histogram, the selected bar is saved in a variable called `activeHistBin`, which is then used in the `visible()` method of the flights. The resulting picture will look something like this:
+
+![Linked views with histogram](images/linked_with_histogram.png)
+
+Let's see how that last script is different from script 17...
+
+* We create a new class `Histogram` (lines 72 to 110)that holds an array consisting of 16 integers (line 77). The `int[] data = new int[16]` means: "Create a variable called 'data' that is an array of integers (`int[]` instead of just `int`), and assign it a new array of integers of length 16". For the `flights` variable, we needed to use an `ArrayList` because we didn't know the length of the array beforehand. This is different for the histogram. The distances in the dataset range from 0 to 15406 km. We'll simply take 16 bins, so we can easily assign a flight to a bin by dividing the distance by 1000 (line 82).
+* The moment we create a new `Histogram` object (we'll create only one), 
 
 # Whereto from here?
 
