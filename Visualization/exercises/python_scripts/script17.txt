@@ -1,0 +1,68 @@
+class Flight:
+
+    def __init__(self, d, flo, fla, tlo, tla, fc, tc):
+        self.distance = d
+        self.from_long = flo
+        self.from_lat = fla
+        self.to_long = tlo
+        self.to_lat = tla
+        self.from_country = fc
+        self.to_country = tc
+
+        self.x1 = map(self.from_long, -180, 180, 0, width/2)
+        self.y1 = map(self.from_lat, -180, 180, height/2, 0)
+        self.x2 = map(self.to_long, -180, 180, width/2, width)
+        self.y2 = map(self.to_lat, -180, 180, height, height/2)
+
+    def visible(self):
+        if dist(mouseX, mouseY, self.x1, self.y1) < 10:
+            return True
+        else:
+            return False
+
+    def drawDepartureAirport(self):
+        if self.visible():
+            fill(255, 0, 0, 25)
+        else:
+            fill(0, 0, 255, 10)
+        ellipse(self.x1, self.y1, 3, 3)
+
+    def drawArrivalAirport(self):
+        if self.visible():
+            fill(255, 0, 0, 25)
+        else:
+            fill(0, 0, 255, 1)
+        ellipse(self.x2, self.y2, 3, 3)
+    
+    def drawAirports(self):
+        self.drawDepartureAirport()
+        self.drawArrivalAirport()
+
+def setup():
+    global flights
+    flights = []
+    size(800, 800)
+    noStroke()
+    noLoop()
+    fill(0, 0, 255, 10)
+    table = loadTable("flights.csv", "header")
+    for row in table.rows():
+        distance = row.getInt("distance")
+        from_long = row.getFloat("from_long")
+        from_lat = row.getFloat("from_lat")
+        to_long = row.getFloat("to_long")
+        to_lat = row.getFloat("to_lat")
+        from_country = row.getString("from_country")
+        to_country = row.getString("to_country")
+        this_flight = Flight(distance, from_long, from_lat, to_long, to_lat, from_country, to_country)
+        flights.append(this_flight)
+
+
+def draw():
+    global flights
+    background(255, 255, 255)
+    for flight in flights:
+        flight.drawAirports()
+
+def mouseMoved():
+    redraw()

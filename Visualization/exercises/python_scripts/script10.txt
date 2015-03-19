@@ -1,0 +1,55 @@
+table = loadTable("flights.csv","header")
+
+def setup():
+    size(800,800)
+    noStroke()
+    noLoop()
+    global grey
+    grey = True
+
+def draw():
+    global grey
+    background(255,255,255)
+    fill(100,100,100)
+    rect(50,100,20,20)
+    for row in table.rows():
+        distance = row.getInt("distance")
+        mouseXMin = mouseX - 25
+        mouseXMax = mouseX + 25
+        minDistance = map(mouseXMin, 0, 800, 0, 15406)
+        maxDistance = map(mouseXMax, 0, 800, 0, 15406)
+        
+        if minDistance < distance and distance < maxDistance:
+            from_long = row.getFloat("from_long")
+            from_lat = row.getFloat("from_lat")
+            from_country = row.getString("from_country")
+            to_country = row.getString("to_country")
+            
+            x = map(from_long,-180,180,0,width)
+            y = map(from_lat,-180,180,height,0)
+            
+            if grey == True:
+                fill(100,100,100,10)
+            else:
+                if from_country == to_country:
+                    fill(255,0,0,10)
+                else:
+                    fill(0,0,255,10)
+            
+            ellipse(x,y,3,3)
+
+def mouseClicked():
+    global grey
+    
+    if mouseX > 50 and mouseX < 70 and mouseY > 100 and mouseY < 120:
+        print('before :' + str(grey))
+        if grey == True:
+            grey = False
+        else:
+            grey = True
+        print('after :' + str(grey))
+    redraw()
+
+    
+def mouseMoved():
+    redraw()

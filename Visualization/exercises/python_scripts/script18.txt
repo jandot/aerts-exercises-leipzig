@@ -1,0 +1,99 @@
+class Flight:
+    def __init__(self,d,flo,fla,tlo,tla,fc,tc):
+        self.distance = d
+        self.from_long = flo
+        self.from_lat = fla
+        self.to_long = tlo
+        self.to_lat = tla
+        self.from_country = fc
+        self.to_country = tc
+        
+        self.x1 = map(self.from_long, -180, 180, 0, width/2)
+        self.y1 = map(self.from_lat, -180, 180, height/2, 0)
+        self.x2 = map(self.to_long, -180, 180, width/2, width)
+        self.y2 = map(self.to_lat, -180, 180, height, height/2)
+
+    def selected(self,activeHistBin):
+        if self.distance/1000 == activeHistBin:
+            return True
+        else:
+            return False
+
+    def drawDepartureAirport(self,activeHistBin):
+        if self.selected(activeHistBin):
+            fill(255, 0, 0, 25)
+        else:
+            fill(0, 0, 255, 10)
+        ellipse(self.x1, self.y1, 3, 3)
+
+    def drawArrivalAirport(self,activeHistBin):
+        if self.selected(activeHistBin):
+            fill(255, 0, 0, 25)
+        else:
+            fill(0, 0, 255, 1)
+        ellipse(self.x2, self.y2, 3, 3)
+    
+    def drawAirports(self,activeHistBin):
+        self.drawDepartureAirport(activeHistBin)
+        self.drawArrivalAirport(activeHistBin)
+
+class Histogram:
+    def __init__(self,table):
+        self.data = {}
+        for row in table.rows():
+            distance = row.getInt("distance")
+            bin = distance/1000
+            if bin in self.data:
+                self.data[bin] += 1
+            else:
+                self.data[bin] = 1
+
+    def selected(self):
+        if mouseX > 50 and mouseX < 210 and mouseY > height - 350 and mouseY < height - 50:
+            return (mouseX - 50)/10
+        else:
+            return 17
+
+    def show(self):
+        for bin in self.data:
+            if bin == activeHistBin:
+                fill(255,0,0,100)
+            else:
+                fill(0,0,0,100)
+            x = 50+10*bin
+            binHeight = map(self.data[bin], 0, 26154,0,-300)
+            rect(x,height-50,8,binHeight)
+
+def setup():
+    global hist,table,flights,activeHistBin
+    size(800,800)
+    fill(0,0,255,10)
+    table = loadTable("flights.csv","header")
+    noStroke()
+    noLoop()
+    flights = []
+    hist = Histogram(table)
+    
+    for row in table.rows():
+        distance = row.getInt("distance")
+        from_long = row.getFloat("from_long")
+        from_lat = row.getFloat("from_lat")
+        to_long = row.getFloat("to_long")
+        to_lat = row.getFloat("to_lat")
+        from_country = row.getString("from_country")
+        to_country = row.getString("to_country")
+        thisFlight = Flight(distance,from_long, from_lat,to_long, to_lat,from_country, to_country)
+        flights.append(thisFlight)
+    activeHistBin = 0
+
+def draw():
+    global hist,flights,activeHistBin
+    background(255,255,255)
+    noStroke()
+    activeHistBin = hist.selected()
+    hist.show()
+    for flight in flights:
+        flight.drawAirports(activeHistBin)
+    
+def mouseMoved():
+    redraw()

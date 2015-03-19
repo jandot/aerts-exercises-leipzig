@@ -1,0 +1,27 @@
+class Dog:    
+    def __init__(self, n, b, w):
+        self.name = n
+        self.breed = b
+        self.weight = w
+    
+    def bark(self):
+        print("My name is " + self.name + ", I'm a " + self.breed + ", and I weigh " + str(self.weight) + " kg")
+
+    def eat(self):
+        print("I am " + self.name + " and I ate")
+    
+    def pee(self):
+        print("I am " + self.name + " and I've got wet legs now")    
+
+def setup():
+    size(800,800)
+    
+    dog1 = Dog("Buddy","Rottweiler",19)
+    dog2 = Dog("Lucy","Terrier",8)
+    
+    dog1.bark()
+    dog1.eat()
+    dog1.pee()
+    dog2.bark()
+    dog2.eat()
+    dog2.pee()
