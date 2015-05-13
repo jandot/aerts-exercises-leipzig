@@ -252,19 +252,7 @@ Each line in the RMAvalues file contains the expression values for a single prob
 
 ![Probeset data](probesets.png)
 
-Columns in RMAvalues0.05.txt:
-
-* probeset
-* human1
-* human2
-* human3
-* human4
-* chimp1
-* chimp2
-* chimp3
-* chimp4
-
-First 5 lines (`head -n5 RMAvalues0.05.txt`):
+First 5 lines of RMAvalues0.05.txt (`head -n5 RMAvalues0.05.txt`):
 
 ```
 #probeset  Human1  Human2  Human3  Human4  Chimp1  Chimp2  Chimp3  Chimp4
@@ -274,18 +262,7 @@ First 5 lines (`head -n5 RMAvalues0.05.txt`):
 121_at     6.7163  6.6314  6.9975  6.8237  6.6996  6.7241  6.7576  6.6707
 ```
 
-Columns in AffyAnnotation.clean:
-
-* probeset
-* gene_symbol
-* chromosomal_location
-* ensembl
-* omim
-* go_biological_process
-* go_cellular_component
-* go_molecular_function
-
-First 5 lines (`head -n5 AffyAnnotation.clean`):
+First 5 lines of AffyAnnotation.clean (`head -n5 AffyAnnotation.clean`):
 
 ```
 #probeset gene_symbol chromosomal_location ensembl          omim    go_biological_process  go_cellular_component  go_molecular_function

@@ -1,9 +1,10 @@
 % Hands-on exercise data visualization
 % Jan Aerts, Visual Data Analysis Lab, KU Leuven - http://vda-lab.be
 
-In this exercise, we will use the Processing tool ([http://processing.org](http://processing.org)) to generate visualizations based on a flights dataset. This tutorial holds numerous code snippets that can by copy/pasted and modified for your own purpose. The contents of this tutorial is available under the CC-BY license.
-
 ![](images/ccby.png)
+
+In this exercise, we will use the Processing tool ([http://processing.org](http://processing.org)) to generate visualizations based on a flights dataset. This tutorial holds numerous code snippets that can by copy/pasted and modified for your own purpose. The contents of this tutorial is available under the CC-BY license.
+The tutorial is written in a very incremental way. We start with something simple, and gradually add little bits and pieces that allow us to make more complex visualizations. So make sure to not skip parts of the tutorial: everything depends on everything that precedes it.
 
 ![flights](images/flights_double.png)
 
@@ -944,7 +945,7 @@ class Flight {
   }
   
   boolean visible() {
-    if ( dist(mouseX, mouseY, x, y) < 10 ) {
+    if ( dist(mouseX, mouseY, x1, y1) < 10 ) {
       return true;
     } else {
       return false;
@@ -1044,7 +1045,7 @@ class Flight {
   }
   
   boolean visible() {
-    if ( dist(mouseX, mouseY, x, y) < 10 ) {
+    if ( dist(mouseX, mouseY, x1, y1) < 10 ) {
       return true;
     } else {
       return false;
@@ -1214,7 +1215,8 @@ class Histogram {
   }
   
   int active() {
-    if ( mouseY > 400 && mouseY < 700 && mouseX > (width/2) + 50 && mouseX < (width/2) + 130 ) {
+    if ( mouseY > 400 && mouseY < 700 &&
+         mouseX > (width/2) + 50 && mouseX < (width/2) + 130 ) {
       return (mouseX - width/2 - 50)/10;      
     } else {
       return 17;      
@@ -1284,10 +1286,19 @@ The approach we take in this plot is the following: if the user hovers over the 
 
 ![Linked views with histogram](images/linked_with_histogram.png)
 
-Let's see how that last script is different from script 17...
+Let's see how that last script is different from script 17... In the probable order that you would modify script 17 into script 18 (although you might do this differently):
 
-* We create a new class `Histogram` (lines 72 to 110)that holds an array consisting of 16 integers (line 77). The `int[] data = new int[16]` means: "Create a variable called 'data' that is an array of integers (`int[]` instead of just `int`), and assign it a new array of integers of length 16". For the `flights` variable, we needed to use an `ArrayList` because we didn't know the length of the array beforehand. This is different for the histogram. The distances in the dataset range from 0 to 15406 km. We'll simply take 16 bins, so we can easily assign a flight to a bin by dividing the distance by 1000 (line 82).
-* The moment we create a new `Histogram` object (we'll create only one), 
+* We create a new histogram of the data (line 119): `hist = new Histogram();`.
+* In the `draw()` method, we get the current active bin (line 142; `activeHistBin = hist.active()`) and draw the histogram (line 143).
+* To make this functionality possible, we create a new class `Histogram` (lines 72 to 110) that holds an array consisting of 16 integers (line 77). The `int[] data = new int[16]` means: "Create a variable called 'data' that is an array of integers (`int[]` instead of just `int`), and assign it a new array of integers of length 16". For the `flights` variable, we needed to use an `ArrayList` because we didn't know the length of the array beforehand. This is different for the histogram. The distances in the dataset range from 0 to 15406 km. We'll simply take 16 bins, so we can easily assign a flight to a bin by dividing the distance by 1000 (line 82).
+* The moment we create a new `Histogram` object (we'll create only one, lines 79 to 85), we load it with data. For each line in our datafile, we get the distance, calculate which histogram bin this flight belongs to (by dividing the distance by 1,000), and increment the appropriate bin with 1 (line 83).
+* We need to be able to find out which is the "active" bin (i.e. which is the one that the mouse is pointing at), which can then be used to set the variable `activeHistBin`. This is done in the method `int active()` (lines 87 to 94). This method should return a number. That's why it's `int active()` and not `void active()`. That also means we need `return`-statements in the method. In the method, we just compare the position of the mouse with the positions of the drawn bars of the histogram. The numbers to use here completely depend on the numbers we'll use in the `show()` method for `x` and `binHeight` (see below).
+* We need to draw the histogram. For that, we write the `show()` method (lines 96 to 110). Line 100 shows the default way on how to go over an array: you create a `for`-loop, which takes 3 parameters: (1) the starting condition (often `int i = 0`, i.e. we use the index in the array and start at zero), (2) the condition that must be met to continue in the loop (in this case: "keep going as long as `i` is smaller than the length of the `data` array"), and (3) what should happen with each iteration (in this case: increment `i` with 1). In the loop, we check if we're looking at the active bin, which defines the colour to use. Next, we define the `x` position and the height of the histogram at that position (`binHeight`). Finally, we draw a rectangle.
+* We define the `activeHistBin` and `hist` variables at the top (lines 5 and 6) because we'll need those further in the script.
+
+# Exporting your application
+
+So you have written this world-chattering data visualization tool to help some experimentalist in a white coat in a lab. Of course you wouldn't want to ask that person to install java on their own computer, download Processing, install python mode, copy/paste all code into the IDE, and upload the datafiles. There are just too many things that can go wrong. Enter "Export Application". In Processing: go to "File", then "Export Application". This makes it possible to create executable files (a.k.a. "programs") for Windows, Mac, and linux. After exporting the application, you will see an executable file that you can just email to the expert who needs the visualization.
 
 # Whereto from here?
 

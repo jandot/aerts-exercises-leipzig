@@ -528,36 +528,13 @@ sqlite&gt; INSERT INTO genotypes (individual_id, snp_id, genotype, genotype_amb)
 <div class="figure">
 <img src="probesets.png" alt="Probeset data" /><p class="caption">Probeset data</p>
 </div>
-<p>Columns in RMAvalues0.05.txt:</p>
-<ul>
-<li>probeset</li>
-<li>human1</li>
-<li>human2</li>
-<li>human3</li>
-<li>human4</li>
-<li>chimp1</li>
-<li>chimp2</li>
-<li>chimp3</li>
-<li>chimp4</li>
-</ul>
-<p>First 5 lines (<code>head -n5 RMAvalues0.05.txt</code>):</p>
+<p>First 5 lines of RMAvalues0.05.txt (<code>head -n5 RMAvalues0.05.txt</code>):</p>
 <pre><code>#probeset  Human1  Human2  Human3  Human4  Chimp1  Chimp2  Chimp3  Chimp4
 1007_s_at  6.7537  6.9326  7.3279  6.9575  5.3196  7.3580  6.8239  6.2648
 1053_at    8.4116  8.3471  8.2438  8.3200  8.8715  8.2700  8.4452  8.4362
 117_at     5.9137  4.9913  5.3139  7.0950  5.3874  5.7601  4.7575  5.1184
 121_at     6.7163  6.6314  6.9975  6.8237  6.6996  6.7241  6.7576  6.6707</code></pre>
-<p>Columns in AffyAnnotation.clean:</p>
-<ul>
-<li>probeset</li>
-<li>gene_symbol</li>
-<li>chromosomal_location</li>
-<li>ensembl</li>
-<li>omim</li>
-<li>go_biological_process</li>
-<li>go_cellular_component</li>
-<li>go_molecular_function</li>
-</ul>
-<p>First 5 lines (<code>head -n5 AffyAnnotation.clean</code>):</p>
+<p>First 5 lines of AffyAnnotation.clean (<code>head -n5 AffyAnnotation.clean</code>):</p>
 <pre><code>#probeset gene_symbol chromosomal_location ensembl          omim    go_biological_process  go_cellular_component  go_molecular_function
 1007_s_at DDR1        chr6p21.3            ENSG00000137332  600408  6468                   5887                   166
 1053_at   RFC2        chr7q11.23           ENSG00000049541  600404  6260                   5634                   166
@@ -1054,6 +1031,7 @@ WHERE &lt;condition&gt;;</code></pre>
 <h3 id="public-bioinformatics-databases"><span class="header-section-number">2.3.4</span> Public bioinformatics databases</h3>
 <p>Sqlite is a light-weight system for running relational databases. If you want to make your data available to other people it's often better to use systems such as MySQL. The data behind the Ensembl genome browser, for example, is stored in a relational database and directly accessible through SQL as well.</p>
 <p>To access the last release of human from Ensembl: <code>mysql -h ensembldb.ensembl.org -P 5306 -u anonymous homo_sapiens_core_70_37</code>. To get an overview of the tables that we can query: <code>show tables</code>.</p>
+<p>To access the <code>hg19</code> release of the UCSC database (which is also a MySQL database): <code>mysql --user=genome --host=genome-mysql.cse.ucsc.edu hg19</code>.</p>
 <h3 id="views"><span class="header-section-number">2.3.5</span> Views</h3>
 <p>By decomposing data into different tables as we described above (and using the different normal forms), we can significantly improve maintainability of our database and make sure that it does not contain inconsistencies. But at the other hand, this means it's a lot of hassle to look at the actual data: to know what the genotype is for SNP <code>rs12345</code> in <code>individual_A</code> we cannot just look it up in a single table, but have to write a complicated query which joins 3 tables together. The query would look like this:</p>
 <pre><code>SELECT i.name, i.ethnicity, s.accession, s.chromosome, s.position, g.genotype_amb

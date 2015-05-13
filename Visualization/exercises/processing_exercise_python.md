@@ -1060,6 +1060,10 @@ Let's see how that last script is different from script 17... In the probable or
 * We need to be able to find out which is the "active" bin (i.e. which is the one that the mouse is pointing at), which can then be used to set the variable `activeHistBin`. This is done in the method `selected()` (lines 51 to 55). This method should return a number. In the method, we just compare the position of the mouse with the positions of the drawn bars of the histogram. The numbers to use here completely depend on the numbers we'll use in the `show()` method for `x` and `binHeight` (see below).
 * We need to draw the histogram. For that, we write the `show()` method (lines 57 to 65). In the loop, we check if we're looking at the active bin, which defines the colour to use. Next, we define the `x` position and the height of the histogram at that position (`binHeight`). Finally, we draw a rectangle.
 
+# Exporting your application
+
+So you have written this world-chattering data visualization tool to help some experimentalist in a white coat in a lab. Of course you wouldn't want to ask that person to install java on their own computer, download Processing, install python mode, copy/paste all code into the IDE, and upload the datafiles. There are just too many things that can go wrong. Enter "Export Application". In Processing: go to "File", then "Export Application". This makes it possible to create executable files (a.k.a. "programs") for Windows, Mac, and linux. After exporting the application, you will see an executable file that you can just email to the expert who needs the visualization.
+
 # Whereto from here?
 
 There are many different ways to show this information. This exact same dataset was visualized by Till Nagel during the visualization challenge in 2012 from visualising.org. Part of his entry is shown in Figure 13.
