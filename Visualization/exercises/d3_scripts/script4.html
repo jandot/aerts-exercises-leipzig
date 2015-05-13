@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript"
+        src="http://mbostock.github.com/d3/d3.js"></script>
+</head>
+<body>
+<svg></svg>
+<script type="text/javascript">
+  var svg = d3.select("svg")
+
+  var data = [30,382,59,102,200];
+  svg.selectAll("circle")
+     .data(data)
+     .enter()
+     .append("circle")
+     .attr({
+       cx: function(d,i) { return d },
+       cy: 100,
+       r: 10
+     })
+     .style({
+       fill: "blue"
+     })
+</script>
+</body>
+</html>

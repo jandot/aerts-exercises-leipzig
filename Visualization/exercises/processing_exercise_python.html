@@ -1,0 +1,1577 @@
+<div class="figure">
+<img src="images/ccby.png" />
+</div>
+<p>In this exercise, we will use the Processing tool (<a href="http://processing.org">http://processing.org</a>) to generate visualizations based on a flights dataset. In particular, we will use the python mode (<a href="http://py.processing.org">http://py.processing.org</a>). This tutorial holds numerous code snippets that can by copy/pasted and modified for your own purpose. The contents of this tutorial is available under the CC-BY license. The tutorial is written in a very incremental way. We start with something simple, and gradually add little bits and pieces that allow us to make more complex visualizations. So make sure to not skip parts of the tutorial: everything depends on everything that precedes it.</p>
+<div class="figure">
+<img src="images/flights_double.png" alt="flights" /><p class="caption">flights</p>
+</div>
+<h1 id="introduction-to-processing"><span class="header-section-number">1</span> Introduction to Processing</h1>
+<p>py.processing is a language based on python, with its own development environment.</p>
+<div class="figure">
+<img src="images/Processing-1_2_1.png" alt="Processing IDE" /><p class="caption">Processing IDE</p>
+</div>
+<h2 id="download-and-install-py-processing"><span class="header-section-number">1.1</span> Download and install py-processing</h2>
+<p>Processing can be downloaded from <a href="http://processing.org/download/">http://processing.org/download/</a>.</p>
+<ul>
+<li>For Windows: Double-click the zip-file; there should be a <code>processing.exe</code> file which is your program.</li>
+<li>For Mac: Just double-click the downloaded file.</li>
+<li>For linux: Download the <code>.tgz</code> file, and run <code>tar -xvzf that_file.tgz</code>.</li>
+</ul>
+<p>To install python mode, click on the button in the top-right corner, select &quot;Add Mode...&quot; from the drop-down box, and choose &quot;Python&quot;.</p>
+<h2 id="a-minimal-script"><span class="header-section-number">1.2</span> A minimal script</h2>
+<p>A minimal script is provided below.</p>
+<p><em>Script 1</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">size(<span class="dv">400</span>,<span class="dv">400</span>)
+
+fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+ellipse(<span class="dv">100</span>,<span class="dv">150</span>,<span class="dv">20</span>,<span class="dv">20</span>)
+
+fill(<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">0</span>)
+rect(<span class="dv">200</span>,<span class="dv">200</span>,<span class="dv">50</span>,<span class="dv">60</span>)
+
+stroke(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>)
+strokeWeight(<span class="dv">5</span>)
+line(<span class="dv">150</span>,<span class="dv">5</span>,<span class="dv">150</span>,<span class="dv">50</span>)</code></pre></td></tr></table>
+<p>This code generates the following image:</p>
+<div class="figure">
+<img src="images/minimal_output.png" alt="minimal output" /><p class="caption">minimal output</p>
+</div>
+<p>The numbers at the front of each line are the <em>line numbers</em> and are actually not part of the program. We've added them here to be able to refer to specific lines. So if you type in this piece of code, <em>do not type the line numbers</em>.</p>
+<p>Let's walk through each line. The script is made up of a list of <strong>statements</strong>. The first line in the script <code>size(400,400)</code> sets the <strong>dimensions of the resulting image</strong>. In this case, we'll generate a picture of 400x400 pixels. Next, (line <code>[3]</code>) we set the <strong>colour</strong> of anything we draw to red. The <code>fill</code> function takes 3 parameters, which are the values for red, green, and blue (RGB), ranging from 0 to 255. We then draw an <strong>ellipse</strong> with its center at horizontal position 100 pixels and vertical position 150 pixels. Note that the vertical position counts from the top down instead of from the bottom up. The <strong>point <code>(0,0)</code> is at the top left</strong> rather than the bottom left... For the ellipse we set both the horizontal and vertical diameter to 20 pixels, which results in a circle. The next thing we do (line <code>[6]</code>) is set the colour of anything that we will draw to green <code>fill(0,255,0)</code>, and draw a <strong>rectangle</strong> at position <code>(200,200)</code> with width set to 50 and height to 60.</p>
+<p>Finally, we set the colour of lines to blue (<code>stroke(0,0,255)</code>), the stroke weight to 5 pixels <code>strokeWeight(5)</code>, and draw a <strong>line</strong> <code>line(150,5,150,50)</code>. This line runs from point <code>(150,5)</code> to <code>(150,50)</code>.</p>
+<p>Both <code>fill</code> and <code>stroke</code> are used to set colour: <code>fill</code> to set the colour of the shape, <code>stroke</code> to set the colour of the border around that shape. In case of <em>lines</em>, only the <code>stroke</code> colour can be set.</p>
+<p>Several drawing primitives exist, including <code>line</code>, <code>rect</code>, <code>triangle</code>, and <code>ellipse</code> (a circle is an ellipse with the same horizontal and vertical radius). A treasure trove of information for these is available in the <a href="http://py.processing.org/reference/">Python Processing reference pages</a>.</p>
+<p>Apart from these primitives, Processing contains functions that modify properties of these primitives. These include setting the fill color (<code>fill</code>), color of lines (<code>stroke</code>), and line weight (<code>lineWeight</code>). Again, the reference pages host all information.</p>
+<h2 id="variables-loops-and-conditionals"><span class="header-section-number">1.3</span> Variables, loops and conditionals</h2>
+<p>What if we want to do something multiple times? Suppose we want to draw 10 lines underneath each other. We could do that like this:</p>
+<p><em>Script 2</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">size(<span class="dv">500</span>,<span class="dv">150</span>)
+background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+line(<span class="dv">100</span>,<span class="dv">0</span>,<span class="dv">400</span>,<span class="dv">0</span>)
+line(<span class="dv">100</span>,<span class="dv">10</span>,<span class="dv">400</span>,<span class="dv">10</span>)
+line(<span class="dv">100</span>,<span class="dv">20</span>,<span class="dv">400</span>,<span class="dv">20</span>)
+line(<span class="dv">100</span>,<span class="dv">30</span>,<span class="dv">400</span>,<span class="dv">30</span>)
+line(<span class="dv">100</span>,<span class="dv">40</span>,<span class="dv">400</span>,<span class="dv">40</span>)
+line(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">400</span>,<span class="dv">50</span>)
+line(<span class="dv">100</span>,<span class="dv">60</span>,<span class="dv">400</span>,<span class="dv">60</span>)
+line(<span class="dv">100</span>,<span class="dv">70</span>,<span class="dv">400</span>,<span class="dv">70</span>)
+line(<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">400</span>,<span class="dv">80</span>)
+line(<span class="dv">100</span>,<span class="dv">90</span>,<span class="dv">400</span>,<span class="dv">90</span>)</code></pre></td></tr></table>
+<p>This generates this image:</p>
+<div class="figure">
+<img src="images/loop.png" alt="lines" /><p class="caption">lines</p>
+</div>
+<p>Of course this is not ideal: what if we have 5,000 datapoints to plot? To handle real data, we will need variables, loops, and conditionals.</p>
+<p>In the code block above, we can replace the hard-coded numbers with <strong>variables</strong>. These can be integers, floats, strings, arrays, etc. <code>startX = 100</code> creates a new variable called <code>startX</code> and gives it the value of <code>100</code>.</p>
+<p><em>Script 3</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">size(<span class="dv">500</span>,<span class="dv">150</span>)
+startX = <span class="dv">100</span>
+stopX = <span class="dv">400</span>
+background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>);
+<span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">0</span>,<span class="dv">9</span>):
+  line(startX,i*<span class="dv">10</span>,stopX,i*<span class="dv">10</span>)</code></pre></td></tr></table>
+<p>We first set the variables <code>startX</code> and <code>stopX</code> to <code>100</code> and <code>400</code>. We then <strong>loop</strong> over values <code>i</code>, which start at <code>0</code> and go up to <code>9</code>. In each loop, a <code>line</code> is drawn.</p>
+<p><strong>Whitespace</strong> is very important in python: it defines code blocks. In the for-loop above, line 6 is indented relative to line 5. This means that line 6 is part of the block started at line 5. In other languages (java, C, perl, ruby, ...), you will for example see curly brackets (<code>{}</code>) used instead of whitespace to define blocks. A for-loop in java for example can look like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">for</span> ( <span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">10</span>; i++ ) { println <span class="st">&quot;Variable i is not &quot;</span> + i };</code></pre>
+<p>As you can see, in java curly brackets have the same role as whitespace in python. This also means that the following code would not work, and will give an IndentationError:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">0</span>,<span class="dv">9</span>):
+<span class="dt">print</span> i</code></pre>
+<p>We can use <strong>conditionals</strong> to for example distinguish odd or even lines by colour. <em>Script 4</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">size(<span class="dv">500</span>,<span class="dv">150</span>)
+startX = <span class="dv">100</span>
+stopX = <span class="dv">400</span>
+background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+strokeWeight(<span class="dv">2</span>)
+<span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">0</span>,<span class="dv">9</span>):
+    <span class="kw">if</span> i%<span class="dv">2</span> == <span class="dv">0</span>:
+        stroke(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+    <span class="kw">else</span>:
+        stroke(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>)
+    line(startX, i*<span class="dv">10</span>, stopX, i*<span class="dv">10</span>)</code></pre></td></tr></table>
+<p>In this code snippet, we check in each loop if <code>i</code> is even or odd, and let the stroke colour depend on that result. An <code>if</code>-clause has the following form:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">if</span> *condition*:
+    <span class="co"># do something</span>
+<span class="kw">else</span>:
+    <span class="co"># do something else</span></code></pre>
+<p>The condition <code>i%2 == 0</code> means: does dividing the number <code>i</code> with 2 result in a remainder of zero? Note that we have to use 2 equal-signs here (<code>==</code>) instead of just one (<code>=</code>). This is so to distinguish between a test for equality, and an assignment. Don't make errors against this...</p>
+<div class="figure">
+<img src="images/oddeven.png" alt="oddeven" /><p class="caption">oddeven</p>
+</div>
+<h2 id="exercise-data"><span class="header-section-number">1.4</span> Exercise data</h2>
+<p>The data for this exercise concerns <strong>flight information</strong> between different cities. Each entry in the dataset contains the following fields:</p>
+<ul>
+<li>from_airport</li>
+<li>from_city</li>
+<li>from_country</li>
+<li>from_long</li>
+<li>from_lat</li>
+<li>to_airport</li>
+<li>to_city</li>
+<li>to_country</li>
+<li>to_long</li>
+<li>to_lat</li>
+<li>airline</li>
+<li>airline_country</li>
+<li>distance</li>
+</ul>
+<h3 id="getting-the-data"><span class="header-section-number">1.4.1</span> Getting the data</h3>
+<p>First, download the file somewhere on your computer. There are 3 ways to get the data into Processing: 1. First save your sketch. In the directory where you saved it, create a new folder called <code>data</code>. Copy the downloaded file into this <code>data</code> directory. 1. Or: drag the file onto your Processing IDE. 1. Or: Go to <code>Sketch</code> =&gt; <code>Add file...</code></p>
+<h3 id="accessing-the-data-from-processing"><span class="header-section-number">1.4.2</span> Accessing the data from Processing</h3>
+<p>Let's write a small script in Processing to visualize this data. The <strong>visual encoding</strong> that we'll use for each flight will be the following:</p>
+<ul>
+<li>x position is defined by longitude of departure airport</li>
+<li>y position is defined by latitude of departure airport</li>
+</ul>
+<p><em>Script 5</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+size(<span class="dv">800</span>,<span class="dv">800</span>)
+noStroke()
+fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+
+background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+<span class="kw">for</span> row in table.rows():
+    from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+    from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+    x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+    y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+    ellipse(x,y,<span class="dv">3</span>,<span class="dv">3</span>)</code></pre></td></tr></table>
+<p>The resulting image:</p>
+<div class="figure">
+<img src="images/flights_map.png" alt="scatterplot" /><p class="caption">scatterplot</p>
+</div>
+<p>You can see that the resulting image shows a map of the world, with areas with high airport density clearly visible. Notice that the data itself does not contain any information where the continents, oceans and coasts are; still, these are clearly visible in the image.</p>
+<p>Let's go through the code:</p>
+<ul>
+<li>[1] The data from the file &quot;flights.csv&quot; is read into a variable <code>table</code>. The <code>&quot;header&quot;</code> indicates that the first line of the file is a list of column headers.</li>
+<li>[4] <code>noStroke()</code> tell Processing to not draw the border around disks, rectangles or other elements.</li>
+<li>[8] This is another way to loop over a collection, instead of the <code>for i in range(0,9):</code> we used before. In this line, we loop over all <code>table.rows()</code>, and each time we put the new row into a variable <code>row</code>.</li>
+<li>[9] <code>row.getFloat(&quot;from_long&quot;)</code> extracts the value from the <code>from_long</code> column from that row and makes it a <code>float</code>. This is then stored in the variable <code>from_long</code>.</li>
+<li>[11] In this line, we transform the longitude value to a value between 0 and the width of our canvas.</li>
+</ul>
+<p>The <code>map</code> function is very useful. It is used to <strong>rescale</strong> values. In our case, longitude values range from <code>-180</code> to <code>180</code>. The <code>x</code> position of the dots on the screen, however, have to be between 0 and 800 (because that's the width of our canvas, as set in <code>canvase(800,800);</code>). In this case, we can even use the variable <code>width</code> instead of <code>800</code>, because <code>width</code> and <code>height</code> are set automatically when we call the statement <code>size(800,800);</code>. You see that the <code>map</code> function for <code>y</code> recalculates the <code>from_lat</code> value to something between <code>height</code> and <code>0</code>, instead of between <code>0</code> and <code>height</code>. The reason is that the <em>origin</em> of our canvas is at the top-left corner instead of the bottom-left one so we have to flip coordinates.</p>
+<p>We can add additional information to this visualization. In the next code block, we alter our script so that colour of the dots is red for domestic flights and blue for international flights. In addition, the size of the dots is proportional to the distance of that particular flight.</p>
+<p><em>Script 6</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+size(<span class="dv">800</span>,<span class="dv">800</span>)
+noStroke()
+fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+
+background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+<span class="kw">for</span> row in table.rows():
+    from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+    from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+    from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+    to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+    distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+    
+    x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+    y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+    <span class="kw">if</span> from_country == to_country:
+        fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+    <span class="kw">else</span>:
+        fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+    r = <span class="dt">map</span>(distance,<span class="dv">1</span>,<span class="dv">15406</span>,<span class="dv">3</span>,<span class="dv">15</span>)
+    
+    ellipse(x,y,r,r)</code></pre></td></tr></table>
+<p>In line [21], we rescale the value of the distance (min = 1, max = 15406) to a minimum of 3 and maximum of 15. That value is than used as the radius <code>r</code>.</p>
+<div class="figure">
+<img src="images/flights_coloured.png" alt="flights_coloured" /><p class="caption">flights_coloured</p>
+</div>
+<p>From this picture, we can deduce many things:</p>
+<ul>
+<li>Airports tend to be located on land =&gt; plotting latitude and longitude recreates a worldmap.</li>
+<li>Blue international flights tend to depart from coastal regions.</li>
+<li>There are few domestic flights within Europe.</li>
+<li>Longer flights (departure airports with larger radius) tend to leave in coastal regions</li>
+</ul>
+<h2 id="interactivity-and-defining-functions"><span class="header-section-number">1.5</span> Interactivity and defining functions</h2>
+<p>It is often the interactivity in data visualization that helps gaining insights in that data and finding new hypotheses. Up until now, we have generated static images. How can we add interactivity?</p>
+<p>As a first use case, say that we want the radius of the dots to depend on the position of the mouse instead of the distance of the flight: if our mouse is at the left of the image, all dots should be small; if it is at the right, they should be large. We will change the line <code>float r = map(distance,1,15406,3,15);</code> to include information on the mouse position.</p>
+<p>This time, instead of creating a simple image, this image will have to be <strong>redrawn</strong> constantly taking into account the mouse position. For this, we have to rearrange our code a little bit. Some of the code has to run only once to initialize the visualization, while the rest of the code has to be rerun constantly. We do this by putting the code that we have either in the <code>setup()</code> or the <code>draw()</code> function:</p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"> <span class="co"># define global variables here</span>
+<span class="kw">def</span> setup():
+  <span class="co"># code that has to be run only once</span>
+<span class="kw">def</span> draw():
+  <span class="co"># code that has to be rerun constantly</span></code></pre></td></tr></table>
+<p>A <strong>function definition</strong> (such as <code>setup</code> and <code>draw</code>) in python always has the same elements:</p>
+<ol style="list-style-type: decimal">
+<li>The <strong><code>def</code></strong> keyword (for &quot;define&quot;)</li>
+<li>The <strong>name</strong> of the function</li>
+<li>The names of <strong>parameters</strong>, between parentheses</li>
+<li>The <strong>actual code</strong> of the function, as an indented code block</li>
+</ol>
+<p>Both the <code>setup()</code> and the <code>draw()</code> functions don't take any parameters, so we just use empty parentheses.</p>
+<p>The <code>setup()</code> function is only run once; the <code>draw()</code> function is run by default 60 times per second.</p>
+<p>Let's put all statements we had before into one of these two functions:</p>
+<p><em>Script 7</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+<span class="kw">def</span> setup():
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    noStroke()
+
+<span class="kw">def</span> draw():
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    <span class="kw">for</span> row in table.rows():
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        
+        x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+        y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+        <span class="kw">if</span> from_country == to_country:
+            fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+        r = <span class="dt">map</span>(distance,<span class="dv">1</span>,<span class="dv">15406</span>,<span class="dv">3</span>,<span class="dv">15</span>)
+        
+        ellipse(x,y,r,r)</code></pre></td></tr></table>
+<p>The <code>draw()</code> function is run 60 times per second. This means that 60 times per second each line in the input table is processed again to draw a new circle. As this is quite compute intensive, your computer might actually not be able to redraw 60 times per second, and show some lagging. For simplicity's sake, we will however not go into optimization here.</p>
+<p>Some things to note:</p>
+<ul>
+<li>We have to define the <code>table</code> variable and load the actual data (using <code>loadTable</code>) at the top.</li>
+<li>We have to set the background every single redraw. If we wouldn't, each picture is drawn on top of the previous one.</li>
+</ul>
+<p>Now how do we adapt this so that the radius of the circles depends on the x-position of my pointer? Luckily, Processing provides two variables called <code>mouseX</code> and <code>mouseY</code> that are very useful. <code>mouseX</code> returns the x position of the pointer. So basically the only thing we have to do is replace <code>float r = map(distance, 0, 15406, 3, 15);</code> with <code>float r = map(mouseX, 0, 800, 3, 15);</code> (Note that we changed the <code>15406</code> to <code>800</code>.) If we do that, and our mouse is towards the right side of the image, we get the following picture:</p>
+<div class="figure">
+<img src="images/scatterplot_largedots.png" alt="scatterplot_largedots" /><p class="caption">scatterplot_largedots</p>
+</div>
+<p><strong>Some optimization</strong> Let's optimize this code a tiny bit. We could for example remove the lines that handle the <code>distance</code> because we don't use them. However, we'll leave those in because we'll use them in the next example... Something else that we can do is <strong>limit the number of times the picture is redrawn</strong>. As long as I don't move my mouse I don't have to redraw the picture. To do that, we add <code>noLoop();</code> to the <code>setup()</code> function, and add a new function at the bottom, called <code>mouseMoved()</code>. In this new function, we tell Processing to <code>redraw()</code> the canvas. The resulting code looks like this:</p>
+<p><em>Script 8</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+<span class="kw">def</span> setup():
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    noStroke()
+    noLoop()
+
+<span class="kw">def</span> draw():
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    <span class="kw">for</span> row in table.rows():
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        
+        x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+        y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+        <span class="kw">if</span> from_country == to_country:
+            fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+        r = <span class="dt">map</span>(mouseX,<span class="dv">0</span>,<span class="dv">800</span>,<span class="dv">3</span>,<span class="dv">15</span>)
+        
+        ellipse(x,y,r,r)
+
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<h3 id="more-useful-interactivity"><span class="header-section-number">1.5.1</span> More useful interactivity</h3>
+<p>This interactivity can be made more useful: we can use the mouse pointer as a <strong>filter</strong>. For example: <em>if our mouse is at the left only short distance flights are drawn; if our mouse is at the right only long distance flights are drawn</em>.</p>
+<p><em>Script 9</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+<span class="kw">def</span> setup():
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    noStroke()
+    noLoop()
+
+<span class="kw">def</span> draw():
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        mouseXMin = mouseX - <span class="dv">25</span>
+        mouseXMax = mouseX + <span class="dv">25</span>
+        minDistance = <span class="dt">map</span>(mouseXMin,<span class="dv">0</span>,<span class="dv">800</span>,<span class="dv">0</span>,<span class="dv">15406</span>)
+        maxDistance = <span class="dt">map</span>(mouseXMax,<span class="dv">0</span>,<span class="dv">800</span>,<span class="dv">0</span>,<span class="dv">15406</span>)
+        
+        <span class="kw">if</span> minDistance &lt; distance and distance &lt; maxDistance:
+            from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+            from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+            from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+            to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+            
+            x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+            y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+            <span class="kw">if</span> from_country == to_country:
+                fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+            <span class="kw">else</span>:
+                fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+            
+            ellipse(x,y,<span class="dv">3</span>,<span class="dv">3</span>)
+    
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<p>We will only draw flights if their duration is between a calculated <code>minDistance</code> and <code>maxDistance</code>. That's what we do on line [17]. Of course we first have to calculate <code>minDistance</code> and <code>maxDistance</code>. That's what we do on lines [12] to [15]. In lines [12] and [13], we say that we will be looking 25 pixels at either side of the mouse position. If the pointer is at position 175, <code>mouseMin</code> is set to 150 and <code>mouseMax</code> to 200. This pixelrange is then translated into distance range on lines [14] and [15].</p>
+<p>Now it gets interesting. We can now look a bit deeper into the data... If we have our mouse at the left side of the image, it looks like this:</p>
+<div class="figure">
+<img src="images/flights_shortdistances.png" alt="short_distances" /><p class="caption">short_distances</p>
+</div>
+<p>Having the mouse in the middle to the canvas gives us this image:</p>
+<div class="figure">
+<img src="images/flights_mediumdistances.png" alt="medium_distances" /><p class="caption">medium_distances</p>
+</div>
+<p>Playing with this visualization, there are some signals that pop up. Moving left and right at about 70-90 pixels from the left, we see a &quot;snake&quot; moving along the north-east coast of Brazil (see Figure below, also indicating position of mouse). This indicates that most of these flights probably go to the same major city in that country. Other dynamic patterns appear in Europe as well. In Figure 10, some dots appear to be darker than others. Why do you think this is?</p>
+<div class="figure">
+<img src="images/snake_brazil.png" alt="snake_brazil" /><p class="caption">snake_brazil</p>
+</div>
+<h2 id="buttons-and-sliders"><span class="header-section-number">1.6</span> Buttons and sliders</h2>
+<p>Of course many tools have buttons and sliders. Let's implement those in Processing. Instead of using the mouse position as a filter as before, why don't we make a slider to do the same? Unfortunately, this is a bit more complex than it should be... So let's first start with a <strong>button</strong>. To create a button, what we basically do is draw a rectangle, and check if the mouse position is within the area of that rectangle when we press the mouse button.</p>
+<p><em>Script 10</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+<span class="kw">def</span> setup():
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    noStroke()
+    noLoop()
+    <span class="kw">global</span> grey
+    grey = <span class="ot">True</span>
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> grey
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    fill(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>)
+    rect(<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">20</span>,<span class="dv">20</span>)
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        mouseXMin = mouseX - <span class="dv">25</span>
+        mouseXMax = mouseX + <span class="dv">25</span>
+        minDistance = <span class="dt">map</span>(mouseXMin, <span class="dv">0</span>, <span class="dv">800</span>, <span class="dv">0</span>, <span class="dv">15406</span>)
+        maxDistance = <span class="dt">map</span>(mouseXMax, <span class="dv">0</span>, <span class="dv">800</span>, <span class="dv">0</span>, <span class="dv">15406</span>)
+        
+        <span class="kw">if</span> minDistance &lt; distance and distance &lt; maxDistance:
+            from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+            from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+            from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+            to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+            
+            x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+            y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+            
+            <span class="kw">if</span> grey == <span class="ot">True</span>:
+                fill(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">10</span>)
+            <span class="kw">else</span>:
+                <span class="kw">if</span> from_country == to_country:
+                    fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+                <span class="kw">else</span>:
+                    fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+            
+            ellipse(x,y,<span class="dv">3</span>,<span class="dv">3</span>)
+
+<span class="kw">def</span> mouseClicked():
+    <span class="kw">global</span> grey
+    
+    <span class="kw">if</span> mouseX &gt; <span class="dv">50</span> and mouseX &lt; <span class="dv">70</span> and mouseY &gt; <span class="dv">100</span> and mouseY &lt; <span class="dv">120</span>:
+        <span class="dt">print</span>(<span class="st">&#39;before :&#39;</span> + <span class="dt">str</span>(grey))
+        <span class="kw">if</span> grey == <span class="ot">True</span>:
+            grey = <span class="ot">False</span>
+        <span class="kw">else</span>:
+            grey = <span class="ot">True</span>
+        <span class="dt">print</span>(<span class="st">&#39;after :&#39;</span> + <span class="dt">str</span>(grey))
+    redraw()
+
+    
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<p>Now, we basically keep track of a variable called <code>grey</code> which can be <code>true</code> or <code>false</code> (such variable is called a &quot;boolean&quot;). If it is <code>true</code> then all points will be drawn in grey; if it is <code>false</code> then the points will be blue or red just like before.</p>
+<p>The variable <code>grey</code> should be a &quot;global&quot; variable which is visible to the <code>setup()</code>, <code>draw()</code>, and <code>mouseClicked()</code> methods. To do this, we add <code>global grey</code> to each of these methods to indicate that they should not create their own <code>grey</code> variable, but use a global one.</p>
+<p>We give the variable <code>grey</code> the value of <code>true</code> in the setup (line [7-8]). Then, we draw a little square (line [13-14]) just so that we have something to point at. Next, we change the line [25-28] from script 9 into line [31-37] in script 10. This first checks if the boolean <code>grey</code> is set to true, and sets the fill colour based on that information. Finally, we create a new method called <code>mouseClicked</code> (line [41-51]) to handle the actual click event itself. This method (which really must be called &quot;mouseClicked&quot;) will be run every time you click the mouse. If you do so, it will check if the position of the mouse is within the range of the rectangle that we drew in the beginning. If it is, it changes the value of <code>grey</code> and redraws the map. See the reference guide on the Processing.org website for more information on <code>mouseClicked()</code>.</p>
+<p><em>Note that there is basically no connection between the rectangle we draw at line [14] and the actual click event: we have to check if our mouse is over the rectangle ourselves; we're not able to say &quot;if this rectangle is clicked&quot;. We could just as well remove line [14] (so that we don't see a rectangle) and the visualization would still work exactly the same. The only problem would be that you wouldn't know where the region that we define in lines [44] actually is...</em></p>
+<p>Now let's implement an actual <strong>slider</strong>. This looks a lot like what we had before in script 9, but we obviously have to change some things. Let's start with the final script, which was adapted from script 9:</p>
+<p><em>Script 11</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python">table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> circlePosition
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    noLoop()
+    circlePosition = <span class="dv">50</span>
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> circlePosition
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    stroke(<span class="dv">150</span>,<span class="dv">150</span>,<span class="dv">150</span>)
+    line(<span class="dv">50</span>,<span class="dv">150</span>,<span class="dv">150</span>,<span class="dv">150</span>) <span class="co"># draw the line of 100 pixels long</span>
+    noStroke()
+    fill(<span class="dv">150</span>,<span class="dv">150</span>,<span class="dv">150</span>)
+    ellipse(circlePosition,<span class="dv">150</span>,<span class="dv">10</span>,<span class="dv">10</span>)
+  
+    circleXMin = circlePosition - <span class="dv">2</span>
+    circleXMax = circlePosition + <span class="dv">2</span>
+    minDistance = <span class="dt">map</span>(circleXMin, <span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">0</span>, <span class="dv">15406</span>)
+    maxDistance = <span class="dt">map</span>(circleXMax, <span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">0</span>, <span class="dv">15406</span>)
+
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+
+        <span class="kw">if</span> minDistance &lt; distance and distance &lt; maxDistance:
+            from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+            from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+            from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+            to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+    
+            x = <span class="dt">map</span>(from_long,-<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+            y = <span class="dt">map</span>(from_lat,-<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+        
+            <span class="kw">if</span> from_country == to_country:
+                fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>)
+            <span class="kw">else</span>:
+                fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+            ellipse(x,y,<span class="dv">3</span>,<span class="dv">3</span>)
+    
+<span class="kw">def</span> mouseDragged():
+    <span class="kw">global</span> circlePosition
+    <span class="kw">if</span> <span class="dt">abs</span>(mouseX - circlePosition) &lt;= <span class="dv">5</span> and <span class="dt">abs</span>(mouseY - <span class="dv">150</span>) &lt;= <span class="dv">5</span> and mouseX &gt;= <span class="dv">50</span> and mouseX &lt;= <span class="dv">150</span>:
+          circlePosition = mouseX
+          redraw()</code></pre></td></tr></table>
+<div class="figure">
+<img src="images/slider.png" alt="slider" /><p class="caption">slider</p>
+</div>
+<p>So what changed? We now define a variable called <code>circlePosition</code> in the <code>setup()</code>, <code>draw()</code> and <code>mouseDragged()</code> methods, and give it an initial value of 50 (line[7]). At the start of the <code>draw()</code> function [12-16], we also draw a line that will serve as a guide as well as the actual circle. Furthermore, we change lines [18-21] to refer to the <code>circlePosition</code> instead of <code>mouseX</code>. Note that that includes using +/- 2 instead of +/- 25 as a buffer, and using the minimum and maximum values of the line (i.e. 50 and 150) instead of those of the mouse in the map functions. Finally, we write the <code>mouseDragged()</code> function at the bottom (lines [41-45]). A &quot;mouse-drag&quot; in Processing-speak means: pressing the mouse button, then moving the mouse to another position, and finally releasing the mouse button. The <code>mouseDragged()</code> function looks a lot like the <code>mouseClicked()</code> function in script 10. We want to make sure that we are on top of the circle when we start dragging (both horizontally and vertically; line [43]). Also, we need to make sure that we cannot drag the circle further than the minimum or maximum value. If the situation complies to these three conditions, we change the <code>circlePosition</code> to <code>mouseX</code>, which basically means that the circle follows the mouse. Don't forget the <code>redraw()</code> or the scene will not be updated. Question: what happens if you drag the mouse too fast? Why is that? And just for laughs: remove the <code>and mouseX &gt;= 50 and mouseX &lt;= 150</code>, and see what happens if you start interacting with the visualization...</p>
+<h2 id="brushing-and-linking"><span class="header-section-number">1.7</span> Brushing and linking</h2>
+<p>Very often, you will want to create views that show different aspects of the same data. In our flights case, we might want to have both a map and a histogram of the flight distances. To be able to do this, we will have to look at how to create objects.</p>
+<h3 id="working-with-objects"><span class="header-section-number">1.7.1</span> Working with objects</h3>
+<h4 id="dogs"><span class="header-section-number">1.7.1.1</span> Dogs</h4>
+<p>The code that we have been writing so far is what they call &quot;imperative&quot;: the code does not know what we are talking about (i.e. flight data); it just performs a single action for each line in the file. As a result, all things (dots) on the screen are completely independent. They do not know of each other's existence. To create linked views, however, we will need to make these visuals more self-aware, which we do by working with <strong>objects</strong>. Objects are members of a specific <strong>class</strong>. For example, Rusty, Duke and Lucy are three dogs; in object-oriented speak, we say that Rusty, Duke and Lucy are &quot;objects&quot; of the &quot;class&quot; dog. Of course, all dogs have types of <strong>properties</strong> in common: they have names, have a breed, a weight, etc. At the same time, they share some <strong>methods</strong>, for example: they can all bark, eat, pee, ...</p>
+<p>In object-oriented programming, we first define <code>classes</code> that completely describe the <code>properties</code> and <code>methods</code> of that type of object. Have a look at this bit of code that defines and creates a dog.</p>
+<p><em>Script 12</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Dog:    
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, n, b, w):
+        <span class="ot">self</span>.name = n
+        <span class="ot">self</span>.breed = b
+        <span class="ot">self</span>.weight = w
+    
+    <span class="kw">def</span> bark(<span class="ot">self</span>):
+        <span class="dt">print</span>(<span class="st">&quot;My name is &quot;</span> + <span class="ot">self</span>.name + <span class="st">&quot;, I&#39;m a &quot;</span> + <span class="ot">self</span>.breed + <span class="st">&quot;, and I weigh &quot;</span> + <span class="dt">str</span>(<span class="ot">self</span>.weight) + <span class="st">&quot; kg&quot;</span>)
+
+    <span class="kw">def</span> eat(<span class="ot">self</span>):
+        <span class="dt">print</span>(<span class="st">&quot;I am &quot;</span> + <span class="ot">self</span>.name + <span class="st">&quot; and I ate&quot;</span>)
+    
+    <span class="kw">def</span> pee(<span class="ot">self</span>):
+        <span class="dt">print</span>(<span class="st">&quot;I am &quot;</span> + <span class="ot">self</span>.name + <span class="st">&quot; and I&#39;ve got wet legs now&quot;</span>)    
+
+<span class="kw">def</span> setup():
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    
+    dog1 = Dog(<span class="st">&quot;Buddy&quot;</span>,<span class="st">&quot;Rottweiler&quot;</span>,<span class="dv">19</span>)
+    dog2 = Dog(<span class="st">&quot;Lucy&quot;</span>,<span class="st">&quot;Terrier&quot;</span>,<span class="dv">8</span>)
+    
+    dog1.bark()
+    dog1.eat()
+    dog1.pee()
+    dog2.bark()
+    dog2.eat()
+    dog2.pee()</code></pre></td></tr></table>
+<p>When you run this code, you will see an empty picture (because we didn't draw anything), but you will also see some text appear in the black terminal underneath your code. That text should be:</p>
+<pre><code>My name is Buddy, I&#39;m a Rottweiler, and I weight 19.0 kg
+I am Buddy and I ate
+I am Buddy and I&#39;ve got wet legs now
+My name is Lucy, I&#39;m a Terrier, and I weight 8.0 kg
+I am Lucy and I ate
+I am Lucy and I&#39;ve got wet legs now</code></pre>
+<p>So what did we do? Outside of the <code>setup()</code> method, in lines 1 to 14, we defined a new <em>class</em>, called <code>Dog</code> (notice the uppercase &quot;D&quot;). In such class, we want to do 2 things: (1) define a method to create a new member of this class (lines 2 to 5), and (2) define any additional methods of the class (lines 7 to 14).</p>
+<p>The method to create a new object of the class is called <code>__init__()</code> (note the <strong>2</strong> underscores on either side). Also, you see here that every method should have <code>self</code> as the first argument. This argument is hidden in the calling code, though. For example, you see that the creation of a new object takes 4 parameters (line 2), but when we actually call that function to create <code>dog1</code> (line 19), we only provide 3. The <code>self</code> is automatic. The other parameters (the things between parentheses) can be assigned to properties of the objects.</p>
+<p>In our little example here, the methods <code>bark()</code>, <code>eat()</code> and <code>pee()</code> don't do anything else than sending some text to the console, using <code>print()</code>.</p>
+<p>Now what does this actually mean? We can create new objects just like we create variables before, for example the <code>startX = 100</code> in script 4. Just like we did in the previous scripts, we create 2 new variables (of the type <code>Dog</code>).</p>
+<pre><code>dog1 = Dog(&quot;Buddy&quot;,&quot;Rottweiler&quot;,19)</code></pre>
+<p>Once we have these objects, we can call the methods on them that we defined in the class definition, as is shown in lines 22 to 27.</p>
+<h4 id="one-flight"><span class="header-section-number">1.7.1.2</span> One flight</h4>
+<p>So what could a <strong>flight class</strong> look like? Let's alter this code so that we use a <code>Flight</code> class.</p>
+<p><em>Script 13</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Flight:    
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, d,flo,fla,tlo,tla,fc,tc):
+        <span class="ot">self</span>.distance = d
+        <span class="ot">self</span>.from_long = flo
+        <span class="ot">self</span>.from_lat = fla
+        <span class="ot">self</span>.to_long = tlo
+        <span class="ot">self</span>.to_lat = tla
+        <span class="ot">self</span>.from_country = fc
+        <span class="ot">self</span>.to_country = tc
+        
+        <span class="ot">self</span>.x = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+        <span class="ot">self</span>.y = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+    
+    <span class="kw">def</span> drawDepartureAirport(<span class="ot">self</span>):
+        ellipse(<span class="ot">self</span>.x, <span class="ot">self</span>.y, <span class="dv">3</span>,<span class="dv">3</span>)
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> my_flight
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+    my_flight = Flight(<span class="dv">1458</span>, <span class="fl">61.838</span>, <span class="fl">55.509</span>, <span class="fl">38.51</span>, <span class="fl">55.681</span>, <span class="st">&quot;Belgium&quot;</span>, <span class="st">&quot;Germany&quot;</span>);
+    
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> my_flight
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    my_flight.drawDepartureAirport()</code></pre></td></tr></table>
+<p>For simplicity's sake, we only draw a single flight in this example. So what did we do? We define the <code>Flight</code> class in lines 1 to 15. First, we create an <code>__init__()</code> method for creating new objects and assigning properties (line 2 to 12). We also include <code>x</code> and <code>y</code> here. These are the x- and y-positions on the screen as we used before. Even though these are computed, they are specific for a flight and we can therefore calculate them in the creation method and look at them as any other property of a flight.</p>
+<p>In the <code>setup()</code> method, we create a new object/variable of the class <code>Flight</code>, that we give the name <code>my_flight</code>. Next, in the <code>draw()</code> method, we actually draw the flight (line 26). Notice here that we don't write <code>ellipse()</code> or anything drawing-specific here. We write <code>my_flight.draw()</code> because <em>any flight object knows how to draw itself</em>. The <code>drawDepartureAiport()</code> method definition on lines 14 and 15 returns an ellipse whenever that method is called.</p>
+<h4 id="many-flights"><span class="header-section-number">1.7.1.3</span> Many flights</h4>
+<p>In the code of script 13, we only drew one flight. Here is the same code as in script 13, but showing all flights.</p>
+<p><em>Script 14</em></p>
+<table class="sourceCode java numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td><td class="sourceCode"><pre><code class="sourceCode java"><span class="kw">class</span> Flight:    
+    def <span class="fu">__init__</span>(self, d,flo,fla,tlo,tla,fc,tc):
+        self.<span class="fu">distance</span> = d
+        self.<span class="fu">from_long</span> = flo
+        self.<span class="fu">from_lat</span> = fla
+        self.<span class="fu">to_long</span> = tlo
+        self.<span class="fu">to_lat</span> = tla
+        self.<span class="fu">from_country</span> = fc
+        self.<span class="fu">to_country</span> = tc
+        
+        self.<span class="fu">x</span> = <span class="fu">map</span>(self.<span class="fu">from_long</span>, -<span class="dv">180</span>,<span class="dv">180</span>,<span class="dv">0</span>,width)
+        self.<span class="fu">y</span> = <span class="fu">map</span>(self.<span class="fu">from_lat</span>, -<span class="dv">180</span>,<span class="dv">180</span>,height,<span class="dv">0</span>)
+    
+    def <span class="fu">drawDepartureAirport</span>(self):
+        <span class="fu">ellipse</span>(self.<span class="fu">x</span>, self.<span class="fu">y</span>, <span class="dv">3</span>,<span class="dv">3</span>)
+
+def <span class="fu">setup</span>():
+    global flights
+    flights = []
+    <span class="fu">size</span>(<span class="dv">800</span>,<span class="dv">800</span>)
+    <span class="fu">noStroke</span>()
+    <span class="fu">noLoop</span>()
+    <span class="fu">fill</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+    table = <span class="fu">loadTable</span>(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+    <span class="kw">for</span> row in table.<span class="fu">rows</span>():
+        distance = row.<span class="fu">getInt</span>(<span class="st">&quot;distance&quot;</span>)
+        from_long = row.<span class="fu">getFloat</span>(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.<span class="fu">getFloat</span>(<span class="st">&quot;from_lat&quot;</span>)
+        to_long = row.<span class="fu">getFloat</span>(<span class="st">&quot;to_long&quot;</span>)
+        to_lat = row.<span class="fu">getFloat</span>(<span class="st">&quot;to_lat&quot;</span>)
+        from_country = row.<span class="fu">getString</span>(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.<span class="fu">getString</span>(<span class="st">&quot;to_country&quot;</span>)
+        this_flight = <span class="fu">Flight</span>(distance,from_long,from_lat,to_long,to_lat,from_country,to_country)
+        flights.<span class="fu">append</span>(this_flight)
+                                     
+        
+def <span class="fu">draw</span>():
+    global flights
+    <span class="fu">background</span>(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    <span class="kw">for</span> flight in flights:
+        flight.<span class="fu">drawDepartureAirport</span>()</code></pre></td></tr></table>
+<p>As always, let's see what is different in this script relative to the previous one. For starters, the <code>Flight</code> class is exactly the same as in script 13. Some parts are the same as in script 11, before we started working with these object things. But these are the really new things:</p>
+<ul>
+<li>On line 18 and 19, we define a global variable <code>flights</code> and make it an empty array.</li>
+<li>On line 25 to 34, we go over each line in the file, get the required columns for that row, and create a new flight object. We then add (<code>append</code>) that new flight to the <code>flights</code> array (line 34).</li>
+<li>In the <code>draw()</code> method, we also define that same <code>global flights</code>.</li>
+<li>On lines 40 and 41, we loop over all flights and let each draw itself.</li>
+</ul>
+<p>The resulting picture should be the same as that from script 5 (i.e. Figure 6).</p>
+<h3 id="linking-two-copies-of-the-departure-plots"><span class="header-section-number">1.7.2</span> Linking two copies of the departure plots</h3>
+<p>Now that we work with objects, we can start implementing <em>brushing and linking</em>. Let's first look at the brushing.</p>
+<h4 id="brushing"><span class="header-section-number">1.7.2.1</span> Brushing</h4>
+<p>Let's change the code from script 14 a bit, so that all objects that are in the vicinity (e.g. within 10 pixels) of the mouse position are &quot;active&quot;. To do this, we'll (1) add a new function to the <code>Flight</code> class, which checks if an object (i.e. flight) is selected/activated or not, and (2) change the <code>drawDepartureAiport()</code> function a bit to distinguish between selected and non-selected objects.</p>
+<p>Add the following function to the <code>Flight</code> class:</p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">def</span> selected():
+    <span class="kw">if</span> dist(mouseX, mouseY, <span class="ot">self</span>.x, <span class="ot">self</span>.y) &lt; <span class="dv">10</span>:
+        <span class="kw">return</span> <span class="ot">True</span>
+    <span class="kw">else</span>:
+        <span class="kw">return</span> <span class="ot">False</span></code></pre></td></tr></table>
+<p>And change the <code>drawDepartureAiport()</code> function to this:</p>
+<table class="sourceCode java numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode java"><span class="dt">void</span> <span class="fu">drawDepartureAirport</span>() {
+  <span class="kw">if</span> <span class="fu">selected</span>():
+    <span class="fu">fill</span>(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">25</span>)
+    <span class="kw">else</span>:
+    <span class="fu">fill</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+    <span class="fu">ellipse</span>(x,y,<span class="dv">3</span>,<span class="dv">3</span>)</code></pre></td></tr></table>
+<p>You'll also have to either remove the <code>noLoop()</code> from the <code>setup()</code> method, or add a <code>void mouseMoved()</code> method just like in script 8. (Hint: the section option is better...)</p>
+<p>The <code>selected()</code> function returns either <code>True</code> or <code>False</code> for a given flight, depending on the mouse position. We can then use that result in the <code>drawDepartureAiport()</code> function: <code>if selected():</code>.</p>
+<p>Your resulting code will look like script 15 below. All airports will be in blue, except the ones in the vicinity of the mouse position which will be red.</p>
+<p><em>Script 15</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Flight:
+
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, d, flo, fla, tlo, tla, fc, tc):
+        <span class="ot">self</span>.distance = d
+        <span class="ot">self</span>.from_long = flo
+        <span class="ot">self</span>.from_lat = fla
+        <span class="ot">self</span>.to_long = tlo
+        <span class="ot">self</span>.to_lat = tla
+        <span class="ot">self</span>.from_country = fc
+        <span class="ot">self</span>.to_country = tc
+
+        <span class="ot">self</span>.x = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">0</span>, width)
+        <span class="ot">self</span>.y = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height, <span class="dv">0</span>)
+
+    <span class="kw">def</span> selected(<span class="ot">self</span>):
+        <span class="kw">if</span> dist(mouseX, mouseY, <span class="ot">self</span>.x, <span class="ot">self</span>.y) &lt; <span class="dv">10</span>:
+            <span class="kw">return</span> <span class="ot">True</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="ot">False</span>
+
+    <span class="kw">def</span> drawDepartureAirport(<span class="ot">self</span>):
+        <span class="kw">if</span> <span class="ot">self</span>.selected():
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+        ellipse(<span class="ot">self</span>.x, <span class="ot">self</span>.y, <span class="dv">3</span>, <span class="dv">3</span>)
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> flights
+    flights = []
+    size(<span class="dv">800</span>, <span class="dv">800</span>)
+    noStroke()
+    noLoop()
+    fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+    table = loadTable(<span class="st">&quot;flights.csv&quot;</span>, <span class="st">&quot;header&quot;</span>)
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        to_long = row.getFloat(<span class="st">&quot;to_long&quot;</span>)
+        to_lat = row.getFloat(<span class="st">&quot;to_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        this_flight = Flight(distance, from_long, from_lat, to_long, to_lat, from_country, to_country)
+        flights.append(this_flight)
+
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> flights
+    background(<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>)
+    <span class="kw">for</span> flight in flights:
+        flight.drawDepartureAirport()
+
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<h4 id="linking"><span class="header-section-number">1.7.2.2</span> Linking</h4>
+<p>Now that we have the <em>brushing</em> working, let's create a proof of principle for the linking. To make this work, we'll first use a rather useless example, where we draw not one, but two maps of the world. But brushing airports in the first map will highlight them in the second map. We'll make the map a quarter of the size by only using half of the width and half of the height for each. What will we have to change relative to script 15?</p>
+<ul>
+<li>The calculation of <code>x</code> and <code>y</code> for each airport will have to be changed. Instead of just creating just one x and y for a flight, we now need two: <code>x1</code>, <code>y1</code>, and <code>x2</code>, <code>y2</code>. The map function should now not rescale the values from -180 and 180 to (in the case of width) <code>0</code> and <code>width</code>, but from <code>0</code> to <code>width/2</code>. The values for x2 can then range from <code>width/2</code> to <code>width</code>. We do the same for <code>y1</code> and <code>y2</code>.</li>
+<li>The <code>drawDepartureAiport()</code> function will draw each airport twice. Once using <code>x1</code> and <code>y1</code>, and once using <code>x2</code> and <code>y2</code>.</li>
+</ul>
+<p>Here's an overview of what we want to look the visualization like. At the top left, we want picture 1; at the bottom right we want picture 2. The <code>x</code> positions for picture 1 range from <code>0</code> to <code>width/2</code>; the <code>x</code> positions for picture 2 range from <code>width/2</code> to <code>width</code>. The same applies for the <code>y</code> positions of both.</p>
+<div class="figure">
+<embed src="images/figure13.pdf" /><p class="caption">Schematic overview of picture placement and position ranges</p>
+</div>
+<p>So we get the code like this:</p>
+<p><em>Script 16</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Flight:
+
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, d, flo, fla, tlo, tla, fc, tc):
+        <span class="ot">self</span>.distance = d
+        <span class="ot">self</span>.from_long = flo
+        <span class="ot">self</span>.from_lat = fla
+        <span class="ot">self</span>.to_long = tlo
+        <span class="ot">self</span>.to_lat = tla
+        <span class="ot">self</span>.from_country = fc
+        <span class="ot">self</span>.to_country = tc
+
+        <span class="ot">self</span>.x1 = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">0</span>, width/<span class="dv">2</span>)
+        <span class="ot">self</span>.y1 = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height/<span class="dv">2</span>, <span class="dv">0</span>)
+        <span class="ot">self</span>.x2 = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>, <span class="dv">180</span>, width/<span class="dv">2</span>, width)
+        <span class="ot">self</span>.y2 = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height, height/<span class="dv">2</span>)
+
+    <span class="kw">def</span> selected(<span class="ot">self</span>):
+        <span class="kw">if</span> dist(mouseX, mouseY, <span class="ot">self</span>.x1, <span class="ot">self</span>.y1) &lt; <span class="dv">10</span>:
+            <span class="kw">return</span> <span class="ot">True</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="ot">False</span>
+
+    <span class="kw">def</span> drawDepartureAirport(<span class="ot">self</span>):
+        <span class="kw">if</span> <span class="ot">self</span>.selected():
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+        ellipse(<span class="ot">self</span>.x1, <span class="ot">self</span>.y1, <span class="dv">3</span>, <span class="dv">3</span>)
+        ellipse(<span class="ot">self</span>.x2, <span class="ot">self</span>.y2, <span class="dv">3</span>, <span class="dv">3</span>)
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> flights
+    flights = []
+    size(<span class="dv">800</span>, <span class="dv">800</span>)
+    noStroke()
+    noLoop()
+    fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+    table = loadTable(<span class="st">&quot;flights.csv&quot;</span>, <span class="st">&quot;header&quot;</span>)
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        to_long = row.getFloat(<span class="st">&quot;to_long&quot;</span>)
+        to_lat = row.getFloat(<span class="st">&quot;to_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        this_flight = Flight(distance, from_long, from_lat, to_long, to_lat, from_country, to_country)
+        flights.append(this_flight)
+
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> flights
+    background(<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>)
+    <span class="kw">for</span> flight in flights:
+        flight.drawDepartureAirport()
+
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<p>The lines in the code that have changed relative to script 15 are: lines 12 to 15, line 18, and lines 28 and 29. You should see an image similar to this (without the annotated text):</p>
+<div class="figure">
+<img src="images/brushinglinking.png" alt="Brushing and linking" /><p class="caption">Brushing and linking</p>
+</div>
+<h3 id="linking-departure-to-arrival-airports"><span class="header-section-number">1.7.3</span> Linking departure to arrival airports</h3>
+<p>This visualization is not really useful. But how about we draw the departure airport in the top-left, and the arrival airport in the bottom-right. Brushing a group of departure airports in the top-left would then highlight the arrival airports in the bottom-right.</p>
+<p><em>Script 17</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Flight:
+
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, d, flo, fla, tlo, tla, fc, tc):
+        <span class="ot">self</span>.distance = d
+        <span class="ot">self</span>.from_long = flo
+        <span class="ot">self</span>.from_lat = fla
+        <span class="ot">self</span>.to_long = tlo
+        <span class="ot">self</span>.to_lat = tla
+        <span class="ot">self</span>.from_country = fc
+        <span class="ot">self</span>.to_country = tc
+
+        <span class="ot">self</span>.x1 = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">0</span>, width/<span class="dv">2</span>)
+        <span class="ot">self</span>.y1 = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height/<span class="dv">2</span>, <span class="dv">0</span>)
+        <span class="ot">self</span>.x2 = <span class="dt">map</span>(<span class="ot">self</span>.to_long, -<span class="dv">180</span>, <span class="dv">180</span>, width/<span class="dv">2</span>, width)
+        <span class="ot">self</span>.y2 = <span class="dt">map</span>(<span class="ot">self</span>.to_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height, height/<span class="dv">2</span>)
+
+    <span class="kw">def</span> visible(<span class="ot">self</span>):
+        <span class="kw">if</span> dist(mouseX, mouseY, <span class="ot">self</span>.x1, <span class="ot">self</span>.y1) &lt; <span class="dv">10</span>:
+            <span class="kw">return</span> <span class="ot">True</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="ot">False</span>
+
+    <span class="kw">def</span> drawDepartureAirport(<span class="ot">self</span>):
+        <span class="kw">if</span> <span class="ot">self</span>.visible():
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+        ellipse(<span class="ot">self</span>.x1, <span class="ot">self</span>.y1, <span class="dv">3</span>, <span class="dv">3</span>)
+
+    <span class="kw">def</span> drawArrivalAirport(<span class="ot">self</span>):
+        <span class="kw">if</span> <span class="ot">self</span>.visible():
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">1</span>)
+        ellipse(<span class="ot">self</span>.x2, <span class="ot">self</span>.y2, <span class="dv">3</span>, <span class="dv">3</span>)
+    
+    <span class="kw">def</span> drawAirports(<span class="ot">self</span>):
+        <span class="ot">self</span>.drawDepartureAirport()
+        <span class="ot">self</span>.drawArrivalAirport()
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> flights
+    flights = []
+    size(<span class="dv">800</span>, <span class="dv">800</span>)
+    noStroke()
+    noLoop()
+    fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+    table = loadTable(<span class="st">&quot;flights.csv&quot;</span>, <span class="st">&quot;header&quot;</span>)
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        to_long = row.getFloat(<span class="st">&quot;to_long&quot;</span>)
+        to_lat = row.getFloat(<span class="st">&quot;to_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        this_flight = Flight(distance, from_long, from_lat, to_long, to_lat, from_country, to_country)
+        flights.append(this_flight)
+
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> flights
+    background(<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>)
+    <span class="kw">for</span> flight in flights:
+        flight.drawAirports()
+
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<p>Let's see what changed compared to script 16:</p>
+<ul>
+<li>We changed the calculation of <code>x2</code> and <code>y2</code> to use <code>to_long</code> and <code>to_lat</code> instead of <code>from_long</code> and <code>from_lat</code> (lines 14 and 15).</li>
+<li>We removed the instruction to draw an ellipse at position <code>(x2,y2)</code> from the <code>drawDepartureAirport()</code> function.</li>
+<li>We created a new function <code>drawArrivalAirport()</code> (lines 30 to 35). We also set the colour in this function to be very transparent (opacity set to <code>1</code> instead of <code>10</code>), so that it is more clear which of the airports is active.</li>
+<li>We created a new function <code>drawAirports()</code> (lines 37 to 39), which basically just calls the <code>drawDepartureAirport()</code> and <code>drawArrivalAirport()</code> functions.</li>
+<li>In the <code>draw()</code> function, we replace <code>flight.drawDepartureAirport()</code> with <code>flight.drawAirports()</code> so that both plots are made.</li>
+</ul>
+<p>The resulting figure should look like this (without the annotated text):</p>
+<div class="figure">
+<img src="images/brushinglinking2.png" alt="Brushing and linking between departure and arrival airports" /><p class="caption">Brushing and linking between departure and arrival airports</p>
+</div>
+<h3 id="using-a-histogram-as-a-filter"><span class="header-section-number">1.7.4</span> Using a histogram as a filter</h3>
+<p>As a final version of a brushing-and-linking plot, we'll include a histogram in the picture. By hovering over the different bars in the histogram we can filter airports in the departure and arrival subplots. Let's first look at the code:</p>
+<p><em>Script 18</em></p>
+<table class="sourceCode python numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+</pre></td><td class="sourceCode"><pre><code class="sourceCode python"><span class="kw">class</span> Flight:
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>,d,flo,fla,tlo,tla,fc,tc):
+        <span class="ot">self</span>.distance = d
+        <span class="ot">self</span>.from_long = flo
+        <span class="ot">self</span>.from_lat = fla
+        <span class="ot">self</span>.to_long = tlo
+        <span class="ot">self</span>.to_lat = tla
+        <span class="ot">self</span>.from_country = fc
+        <span class="ot">self</span>.to_country = tc
+        
+        <span class="ot">self</span>.x1 = <span class="dt">map</span>(<span class="ot">self</span>.from_long, -<span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">0</span>, width/<span class="dv">2</span>)
+        <span class="ot">self</span>.y1 = <span class="dt">map</span>(<span class="ot">self</span>.from_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height/<span class="dv">2</span>, <span class="dv">0</span>)
+        <span class="ot">self</span>.x2 = <span class="dt">map</span>(<span class="ot">self</span>.to_long, -<span class="dv">180</span>, <span class="dv">180</span>, width/<span class="dv">2</span>, width)
+        <span class="ot">self</span>.y2 = <span class="dt">map</span>(<span class="ot">self</span>.to_lat, -<span class="dv">180</span>, <span class="dv">180</span>, height, height/<span class="dv">2</span>)
+
+    <span class="kw">def</span> selected(<span class="ot">self</span>,activeHistBin):
+        <span class="kw">if</span> <span class="ot">self</span>.distance/<span class="dv">1000</span> == activeHistBin:
+            <span class="kw">return</span> <span class="ot">True</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="ot">False</span>
+
+    <span class="kw">def</span> drawDepartureAirport(<span class="ot">self</span>,activeHistBin):
+        <span class="kw">if</span> <span class="ot">self</span>.selected(activeHistBin):
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>)
+        ellipse(<span class="ot">self</span>.x1, <span class="ot">self</span>.y1, <span class="dv">3</span>, <span class="dv">3</span>)
+
+    <span class="kw">def</span> drawArrivalAirport(<span class="ot">self</span>,activeHistBin):
+        <span class="kw">if</span> <span class="ot">self</span>.selected(activeHistBin):
+            fill(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">25</span>)
+        <span class="kw">else</span>:
+            fill(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">1</span>)
+        ellipse(<span class="ot">self</span>.x2, <span class="ot">self</span>.y2, <span class="dv">3</span>, <span class="dv">3</span>)
+    
+    <span class="kw">def</span> drawAirports(<span class="ot">self</span>,activeHistBin):
+        <span class="ot">self</span>.drawDepartureAirport(activeHistBin)
+        <span class="ot">self</span>.drawArrivalAirport(activeHistBin)
+
+<span class="kw">class</span> Histogram:
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>,table):
+        <span class="ot">self</span>.data = {}
+        <span class="kw">for</span> row in table.rows():
+            distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+            <span class="dt">bin</span> = distance/<span class="dv">1000</span>
+            <span class="kw">if</span> <span class="dt">bin</span> in <span class="ot">self</span>.data:
+                <span class="ot">self</span>.data[<span class="dt">bin</span>] += <span class="dv">1</span>
+            <span class="kw">else</span>:
+                <span class="ot">self</span>.data[<span class="dt">bin</span>] = <span class="dv">1</span>
+
+    <span class="kw">def</span> selected(<span class="ot">self</span>):
+        <span class="kw">if</span> mouseX &gt; <span class="dv">50</span> and mouseX &lt; <span class="dv">210</span> and mouseY &gt; height - <span class="dv">350</span> and mouseY &lt; height - <span class="dv">50</span>:
+            <span class="kw">return</span> (mouseX - <span class="dv">50</span>)/<span class="dv">10</span>
+        <span class="kw">else</span>:
+            <span class="kw">return</span> <span class="dv">17</span>
+
+    <span class="kw">def</span> show(<span class="ot">self</span>):
+        <span class="kw">for</span> <span class="dt">bin</span> in <span class="ot">self</span>.data:
+            <span class="kw">if</span> <span class="dt">bin</span> == activeHistBin:
+                fill(<span class="dv">255</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">100</span>)
+            <span class="kw">else</span>:
+                fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">100</span>)
+            x = <span class="dv">50+10</span>*<span class="dt">bin</span>
+            binHeight = <span class="dt">map</span>(<span class="ot">self</span>.data[<span class="dt">bin</span>], <span class="dv">0</span>, <span class="dv">26154</span>,<span class="dv">0</span>,-<span class="dv">300</span>)
+            rect(x,height<span class="dv">-50</span>,<span class="dv">8</span>,binHeight)
+
+<span class="kw">def</span> setup():
+    <span class="kw">global</span> hist,table,flights,activeHistBin
+    size(<span class="dv">800</span>,<span class="dv">800</span>)
+    fill(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">10</span>)
+    table = loadTable(<span class="st">&quot;flights.csv&quot;</span>,<span class="st">&quot;header&quot;</span>)
+    noStroke()
+    noLoop()
+    flights = []
+    hist = Histogram(table)
+    
+    <span class="kw">for</span> row in table.rows():
+        distance = row.getInt(<span class="st">&quot;distance&quot;</span>)
+        from_long = row.getFloat(<span class="st">&quot;from_long&quot;</span>)
+        from_lat = row.getFloat(<span class="st">&quot;from_lat&quot;</span>)
+        to_long = row.getFloat(<span class="st">&quot;to_long&quot;</span>)
+        to_lat = row.getFloat(<span class="st">&quot;to_lat&quot;</span>)
+        from_country = row.getString(<span class="st">&quot;from_country&quot;</span>)
+        to_country = row.getString(<span class="st">&quot;to_country&quot;</span>)
+        thisFlight = Flight(distance,from_long, from_lat,to_long, to_lat,from_country, to_country)
+        flights.append(thisFlight)
+    activeHistBin = <span class="dv">0</span>
+
+<span class="kw">def</span> draw():
+    <span class="kw">global</span> hist,flights,activeHistBin
+    background(<span class="dv">255</span>,<span class="dv">255</span>,<span class="dv">255</span>)
+    noStroke()
+    activeHistBin = hist.selected()
+    hist.show()
+    <span class="kw">for</span> flight in flights:
+        flight.drawAirports(activeHistBin)
+    
+<span class="kw">def</span> mouseMoved():
+    redraw()</code></pre></td></tr></table>
+<p>The approach we take in this plot is the following: if the user hovers over the histogram, the selected bar is saved in a variable called <code>activeHistBin</code>, which is then used in the <code>visible()</code> method of the flights. The resulting picture will look something like this:</p>
+<div class="figure">
+<img src="images/linked_with_histogram.png" alt="Linked views with histogram" /><p class="caption">Linked views with histogram</p>
+</div>
+<p>Let's see how that last script is different from script 17... In the probable order that you would modify script 17 into script 18 (although you might do this differently):</p>
+<ul>
+<li>We create a new histogram of the data (line 75): <code>hist = Histogram(table)</code>.</li>
+<li>In the <code>draw()</code> method, we get the current active bin (line 93; <code>activeHistBin = hist.selected()</code>) and draw the histogram (line 94).</li>
+<li>To make this functionality possible, we create a new class <code>Histogram</code> (lines 40 to 65) that holds an hash (line 42). The distances in the dataset range from 0 to 15406 km. We'll simply take 16 bins, so we can easily assign a flight to a bin by dividing the distance by 1000 (line 45). The <code>self.data</code> hash will look like this: <code>{1: 18922, 2: 28271, 3: ...}</code></li>
+<li>The moment we create a new <code>Histogram</code> object (we'll create only one, lines 41 to 49), we load it with data. For each line in our datafile, we get the distance, calculate which histogram bin this flight belongs to (by dividing the distance by 1,000), and increment the appropriate bin with 1 (line 47).</li>
+<li>We need to be able to find out which is the &quot;active&quot; bin (i.e. which is the one that the mouse is pointing at), which can then be used to set the variable <code>activeHistBin</code>. This is done in the method <code>selected()</code> (lines 51 to 55). This method should return a number. In the method, we just compare the position of the mouse with the positions of the drawn bars of the histogram. The numbers to use here completely depend on the numbers we'll use in the <code>show()</code> method for <code>x</code> and <code>binHeight</code> (see below).</li>
+<li>We need to draw the histogram. For that, we write the <code>show()</code> method (lines 57 to 65). In the loop, we check if we're looking at the active bin, which defines the colour to use. Next, we define the <code>x</code> position and the height of the histogram at that position (<code>binHeight</code>). Finally, we draw a rectangle.</li>
+</ul>
+<h1 id="exporting-your-application"><span class="header-section-number">2</span> Exporting your application</h1>
+<p>So you have written this world-chattering data visualization tool to help some experimentalist in a white coat in a lab. Of course you wouldn't want to ask that person to install java on their own computer, download Processing, install python mode, copy/paste all code into the IDE, and upload the datafiles. There are just too many things that can go wrong. Enter &quot;Export Application&quot;. In Processing: go to &quot;File&quot;, then &quot;Export Application&quot;. This makes it possible to create executable files (a.k.a. &quot;programs&quot;) for Windows, Mac, and linux. After exporting the application, you will see an executable file that you can just email to the expert who needs the visualization.</p>
+<h1 id="whereto-from-here"><span class="header-section-number">3</span> Whereto from here?</h1>
+<p>There are many different ways to show this information. This exact same dataset was visualized by Till Nagel during the visualization challenge in 2012 from visualising.org. Part of his entry is shown in Figure 13.</p>
+<div class="figure">
+<img src="images/till_nagel.png" alt="Entry by Till Nagel" /><p class="caption">Entry by Till Nagel</p>
+</div>
+<p>Till focused on domestic flights, and wanted to show how many of these are served by domestic airlines or by foreign airlines.</p>
+<p>Also have a look at Aaron Koblin's visualization of flight patterns at http://www.aaronkoblin.com/work/flightpatterns/.</p>
+<h2 id="exercise"><span class="header-section-number">3.1</span> Exercise</h2>
+<ul>
+<li>Alter the script to map other data attributes to these visuals. Can you find new insights?</li>
+<li>What other ways of visualizing this data could you think of?</li>
+</ul>

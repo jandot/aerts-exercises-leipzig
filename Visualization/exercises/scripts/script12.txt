@@ -1,0 +1,42 @@
+Dog dog_1;
+Dog dog_2;
+
+class Dog {
+  String name;
+  String breed;
+  float weight;
+  
+  Dog(String n, String b, float w) {
+    name = n;
+    breed = b;
+    weight = w;
+  }
+  
+  void bark() {
+    println("My name is " + name + ", I'm a " + breed +
+            ", and I weigh " + weight + " kg");
+  }
+  
+  void eat() {
+    println("I am " + name + " and I ate");    
+  }
+  
+  void pee() {
+    println("I am " + name + " and I've got wet legs now");    
+  }
+}
+
+void setup() {
+  size(800,800);
+  
+  Dog dog_1 = new Dog("Buddy","Rottweiler",19);
+  Dog dog_2 = new Dog("Lucy","Terrier",8);
+  
+  dog_1.bark();
+  dog_1.eat();
+  dog_1.pee();
+  
+  dog_2.bark();
+  dog_2.eat();
+  dog_2.pee();  
+}

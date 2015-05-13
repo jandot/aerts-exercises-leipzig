@@ -1,0 +1,39 @@
+Table table;
+
+void setup() {
+  size(800,800);
+  table = loadTable("flights.csv","header");
+  noLoop();
+  noStroke();
+}
+
+void draw() {
+  background(255,255,255); // set background to white
+  for ( TableRow row : table.rows() ) {
+    int distance = row.getInt("distance");
+    float mouseXMin = mouseX - 25;
+    float mouseXMax = mouseX + 25;
+    float minDistance = map(mouseXMin, 0, 800, 0, 15406);
+    float maxDistance = map(mouseXMax, 0, 800, 0, 15406);
+
+    if ( minDistance < distance && distance < maxDistance ) {
+      float from_long = row.getFloat("from_long");
+      float from_lat = row.getFloat("from_lat");
+      String from_country = row.getString("from_country");
+      String to_country = row.getString("to_country");
+  
+      float x = map(from_long,-180,180,10,width-10);
+      float y = map(from_lat,-180,180,height-10,10);
+      if ( from_country.equals(to_country) ) {
+        fill(255,0,0,10);
+      } else {
+        fill(0,0,255,10);
+      }
+      ellipse(x,y,3,3);
+    }
+  }
+}
+
+void mouseMoved() {
+  redraw();  
+}

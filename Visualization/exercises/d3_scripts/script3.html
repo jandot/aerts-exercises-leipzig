@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript"
+        src="http://mbostock.github.com/d3/d3.js"></script>
+</head>
+<body>
+<svg></svg>
+<script type="text/javascript">
+  var svg = d3.select("svg")
+  svg.append("circle").attr({cx: 100, cy: 100, r: 10})
+                      .style({fill: "blue"})
+  svg.append("circle").attr({cx: 120, cy: 90, r: 20})
+                      .style({fill: "red"})
+</script>
+</body>
+</html>

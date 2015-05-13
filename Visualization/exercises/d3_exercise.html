@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	
+	var svg = d3.select("body").append("svg").attr("width", 1000).attr("height", 1000)
+
+  d3.csv("flights_mini.csv", function(csv) {
+		svg.selectAll("circle")
+			.data(csv)
+			.enter()
+			.append("circle")
+			.attr({
+				cx: 100,
+				cy: 100,
+				r: 20
+			})
+			.style({
+				fill: "blue",
+				opacity: 0.5
+			})
+	})
+
+	</script>
+</body>
+</html>

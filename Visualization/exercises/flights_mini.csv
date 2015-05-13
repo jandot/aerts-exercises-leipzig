@@ -1,0 +1,500 @@
+from_airport,from_city,from_country,from_long,from_lat,to_airport,to_city,to_country,to_long,to_lat,airline,airline_country,distance
+Balandino,Chelyabinsk,Russia,61.838,55.509,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,1458
+Balandino,Chelyabinsk,Russia,61.838,55.509,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,775
+Balandino,Chelyabinsk,Russia,61.838,55.509,Tolmachevo,Novosibirsk,Russia,83.084,55.021,Aerocondor,Portugal,1341
+Domododevo,Moscow,Russia,38.51,55.681,Balandino,Chelyabinsk,Russia,61.838,55.509,Aerocondor,Portugal,1458
+Domododevo,Moscow,Russia,38.51,55.681,Khrabrovo,Kaliningrad,Russia,20.987,55.483,Aerocondor,Portugal,1098
+Domododevo,Moscow,Russia,38.51,55.681,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,684
+Domododevo,Moscow,Russia,38.51,55.681,Beaufort Mcas,Beaufort,United States,-80.539,32.795,Aerocondor,Portugal,8612
+Domododevo,Moscow,Russia,38.51,55.681,Penza Airport,Penza,Russia,45.035,53.184,Aerocondor,Portugal,504
+Domododevo,Moscow,Russia,38.51,55.681,Bugulma Airport,Bugulma,Russia,53.336,55.066,Aerocondor,Portugal,937
+Heydar Aliyev,Baku,Azerbaijan,50.077,40.779,Beaufort Mcas,Beaufort,United States,-80.539,32.795,Aerocondor,Portugal,10393
+Khrabrovo,Kaliningrad,Russia,20.987,55.483,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,1098
+Kazan,Kazan,Russia,49.464,56.01,Balandino,Chelyabinsk,Russia,61.838,55.509,Aerocondor,Portugal,775
+Kazan,Kazan,Russia,49.464,56.01,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,684
+Kazan,Kazan,Russia,49.464,56.01,Pulkovo,St. Petersburg,Russia,30.437,60.333,Aerocondor,Portugal,1209
+Kazan,Kazan,Russia,49.464,56.01,Franz Josef Strauss,Munich,Germany,12.31,48.589,Aerocondor,Portugal,2621
+Kazan,Kazan,Russia,49.464,56.01,Bugulma Airport,Bugulma,Russia,53.336,55.066,Aerocondor,Portugal,265
+Pulkovo,St. Petersburg,Russia,30.437,60.333,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,1209
+Pulkovo,St. Petersburg,Russia,30.437,60.333,Beaufort Mcas,Beaufort,United States,-80.539,32.795,Aerocondor,Portugal,7920
+Pulkovo,St. Petersburg,Russia,30.437,60.333,Bugulma Airport,Bugulma,Russia,53.336,55.066,Aerocondor,Portugal,1471
+Franz Josef Strauss,Munich,Germany,12.31,48.589,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,2621
+Beaufort Mcas,Beaufort,United States,-80.539,32.795,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,8612
+Beaufort Mcas,Beaufort,United States,-80.539,32.795,Heydar Aliyev,Baku,Azerbaijan,50.077,40.779,Aerocondor,Portugal,10393
+Beaufort Mcas,Beaufort,United States,-80.539,32.795,Pulkovo,St. Petersburg,Russia,30.437,60.333,Aerocondor,Portugal,7920
+Nizhnevartovsk,Nizhnevartovsk,Russia,76.806,61.582,Bugulma Airport,Bugulma,Russia,53.336,55.066,Aerocondor,Portugal,1538
+Tolmachevo,Novosibirsk,Russia,83.084,55.021,Balandino,Chelyabinsk,Russia,61.838,55.509,Aerocondor,Portugal,1341
+Penza Airport,Penza,Russia,45.035,53.184,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,504
+Bugulma Airport,Bugulma,Russia,53.336,55.066,Domododevo,Moscow,Russia,38.51,55.681,Aerocondor,Portugal,937
+Bugulma Airport,Bugulma,Russia,53.336,55.066,Kazan,Kazan,Russia,49.464,56.01,Aerocondor,Portugal,265
+Bugulma Airport,Bugulma,Russia,53.336,55.066,Pulkovo,St. Petersburg,Russia,30.437,60.333,Aerocondor,Portugal,1471
+Bugulma Airport,Bugulma,Russia,53.336,55.066,Nizhnevartovsk,Nizhnevartovsk,Russia,76.806,61.582,Aerocondor,Portugal,1538
+Andahuaylas,Andahuaylas,Peru,-72.918,-13.511,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,458
+Rodriguez Ballon,Arequipa,Peru,-71.306,-15.902,Juliaca,Juliaca,Peru,-69.597,-15.112,Star Peru (2I),Peru,203
+Rodriguez Ballon,Arequipa,Peru,-71.306,-15.902,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,756
+Coronel Fap Alfredo Mendivil Duarte,Ayacucho,Peru,-73.675,-12.592,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,338
+Teniente Alejandro Velasco Astete Intl,Cuzco,Peru,-71.898,-13.227,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,543
+Teniente Alejandro Velasco Astete Intl,Cuzco,Peru,-71.898,-13.227,Padre Aldamiz,Puerto Maldonado,Peru,-68.715,-12.357,Star Peru (2I),Peru,358
+Alferez Fap David Figueroa Fernandini Airport,Huánuco,Peru,-75.675,-9.799,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,197
+Coronel Francisco Secada Vignetta Intl,Iquitos,Peru,-72.849,-3.642,Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Star Peru (2I),Peru,506
+Coronel Francisco Secada Vignetta Intl,Iquitos,Peru,-72.849,-3.642,Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Star Peru (2I),Peru,445
+Juliaca,Juliaca,Peru,-69.597,-15.112,Rodriguez Ballon,Arequipa,Peru,-71.306,-15.902,Star Peru (2I),Peru,203
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Andahuaylas,Andahuaylas,Peru,-72.918,-13.511,Star Peru (2I),Peru,458
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Rodriguez Ballon,Arequipa,Peru,-71.306,-15.902,Star Peru (2I),Peru,756
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Coronel Fap Alfredo Mendivil Duarte,Ayacucho,Peru,-73.675,-12.592,Star Peru (2I),Peru,338
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Teniente Alejandro Velasco Astete Intl,Cuzco,Peru,-71.898,-13.227,Star Peru (2I),Peru,543
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Alferez Fap David Figueroa Fernandini Airport,Huánuco,Peru,-75.675,-9.799,Star Peru (2I),Peru,197
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Star Peru (2I),Peru,450
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Pedro Canga,Tumbes,Peru,-79.969,-3.255,Star Peru (2I),Peru,979
+Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Star Peru (2I),Peru,580
+Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Coronel Francisco Secada Vignetta Intl,Iquitos,Peru,-72.849,-3.642,Star Peru (2I),Peru,506
+Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,450
+Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Star Peru (2I),Peru,270
+Padre Aldamiz,Puerto Maldonado,Peru,-68.715,-12.357,Teniente Alejandro Velasco Astete Intl,Cuzco,Peru,-71.898,-13.227,Star Peru (2I),Peru,358
+Pedro Canga,Tumbes,Peru,-79.969,-3.255,Capitan Montes,Talara,Peru,-80.757,-4.295,Star Peru (2I),Peru,144
+Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Coronel Francisco Secada Vignetta Intl,Iquitos,Peru,-72.849,-3.642,Star Peru (2I),Peru,445
+Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,580
+Cadete Guillermo Del Castillo Paredes,Tarapoto,Peru,-75.956,-6.182,Cap Fap David Abenzur Rengifo Intl,Pucallpa,Peru,-74.291,-7.964,Star Peru (2I),Peru,270
+Capitan Montes,Talara,Peru,-80.757,-4.295,Jorge Chavez Intl,Lima,Peru,-76.524,-11.37,Star Peru (2I),Peru,914
+Abidjan Felix Houphouet Boigny Intl,Abidjan,Cote d'Ivoire,-3.878,5.435,Bobo Dioulasso,Bobo-dioulasso,Burkina Faso,-3.885,11.266,Air Burkina,Burkina Faso,648
+Abidjan Felix Houphouet Boigny Intl,Abidjan,Cote d'Ivoire,-3.878,5.435,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,848
+Kotoka Intl,Accra,Ghana,0.388,6.008,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,751
+Senou,Bamako,Mali,-7.917,12.889,Leopold Sedar Senghor Intl,Dakar,Senegal,-17.151,15.232,Air Burkina,Burkina Faso,1029
+Senou,Bamako,Mali,-7.917,12.889,Orly,Paris,France,2.599,49.208,Air Burkina,Burkina Faso,4152
+Senou,Bamako,Mali,-7.917,12.889,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,730
+Bobo Dioulasso,Bobo-dioulasso,Burkina Faso,-3.885,11.266,Abidjan Felix Houphouet Boigny Intl,Abidjan,Cote d'Ivoire,-3.878,5.435,Air Burkina,Burkina Faso,648
+Bobo Dioulasso,Bobo-dioulasso,Burkina Faso,-3.885,11.266,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,328
+Cadjehoun,Cotonou,Benin,2.64,6.595,Douala,Douala,Cameroon,10.199,4.01,Air Burkina,Burkina Faso,884
+Cadjehoun,Cotonou,Benin,2.64,6.595,Leon M Ba,Libreville,Gabon,9.687,0.764,Air Burkina,Burkina Faso,1015
+Cadjehoun,Cotonou,Benin,2.64,6.595,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,787
+Leopold Sedar Senghor Intl,Dakar,Senegal,-17.151,15.232,Senou,Bamako,Mali,-7.917,12.889,Air Burkina,Burkina Faso,1029
+Leopold Sedar Senghor Intl,Dakar,Senegal,-17.151,15.232,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,1747
+Douala,Douala,Cameroon,10.199,4.01,Cadjehoun,Cotonou,Benin,2.64,6.595,Air Burkina,Burkina Faso,884
+Leon M Ba,Libreville,Gabon,9.687,0.764,Cadjehoun,Cotonou,Benin,2.64,6.595,Air Burkina,Burkina Faso,1015
+Gnassingbe Eyadema Intl,Lome,Togo,1.424,6.276,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,758
+Diori Hamani,Niamey,Niger,2.306,13.802,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,401
+Orly,Paris,France,2.599,49.208,Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Air Burkina,Burkina Faso,4086
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Abidjan Felix Houphouet Boigny Intl,Abidjan,Cote d'Ivoire,-3.878,5.435,Air Burkina,Burkina Faso,848
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Kotoka Intl,Accra,Ghana,0.388,6.008,Air Burkina,Burkina Faso,751
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Senou,Bamako,Mali,-7.917,12.889,Air Burkina,Burkina Faso,730
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Bobo Dioulasso,Bobo-dioulasso,Burkina Faso,-3.885,11.266,Air Burkina,Burkina Faso,328
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Cadjehoun,Cotonou,Benin,2.64,6.595,Air Burkina,Burkina Faso,787
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Leopold Sedar Senghor Intl,Dakar,Senegal,-17.151,15.232,Air Burkina,Burkina Faso,1747
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Gnassingbe Eyadema Intl,Lome,Togo,1.424,6.276,Air Burkina,Burkina Faso,758
+Ouagadougou,Ouagadougou,Burkina Faso,-1.188,12.588,Diori Hamani,Niamey,Niger,2.306,13.802,Air Burkina,Burkina Faso,401
+Eldorado Intl,Bogota,Colombia,-73.579,5.169,Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Aerolineas Galapagos (Aerogal),Ecuador,731
+Mariscal Lamar,Cuenca,Ecuador,-78.974,-2.816,Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Aerolineas Galapagos (Aerogal),Ecuador,164
+Mariscal Lamar,Cuenca,Ecuador,-78.974,-2.816,Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Aerolineas Galapagos (Aerogal),Ecuador,372
+Seymour,Galapagos,Ecuador,-89.777,-0.09,Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Aerolineas Galapagos (Aerogal),Ecuador,1121
+Seymour,Galapagos,Ecuador,-89.777,-0.09,Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Aerolineas Galapagos (Aerogal),Ecuador,1294
+Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Mariscal Lamar,Cuenca,Ecuador,-78.974,-2.816,Aerolineas Galapagos (Aerogal),Ecuador,164
+Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Seymour,Galapagos,Ecuador,-89.777,-0.09,Aerolineas Galapagos (Aerogal),Ecuador,1121
+Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,John F Kennedy Intl,New York,United States,-73.632,41.066,Aerolineas Galapagos (Aerogal),Ecuador,4784
+Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Aerolineas Galapagos (Aerogal),Ecuador,291
+John F Kennedy Intl,New York,United States,-73.632,41.066,Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Aerolineas Galapagos (Aerogal),Ecuador,4784
+Eloy Alfaro Intl,Manta,Ecuador,-80.465,-0.911,Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Aerolineas Galapagos (Aerogal),Ecuador,297
+Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Eldorado Intl,Bogota,Colombia,-73.579,5.169,Aerolineas Galapagos (Aerogal),Ecuador,731
+Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Mariscal Lamar,Cuenca,Ecuador,-78.974,-2.816,Aerolineas Galapagos (Aerogal),Ecuador,372
+Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Jose Joaquin De Olmedo Intl,Guayaquil,Ecuador,-79.806,-1.596,Aerolineas Galapagos (Aerogal),Ecuador,291
+Mariscal Sucre Intl,Quito,Ecuador,-78.148,0.431,Eloy Alfaro Intl,Manta,Ecuador,-80.465,-0.911,Aerolineas Galapagos (Aerogal),Ecuador,297
+Bari,Bari,Italy,17.267,41.231,Zurich,Zurich,Switzerland,8.915,47.774,Helvetic Airways,Switzerland,982
+Bristol,Bristol,United Kingdom,-2.532,51.637,Zurich,Zurich,Switzerland,8.915,47.774,Helvetic Airways,Switzerland,927
+Zurich,Zurich,Switzerland,8.915,47.774,Bari,Bari,Italy,17.267,41.231,Helvetic Airways,Switzerland,982
+Zurich,Zurich,Switzerland,8.915,47.774,Bristol,Bristol,United Kingdom,-2.532,51.637,Helvetic Airways,Switzerland,927
+Ferihegy,Budapest,Hungary,19.425,47.728,Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Moldavian Airlines,Moldova,758
+Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Ferihegy,Budapest,Hungary,19.425,47.728,Moldavian Airlines,Moldova,758
+Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Sabiha Gokcen,Istanbul,Turkey,29.515,41.497,Moldavian Airlines,Moldova,672
+Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Traian Vuia,Timisoara,Romania,21.563,46.349,Moldavian Airlines,Moldova,620
+Sabiha Gokcen,Istanbul,Turkey,29.515,41.497,Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Moldavian Airlines,Moldova,672
+Traian Vuia,Timisoara,Romania,21.563,46.349,Chisinau Intl,Kichinau Fir/acc/com,Moldova,29.551,47.546,Moldavian Airlines,Moldova,620
+Arvidsjaur,Arvidsjaur,Sweden,19.469,65.983,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,657
+Arvidsjaur,Arvidsjaur,Sweden,19.469,65.983,Lycksele,Lycksele,Sweden,19.193,64.913,Yuzhmashavia,Ukraine,119
+Arlanda,Stockholm,Sweden,18.531,60.086,Arvidsjaur,Arvidsjaur,Sweden,19.469,65.983,Yuzhmashavia,Ukraine,657
+Arlanda,Stockholm,Sweden,18.531,60.086,Gallivare,Gallivare,Sweden,21.357,67.22,Yuzhmashavia,Ukraine,805
+Arlanda,Stockholm,Sweden,18.531,60.086,Kramfors Solleftea,Kramfors,Sweden,18.281,63.08,Yuzhmashavia,Ukraine,333
+Arlanda,Stockholm,Sweden,18.531,60.086,Lycksele,Lycksele,Sweden,19.193,64.913,Yuzhmashavia,Ukraine,537
+Arlanda,Stockholm,Sweden,18.531,60.086,Mariehamn,Mariehamn,Finland,20.496,60.203,Yuzhmashavia,Ukraine,109
+Arlanda,Stockholm,Sweden,18.531,60.086,Visby,Visby,Sweden,18.577,58.104,Yuzhmashavia,Ukraine,220
+Arlanda,Stockholm,Sweden,18.531,60.086,Vilhelmina,Vilhelmina,Sweden,17.389,64.965,Yuzhmashavia,Ukraine,545
+Bromma,Stockholm,Sweden,18.569,59.59,Östersund Airport,Östersund,Sweden,14.833,63.324,Yuzhmashavia,Ukraine,459
+Kastrup,Copenhagen,Denmark,13.093,56.029,Saab,Linkoeping,Sweden,16.134,58.676,Yuzhmashavia,Ukraine,346
+Gallivare,Gallivare,Sweden,21.357,67.22,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,805
+Gallivare,Gallivare,Sweden,21.357,67.22,Kramfors Solleftea,Kramfors,Sweden,18.281,63.08,Yuzhmashavia,Ukraine,482
+Helsinki Vantaa,Helsinki,Finland,25.605,60.528,Mariehamn,Mariehamn,Finland,20.496,60.203,Yuzhmashavia,Ukraine,283
+Hemavan Airport,Hemavan,Sweden,15.137,66.343,Vilhelmina,Vilhelmina,Sweden,17.389,64.965,Yuzhmashavia,Ukraine,184
+Kramfors Solleftea,Kramfors,Sweden,18.281,63.08,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,333
+Kramfors Solleftea,Kramfors,Sweden,18.281,63.08,Gallivare,Gallivare,Sweden,21.357,67.22,Yuzhmashavia,Ukraine,482
+Saab,Linkoeping,Sweden,16.134,58.676,Kastrup,Copenhagen,Denmark,13.093,56.029,Yuzhmashavia,Ukraine,346
+Saab,Linkoeping,Sweden,16.134,58.676,Orebro,Orebro,Sweden,15.063,59.372,Yuzhmashavia,Ukraine,98
+Lycksele,Lycksele,Sweden,19.193,64.913,Arvidsjaur,Arvidsjaur,Sweden,19.469,65.983,Yuzhmashavia,Ukraine,119
+Lycksele,Lycksele,Sweden,19.193,64.913,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,537
+Mariehamn,Mariehamn,Finland,20.496,60.203,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,109
+Mariehamn,Mariehamn,Finland,20.496,60.203,Helsinki Vantaa,Helsinki,Finland,25.605,60.528,Yuzhmashavia,Ukraine,283
+Orebro,Orebro,Sweden,15.063,59.372,Saab,Linkoeping,Sweden,16.134,58.676,Yuzhmashavia,Ukraine,98
+Östersund Airport,Östersund,Sweden,14.833,63.324,Bromma,Stockholm,Sweden,18.569,59.59,Yuzhmashavia,Ukraine,459
+Visby,Visby,Sweden,18.577,58.104,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,220
+Vilhelmina,Vilhelmina,Sweden,17.389,64.965,Arlanda,Stockholm,Sweden,18.531,60.086,Yuzhmashavia,Ukraine,545
+Vilhelmina,Vilhelmina,Sweden,17.389,64.965,Hemavan Airport,Hemavan,Sweden,15.137,66.343,Yuzhmashavia,Ukraine,184
+Kodiak,Kodiak,United States,-152.157,58.249,Amook Bay Seaplane Base,Amook Bay,United States,-153.693,57.785,Air Salone,Sierra Leone,104
+Kodiak,Kodiak,United States,-152.157,58.249,Kitoi Bay Seaplane Base,Kitoi Bay,United States,-151.951,58.318,Air Salone,Sierra Leone,14
+Kodiak,Kodiak,United States,-152.157,58.249,Larsen Bay Airport,Larsen Bay,United States,-153.962,57.891,Air Salone,Sierra Leone,113
+Kodiak,Kodiak,United States,-152.157,58.249,Ouzinkie Airport,Ouzinkie,United States,-152.168,58.538,Air Salone,Sierra Leone,32
+Kodiak,Kodiak,United States,-152.157,58.249,Old Harbor Airport,Old Harbor,United States,-152.783,57.363,Air Salone,Sierra Leone,105
+Amook Bay Seaplane Base,Amook Bay,United States,-153.693,57.785,Zachar Bay Seaplane Base,Zachar Bay,United States,-153.584,57.916,Air Salone,Sierra Leone,15
+Kitoi Bay Seaplane Base,Kitoi Bay,United States,-151.951,58.318,Seal Bay Seaplane Base,Seal Bay,United States,-152.167,58.277,Air Salone,Sierra Leone,13
+Larsen Bay Airport,Larsen Bay,United States,-153.962,57.891,Karuluk Airport,Karluk,United States,-154.084,57.944,Air Salone,Sierra Leone,9
+Ouzinkie Airport,Ouzinkie,United States,-152.168,58.538,Port Lions Airport,Port Lions,United States,-152.744,58.475,Air Salone,Sierra Leone,34
+Seal Bay Seaplane Base,Seal Bay,United States,-152.167,58.277,Port Williams Seaplane Base,Port Williams,United States,-152.304,58.816,Air Salone,Sierra Leone,60
+Bacolod,Bacolod,Philippines,123.549,11.07,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,133
+Bacolod,Bacolod,Philippines,123.549,11.07,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,500
+Baiyun Intl,Guangzhou,China,113.497,23.654,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,1878
+Cotabato,Cotabato,Philippines,124.349,7.275,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,916
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Bacolod,Bacolod,Philippines,123.549,11.07,Air Philippines,Philippines,133
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Baiyun Intl,Guangzhou,China,113.497,23.654,Air Philippines,Philippines,1878
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Cagayan De Oro,Ladag,Philippines,125.018,8.692,Air Philippines,Philippines,206
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Francisco Bangoy International,Davao,Philippines,126.076,7.209,Air Philippines,Philippines,400
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Air Philippines,Philippines,1713
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Iloilo,Iloilo,Philippines,122.908,11.188,Air Philippines,Philippines,202
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,620
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Godofredo P,Caticlan,Philippines,122.588,12.535,Air Philippines,Philippines,316
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Ozamis,Ozamis,Philippines,124.402,8.297,Air Philippines,Philippines,247
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Daniel Z Romualdez,Tacloban,Philippines,125.046,11.379,Air Philippines,Philippines,106
+Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Air Philippines,Philippines,432
+Cagayan De Oro,Ladag,Philippines,125.018,8.692,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,206
+Cagayan De Oro,Ladag,Philippines,125.018,8.692,Francisco Bangoy International,Davao,Philippines,126.076,7.209,Air Philippines,Philippines,201
+Cagayan De Oro,Ladag,Philippines,125.018,8.692,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,810
+Catarman National Airport,Catarman,Philippines,125.059,12.837,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,488
+Calbayog Airport,Calbayog City,Philippines,124.908,12.121,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,517
+Francisco Bangoy International,Davao,Philippines,126.076,7.209,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,400
+Francisco Bangoy International,Davao,Philippines,126.076,7.209,Cagayan De Oro,Ladag,Philippines,125.018,8.692,Air Philippines,Philippines,201
+Francisco Bangoy International,Davao,Philippines,126.076,7.209,Iloilo,Iloilo,Philippines,122.908,11.188,Air Philippines,Philippines,562
+Francisco Bangoy International,Davao,Philippines,126.076,7.209,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,1011
+Francisco Bangoy International,Davao,Philippines,126.076,7.209,Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Air Philippines,Philippines,440
+General Santos International Airport,General Santos City,Philippines,125.392,6.177,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,1075
+Xiaoshan,Hangzhou,China,120.724,30.382,Kalibo,Kalibo,Philippines,122.627,12.132,Air Philippines,Philippines,2038
+Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,1713
+Iloilo,Iloilo,Philippines,122.908,11.188,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,202
+Iloilo,Iloilo,Philippines,122.908,11.188,Francisco Bangoy International,Davao,Philippines,126.076,7.209,Air Philippines,Philippines,562
+Iloilo,Iloilo,Philippines,122.908,11.188,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,454
+Jolo Airport,Jolo Airport,Philippines,121.018,6.089,Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Air Philippines,Philippines,200
+Kalibo,Kalibo,Philippines,122.627,12.132,Xiaoshan,Hangzhou,China,120.724,30.382,Air Philippines,Philippines,2038
+Kalibo,Kalibo,Philippines,122.627,12.132,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,347
+Kalibo,Kalibo,Philippines,122.627,12.132,Capital Intl,Beijing,China,116.974,40.133,Air Philippines,Philippines,3162
+Kalibo,Kalibo,Philippines,122.627,12.132,Pudong,Shanghai,China,122.342,31.238,Air Philippines,Philippines,2124
+Laoag Intl,Laoag,Philippines,120.885,18.296,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,383
+Legazpi,Legazpi,Philippines,124.243,13.261,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,388
+Masbate Airport,Masbate,Philippines,124.048,12.615,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,409
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Bacolod,Bacolod,Philippines,123.549,11.07,Air Philippines,Philippines,500
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Cotabato,Cotabato,Philippines,124.349,7.275,Air Philippines,Philippines,916
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,620
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Cagayan De Oro,Ladag,Philippines,125.018,8.692,Air Philippines,Philippines,810
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Catarman National Airport,Catarman,Philippines,125.059,12.837,Air Philippines,Philippines,488
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Calbayog Airport,Calbayog City,Philippines,124.908,12.121,Air Philippines,Philippines,517
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Francisco Bangoy International,Davao,Philippines,126.076,7.209,Air Philippines,Philippines,1011
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,General Santos International Airport,General Santos City,Philippines,125.392,6.177,Air Philippines,Philippines,1075
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Iloilo,Iloilo,Philippines,122.908,11.188,Air Philippines,Philippines,454
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Kalibo,Kalibo,Philippines,122.627,12.132,Air Philippines,Philippines,347
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Laoag Intl,Laoag,Philippines,120.885,18.296,Air Philippines,Philippines,383
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Legazpi,Legazpi,Philippines,124.243,13.261,Air Philippines,Philippines,388
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Masbate Airport,Masbate,Philippines,124.048,12.615,Air Philippines,Philippines,409
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Godofredo P,Caticlan,Philippines,122.588,12.535,Air Philippines,Philippines,307
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Ozamis,Ozamis,Philippines,124.402,8.297,Air Philippines,Philippines,815
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Puerto Princesa,Puerto Princesa,Philippines,119.264,10.236,Air Philippines,Philippines,547
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Changi Intl,Singapore,Singapore,104.657,1.583,Air Philippines,Philippines,2325
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Antique,San Jose,Philippines,122.555,11.276,Air Philippines,Philippines,429
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Surigao Airport,Sangley Point,Philippines,125.798,10.262,Air Philippines,Philippines,726
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Daniel Z Romualdez,Tacloban,Philippines,125.046,11.379,Air Philippines,Philippines,581
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Tagbilaran,Tagbilaran,Philippines,124.422,10.106,Air Philippines,Philippines,642
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Tuguegarao Airport,Tuguegarao,Philippines,122.217,18.063,Air Philippines,Philippines,379
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Busuanga,Busuanga,Philippines,120.166,12.202,Air Philippines,Philippines,308
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Naga Airport,Naga,Philippines,123.45,13.974,Air Philippines,Philippines,277
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Air Philippines,Philippines,821
+Godofredo P,Caticlan,Philippines,122.588,12.535,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,316
+Godofredo P,Caticlan,Philippines,122.588,12.535,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,307
+Ozamis,Ozamis,Philippines,124.402,8.297,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,247
+Ozamis,Ozamis,Philippines,124.402,8.297,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,815
+Capital Intl,Beijing,China,116.974,40.133,Kalibo,Kalibo,Philippines,122.627,12.132,Air Philippines,Philippines,3162
+Puerto Princesa,Puerto Princesa,Philippines,119.264,10.236,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,547
+Puerto Princesa,Puerto Princesa,Philippines,119.264,10.236,Busuanga,Busuanga,Philippines,120.166,12.202,Air Philippines,Philippines,239
+Pudong,Shanghai,China,122.342,31.238,Kalibo,Kalibo,Philippines,122.627,12.132,Air Philippines,Philippines,2124
+Changi Intl,Singapore,Singapore,104.657,1.583,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,2325
+Antique,San Jose,Philippines,122.555,11.276,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,429
+Surigao Airport,Sangley Point,Philippines,125.798,10.262,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,726
+Daniel Z Romualdez,Tacloban,Philippines,125.046,11.379,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,106
+Daniel Z Romualdez,Tacloban,Philippines,125.046,11.379,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,581
+Tagbilaran,Tagbilaran,Philippines,124.422,10.106,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,642
+Tuguegarao Airport,Tuguegarao,Philippines,122.217,18.063,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,379
+Busuanga,Busuanga,Philippines,120.166,12.202,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,308
+Busuanga,Busuanga,Philippines,120.166,12.202,Puerto Princesa,Puerto Princesa,Philippines,119.264,10.236,Air Philippines,Philippines,239
+Naga Airport,Naga,Philippines,123.45,13.974,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,277
+Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Mactan Cebu Intl,Cebu,Philippines,124.632,10.512,Air Philippines,Philippines,432
+Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Francisco Bangoy International,Davao,Philippines,126.076,7.209,Air Philippines,Philippines,440
+Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Jolo Airport,Jolo Airport,Philippines,121.018,6.089,Air Philippines,Philippines,200
+Zamboanga Intl,Zamboanga,Philippines,122.099,7.537,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Air Philippines,Philippines,821
+Mosnov,Ostrava,Czech Republic,18.185,50.16,Ruzyne,Prague,Czech Republic,14.433,50.168,JobAir,Czech Republic,267
+Mosnov,Ostrava,Czech Republic,18.185,50.16,Schwechat,Vienna,Austria,16.949,48.183,JobAir,Czech Republic,237
+Lawica,Poznan,Poland,17.377,52.701,Ruzyne,Prague,Czech Republic,14.433,50.168,JobAir,Czech Republic,347
+Ruzyne,Prague,Czech Republic,14.433,50.168,Mosnov,Ostrava,Czech Republic,18.185,50.16,JobAir,Czech Republic,267
+Ruzyne,Prague,Czech Republic,14.433,50.168,Lawica,Poznan,Poland,17.377,52.701,JobAir,Czech Republic,347
+Schwechat,Vienna,Austria,16.949,48.183,Mosnov,Ostrava,Czech Republic,18.185,50.16,JobAir,Czech Republic,237
+Southeast Iowa Regional Airport,Burlington,United States,-90.543,41.305,Chicago Ohare Intl,Chicago,United States,-87.842,42.631,Air Choice One,United States,267
+Southeast Iowa Regional Airport,Burlington,United States,-90.543,41.305,Lambert St Louis Intl,St. Louis,United States,-89.951,39.247,Air Choice One,United States,234
+Decatur,Decatur,United States,-88.777,40.39,Chicago Ohare Intl,Chicago,United States,-87.842,42.631,Air Choice One,United States,260
+Decatur,Decatur,United States,-88.777,40.39,Lambert St Louis Intl,St. Louis,United States,-89.951,39.247,Air Choice One,United States,161
+Chicago Ohare Intl,Chicago,United States,-87.842,42.631,Southeast Iowa Regional Airport,Burlington,United States,-90.543,41.305,Air Choice One,United States,267
+Chicago Ohare Intl,Chicago,United States,-87.842,42.631,Decatur,Decatur,United States,-88.777,40.39,Air Choice One,United States,260
+Lambert St Louis Intl,St. Louis,United States,-89.951,39.247,Southeast Iowa Regional Airport,Burlington,United States,-90.543,41.305,Air Choice One,United States,234
+Lambert St Louis Intl,St. Louis,United States,-89.951,39.247,Decatur,Decatur,United States,-88.777,40.39,Air Choice One,United States,161
+Craig Seaplane Base,Craig,United States,-132.58,55.798,Hollis Seaplane Base,Hollis,United States,-132.411,55.802,Fly Colombia ( Interliging Flights ),Colombia,10
+Craig Seaplane Base,Craig,United States,-132.58,55.798,Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Fly Colombia ( Interliging Flights ),Colombia,70
+Hollis Seaplane Base,Hollis,United States,-132.411,55.802,Craig Seaplane Base,Craig,United States,-132.58,55.798,Fly Colombia ( Interliging Flights ),Colombia,10
+Hollis Seaplane Base,Hollis,United States,-132.411,55.802,Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Fly Colombia ( Interliging Flights ),Colombia,60
+Thorne Bay Seaplane Base,Thorne Bay,United States,-132.228,56.146,Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Fly Colombia ( Interliging Flights ),Colombia,75
+Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Craig Seaplane Base,Craig,United States,-132.58,55.798,Fly Colombia ( Interliging Flights ),Colombia,70
+Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Hollis Seaplane Base,Hollis,United States,-132.411,55.802,Fly Colombia ( Interliging Flights ),Colombia,60
+Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Thorne Bay Seaplane Base,Thorne Bay,United States,-132.228,56.146,Fly Colombia ( Interliging Flights ),Colombia,75
+Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Metlakatla Seaplane Base,Metakatla,United States,-131.297,55.218,Fly Colombia ( Interliging Flights ),Colombia,43
+Metlakatla Seaplane Base,Metakatla,United States,-131.297,55.218,Ketchikan Intl,Ketchikan,United States,-131.523,55.592,Fly Colombia ( Interliging Flights ),Colombia,43
+Auckland Intl,Auckland,New Zealand,175.319,-36.347,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,8396
+Suvarnabhumi Intl,Bangkok,Thailand,101.245,14.135,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,1445
+Baiyun Intl,Guangzhou,China,113.497,23.654,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2632
+Meilan,Haikou,China,110.764,20.558,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2211
+Noibai Intl,Hanoi,Vietnam,106.345,21.368,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2207
+Xiaoshan,Hangzhou,China,120.724,30.382,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,3622
+Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2559
+Phuket Intl,Phuket,Thailand,98.528,8.188,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,1000
+Kansai,Osaka,Japan,135.406,34.724,Taoyuan Intl,Taipei,Taiwan,121.388,25.129,Jetstar Asia Airways,Singapore,1718
+Kuala Lumpur Intl,Kuala Lumpur,Malaysia,102.183,3.242,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,331
+Macau Intl,Macau,Macau,113.985,22.249,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2509
+Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2325
+Lishe,Ninbo,China,121.769,30.377,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,3675
+Penang Intl,Penang,Malaysia,100.461,5.495,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,637
+Perth Intl,Perth,Australia,116.611,-31.901,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,3930
+Phnom Penh Intl,Phnom-penh,Cambodia,105.406,11.91,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,1151
+Siem Reap,Siem-reap,Cambodia,104.354,13.684,Phnom Penh Intl,Phnom-penh,Cambodia,105.406,11.91,Jetstar Asia Airways,Singapore,227
+Yangon Intl,Yangon,Burma,96.222,17.512,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,1996
+Tansonnhat Intl,Ho Chi Minh City,Vietnam,107.086,11.364,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,1120
+Changi Intl,Singapore,Singapore,104.657,1.583,Auckland Intl,Auckland,New Zealand,175.319,-36.347,Jetstar Asia Airways,Singapore,8396
+Changi Intl,Singapore,Singapore,104.657,1.583,Suvarnabhumi Intl,Bangkok,Thailand,101.245,14.135,Jetstar Asia Airways,Singapore,1445
+Changi Intl,Singapore,Singapore,104.657,1.583,Baiyun Intl,Guangzhou,China,113.497,23.654,Jetstar Asia Airways,Singapore,2632
+Changi Intl,Singapore,Singapore,104.657,1.583,Meilan,Haikou,China,110.764,20.558,Jetstar Asia Airways,Singapore,2211
+Changi Intl,Singapore,Singapore,104.657,1.583,Noibai Intl,Hanoi,Vietnam,106.345,21.368,Jetstar Asia Airways,Singapore,2207
+Changi Intl,Singapore,Singapore,104.657,1.583,Xiaoshan,Hangzhou,China,120.724,30.382,Jetstar Asia Airways,Singapore,3622
+Changi Intl,Singapore,Singapore,104.657,1.583,Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Jetstar Asia Airways,Singapore,2559
+Changi Intl,Singapore,Singapore,104.657,1.583,Phuket Intl,Phuket,Thailand,98.528,8.188,Jetstar Asia Airways,Singapore,1000
+Changi Intl,Singapore,Singapore,104.657,1.583,Kuala Lumpur Intl,Kuala Lumpur,Malaysia,102.183,3.242,Jetstar Asia Airways,Singapore,331
+Changi Intl,Singapore,Singapore,104.657,1.583,Macau Intl,Macau,Macau,113.985,22.249,Jetstar Asia Airways,Singapore,2509
+Changi Intl,Singapore,Singapore,104.657,1.583,Ninoy Aquino Intl,Manila,Philippines,121.032,14.847,Jetstar Asia Airways,Singapore,2325
+Changi Intl,Singapore,Singapore,104.657,1.583,Lishe,Ninbo,China,121.769,30.377,Jetstar Asia Airways,Singapore,3675
+Changi Intl,Singapore,Singapore,104.657,1.583,Penang Intl,Penang,Malaysia,100.461,5.495,Jetstar Asia Airways,Singapore,637
+Changi Intl,Singapore,Singapore,104.657,1.583,Perth Intl,Perth,Australia,116.611,-31.901,Jetstar Asia Airways,Singapore,3930
+Changi Intl,Singapore,Singapore,104.657,1.583,Phnom Penh Intl,Phnom-penh,Cambodia,105.406,11.91,Jetstar Asia Airways,Singapore,1151
+Changi Intl,Singapore,Singapore,104.657,1.583,Siem Reap,Siem-reap,Cambodia,104.354,13.684,Jetstar Asia Airways,Singapore,1345
+Changi Intl,Singapore,Singapore,104.657,1.583,Yangon Intl,Yangon,Burma,96.222,17.512,Jetstar Asia Airways,Singapore,1996
+Changi Intl,Singapore,Singapore,104.657,1.583,Tansonnhat Intl,Ho Chi Minh City,Vietnam,107.086,11.364,Jetstar Asia Airways,Singapore,1120
+Changi Intl,Singapore,Singapore,104.657,1.583,Wai Sha Airport,Shantou,China,117.138,23.666,Jetstar Asia Airways,Singapore,2799
+Changi Intl,Singapore,Singapore,104.657,1.583,Taoyuan Intl,Taipei,Taiwan,121.388,25.129,Jetstar Asia Airways,Singapore,3174
+Wai Sha Airport,Shantou,China,117.138,23.666,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,2799
+Taoyuan Intl,Taipei,Taiwan,121.388,25.129,Kansai,Osaka,Japan,135.406,34.724,Jetstar Asia Airways,Singapore,1718
+Taoyuan Intl,Taipei,Taiwan,121.388,25.129,Changi Intl,Singapore,Singapore,104.657,1.583,Jetstar Asia Airways,Singapore,3174
+Dusseldorf,Duesseldorf,Germany,7.277,51.482,Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Intersky,Austria,417
+Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Dusseldorf,Duesseldorf,Germany,7.277,51.482,Intersky,Austria,417
+Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Graz,Graz,Austria,15.732,47.651,Intersky,Austria,441
+Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Hamburg,Hamburg,Germany,10.647,54.05,Intersky,Austria,661
+Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Tegel,Berlin,Germany,13.479,52.932,Intersky,Austria,593
+Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Schwechat,Vienna,Austria,16.949,48.183,Intersky,Austria,526
+Graz,Graz,Austria,15.732,47.651,Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Intersky,Austria,441
+Hamburg,Hamburg,Germany,10.647,54.05,Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Intersky,Austria,661
+Tegel,Berlin,Germany,13.479,52.932,Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Intersky,Austria,593
+Schwechat,Vienna,Austria,16.949,48.183,Friedrichshafen,Friedrichshafen,Germany,9.852,48.118,Intersky,Austria,526
+Schiphol,Amsterdam,Netherlands,5.273,52.514,El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Air Arabia Maroc,Morocco,1969
+Schiphol,Amsterdam,Netherlands,5.273,52.514,Ibn Batouta,Tanger,Morocco,-5.862,36.211,Air Arabia Maroc,Morocco,2011
+Barcelona,Barcelona,Spain,2.13,41.495,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,1207
+Barcelona,Barcelona,Spain,2.13,41.495,El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Air Arabia Maroc,Morocco,759
+Barcelona,Barcelona,Spain,2.13,41.495,Ibn Batouta,Tanger,Morocco,-5.862,36.211,Air Arabia Maroc,Morocco,907
+Bergamo Orio Al Serio,Bergamo,Italy,10.173,46.123,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,2031
+Brussels Natl,Brussels,Belgium,4.807,51.502,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,2216
+Brussels Natl,Brussels,Belgium,4.807,51.502,El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Air Arabia Maroc,Morocco,1853
+Brussels Natl,Brussels,Belgium,4.807,51.502,Ibn Batouta,Tanger,Morocco,-5.862,36.211,Air Arabia Maroc,Morocco,1898
+Koln Bonn,Cologne,Germany,7.237,51.443,El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Air Arabia Maroc,Morocco,1915
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Barcelona,Barcelona,Spain,2.13,41.495,Air Arabia Maroc,Morocco,1207
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Bergamo Orio Al Serio,Bergamo,Italy,10.173,46.123,Air Arabia Maroc,Morocco,2031
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Brussels Natl,Brussels,Belgium,4.807,51.502,Air Arabia Maroc,Morocco,2216
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Levaldigi,Levaldigi,Italy,8.038,44.911,Air Arabia Maroc,Morocco,1817
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Saint Exupery,Lyon,France,5.151,46.21,Air Arabia Maroc,Morocco,1754
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Mediterranee,Montpellier,France,4.605,43.96,Air Arabia Maroc,Morocco,1543
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Sabiha Gokcen,Istanbul,Turkey,29.515,41.497,Air Arabia Maroc,Morocco,3335
+Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Treviso,Treviso,Italy,12.324,46.08,Air Arabia Maroc,Morocco,2165
+Levaldigi,Levaldigi,Italy,8.038,44.911,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,1817
+Saint Exupery,Lyon,France,5.151,46.21,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,1754
+Mediterranee,Montpellier,France,4.605,43.96,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,1543
+Mediterranee,Montpellier,France,4.605,43.96,El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Air Arabia Maroc,Morocco,1099
+Mediterranee,Montpellier,France,4.605,43.96,Ibn Batouta,Tanger,Morocco,-5.862,36.211,Air Arabia Maroc,Morocco,1237
+El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Schiphol,Amsterdam,Netherlands,5.273,52.514,Air Arabia Maroc,Morocco,1969
+El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Barcelona,Barcelona,Spain,2.13,41.495,Air Arabia Maroc,Morocco,759
+El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Brussels Natl,Brussels,Belgium,4.807,51.502,Air Arabia Maroc,Morocco,1853
+El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Koln Bonn,Cologne,Germany,7.237,51.443,Air Arabia Maroc,Morocco,1915
+El Aroui Airport,El Aroui Airport,Morocco,-2.381,35.648,Mediterranee,Montpellier,France,4.605,43.96,Air Arabia Maroc,Morocco,1099
+Sabiha Gokcen,Istanbul,Turkey,29.515,41.497,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,3335
+Ibn Batouta,Tanger,Morocco,-5.862,36.211,Schiphol,Amsterdam,Netherlands,5.273,52.514,Air Arabia Maroc,Morocco,2011
+Ibn Batouta,Tanger,Morocco,-5.862,36.211,Barcelona,Barcelona,Spain,2.13,41.495,Air Arabia Maroc,Morocco,907
+Ibn Batouta,Tanger,Morocco,-5.862,36.211,Brussels Natl,Brussels,Belgium,4.807,51.502,Air Arabia Maroc,Morocco,1898
+Ibn Batouta,Tanger,Morocco,-5.862,36.211,Mediterranee,Montpellier,France,4.605,43.96,Air Arabia Maroc,Morocco,1237
+Treviso,Treviso,Italy,12.324,46.08,Mohammed V Intl,Casablanca,Morocco,-7.317,33.612,Air Arabia Maroc,Morocco,2165
+Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Flamingo,Kralendijk,Netherlands Antilles,-67.781,12.218,Tiara Air,Aruba,184
+Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Hato,Willemstad,Netherlands Antilles,-68.934,12.314,Tiara Air,Aruba,74
+Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Almirante Padilla,Rio Hacha,Colombia,-72.877,11.877,Tiara Air,Aruba,396
+Flamingo,Kralendijk,Netherlands Antilles,-67.781,12.218,Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Tiara Air,Aruba,184
+Hato,Willemstad,Netherlands Antilles,-68.934,12.314,Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Tiara Air,Aruba,74
+Almirante Padilla,Rio Hacha,Colombia,-72.877,11.877,Reina Beatrix Intl,Oranjestad,Aruba,-69.359,12.835,Tiara Air,Aruba,396
+Andizhan Airport,Andizhan,Uzbekistan,72.49,41.212,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2933
+Bukhara,Bukhara,Uzbekistan,64.805,40.291,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2571
+Domododevo,Moscow,Russia,38.51,55.681,Andizhan Airport,Andizhan,Uzbekistan,72.49,41.212,Moskovia Airlines,Russia,2933
+Domododevo,Moscow,Russia,38.51,55.681,Bukhara,Bukhara,Uzbekistan,64.805,40.291,Moskovia Airlines,Russia,2571
+Domododevo,Moscow,Russia,38.51,55.681,Fergana Airport,Fergana,Uzbekistan,72.241,40.598,Moskovia Airlines,Russia,2967
+Domododevo,Moscow,Russia,38.51,55.681,Karshi Khanabad Airport,Khanabad,Uzbekistan,66.535,39.389,Moskovia Airlines,Russia,2742
+Domododevo,Moscow,Russia,38.51,55.681,Ganja Airport,Ganja,Azerbaijan,46.529,41.229,Moskovia Airlines,Russia,1709
+Domododevo,Moscow,Russia,38.51,55.681,Namangan Airport,Namangan,Uzbekistan,71.927,41.641,Moskovia Airlines,Russia,2866
+Domododevo,Moscow,Russia,38.51,55.681,Samarkand,Samarkand,Uzbekistan,67.639,40.167,Moskovia Airlines,Russia,2737
+Domododevo,Moscow,Russia,38.51,55.681,Tivat,Tivat,Montenegro,19.205,42.674,Moskovia Airlines,Russia,2001
+Domododevo,Moscow,Russia,38.51,55.681,Termez Airport,Termez,Uzbekistan,67.516,37.477,Moskovia Airlines,Russia,2962
+Fergana Airport,Fergana,Uzbekistan,72.241,40.598,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2967
+Karshi Khanabad Airport,Khanabad,Uzbekistan,66.535,39.389,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2742
+Ganja Airport,Ganja,Azerbaijan,46.529,41.229,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,1709
+Namangan Airport,Namangan,Uzbekistan,71.927,41.641,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2866
+Samarkand,Samarkand,Uzbekistan,67.639,40.167,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2737
+Tivat,Tivat,Montenegro,19.205,42.674,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2001
+Termez Airport,Termez,Uzbekistan,67.516,37.477,Domododevo,Moscow,Russia,38.51,55.681,Moskovia Airlines,Russia,2962
+Le Lamentin,Fort-de-france,Martinique,-60.339,14.985,Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Air Antilles Express,Guadeloupe,187
+Le Lamentin,Fort-de-france,Martinique,-60.339,14.985,George F L Charles,Castries,Saint Lucia,-60.989,14.033,Air Antilles Express,Guadeloupe,126
+Toussaint Louverture Intl,Port-au-prince,Haiti,-71.821,18.966,Las Americas Intl,Santo Domingo,Dominican Republic,-69.449,18.716,Air Antilles Express,Guadeloupe,251
+Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Le Lamentin,Fort-de-france,Martinique,-60.339,14.985,Air Antilles Express,Guadeloupe,187
+Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Saint Barthelemy,Gustavia,France,-62.721,18.503,Air Antilles Express,Guadeloupe,279
+Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Las Americas Intl,Santo Domingo,Dominican Republic,-69.449,18.716,Air Antilles Express,Guadeloupe,908
+Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Grand Case,St. Martin,Guadeloupe,-62.412,18.166,Air Antilles Express,Guadeloupe,229
+Saint Barthelemy,Gustavia,France,-62.721,18.503,Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Air Antilles Express,Guadeloupe,279
+Las Americas Intl,Santo Domingo,Dominican Republic,-69.449,18.716,Toussaint Louverture Intl,Port-au-prince,Haiti,-71.821,18.966,Air Antilles Express,Guadeloupe,251
+Las Americas Intl,Santo Domingo,Dominican Republic,-69.449,18.716,Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Air Antilles Express,Guadeloupe,908
+Grand Case,St. Martin,Guadeloupe,-62.412,18.166,Le Raizet,Pointe-a-pitre,Guadeloupe,-61.22,16.442,Air Antilles Express,Guadeloupe,229
+George F L Charles,Castries,Saint Lucia,-60.989,14.033,Le Lamentin,Fort-de-france,Martinique,-60.339,14.985,Air Antilles Express,Guadeloupe,126
+Baiyun Intl,Guangzhou,China,113.497,23.654,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,966
+Baiyun Intl,Guangzhou,China,113.497,23.654,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1197
+Baiyun Intl,Guangzhou,China,113.497,23.654,Francisco C Ada Saipan Intl,Saipan,Northern Mariana Islands,146.215,15.198,Sichuan Airlines,China,3548
+Soekarno Hatta Intl,Jakarta,Indonesia,107.093,-5.543,Wuxu,Nanning,China,108.287,23.013,Sichuan Airlines,China,3177
+Xinzheng,Zhengzhou,China,114.401,34.866,Changchun,Changchun,China,125.2,43.902,Sichuan Airlines,China,1365
+Xinzheng,Zhengzhou,China,114.401,34.866,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1013
+Xinzheng,Zhengzhou,China,114.401,34.866,Baita Airport,Huhhot,China,112.373,41.419,Sichuan Airlines,China,749
+Xinzheng,Zhengzhou,China,114.401,34.866,Taiping,Harbin,China,126.417,46.039,Sichuan Airlines,China,1601
+Xinzheng,Zhengzhou,China,114.401,34.866,Wujiaba,Kunming,China,103.239,25.653,Sichuan Airlines,China,1480
+Changchun,Changchun,China,125.2,43.902,Xinzheng,Zhengzhou,China,114.401,34.866,Sichuan Airlines,China,1365
+Changchun,Changchun,China,125.2,43.902,Jinan,Jinan,China,117.359,37.428,Sichuan Airlines,China,976
+Changchun,Changchun,China,125.2,43.902,Binhai,Tianjin,China,117.576,39.207,Sichuan Airlines,China,820
+Chifeng Airport,Chifeng,China,119.513,42.391,Baita Airport,Huhhot,China,112.373,41.419,Sichuan Airlines,China,600
+Jiangbei,Chongqing,China,107.069,30.198,Baiyun Intl,Guangzhou,China,113.497,23.654,Sichuan Airlines,China,966
+Jiangbei,Chongqing,China,107.069,30.198,Huanghua,Changcha,China,113.366,28.315,Sichuan Airlines,China,645
+Jiangbei,Chongqing,China,107.069,30.198,Changzhou,Changzhou,China,120.186,32.569,Sichuan Airlines,China,1271
+Jiangbei,Chongqing,China,107.069,30.198,Zhoushuizi,Dalian,China,121.897,39.609,Sichuan Airlines,China,1705
+Jiangbei,Chongqing,China,107.069,30.198,Xiaoshan,Hangzhou,China,120.724,30.382,Sichuan Airlines,China,1310
+Jiangbei,Chongqing,China,107.069,30.198,Phuket Intl,Phuket,Thailand,98.528,8.188,Sichuan Airlines,China,2603
+Jiangbei,Chongqing,China,107.069,30.198,Yinchuan,Yinchuan,China,106.015,38.803,Sichuan Airlines,China,961
+Jiangbei,Chongqing,China,107.069,30.198,Changbei Intl,Nanchang,China,116.5,29.441,Sichuan Airlines,China,913
+Jiangbei,Chongqing,China,107.069,30.198,Wujiaba,Kunming,China,103.239,25.653,Sichuan Airlines,China,629
+Jiangbei,Chongqing,China,107.069,30.198,Lhasa-Gonggar,Lhasa,China,91.519,29.496,Sichuan Airlines,China,1500
+Jiangbei,Chongqing,China,107.069,30.198,Lishe,Ninbo,China,121.769,30.377,Sichuan Airlines,China,1410
+Jiangbei,Chongqing,China,107.069,30.198,Lukou,Nanjing,China,119.436,32.236,Sichuan Airlines,China,1196
+Jiangbei,Chongqing,China,107.069,30.198,Capital Intl,Beijing,China,116.974,40.133,Sichuan Airlines,China,1423
+Jiangbei,Chongqing,China,107.069,30.198,Pudong,Shanghai,China,122.342,31.238,Sichuan Airlines,China,1463
+Jiangbei,Chongqing,China,107.069,30.198,Phoenix International,Sanya,China,109.687,18.504,Sichuan Airlines,China,1326
+Jiangbei,Chongqing,China,107.069,30.198,Baoan Intl,Shenzhen,China,114.351,23.065,Sichuan Airlines,China,1073
+Jiangbei,Chongqing,China,107.069,30.198,Jinan,Jinan,China,117.359,37.428,Sichuan Airlines,China,1243
+Jiangbei,Chongqing,China,107.069,30.198,Sungshan,Taipei,Taiwan,121.92,25.116,Sichuan Airlines,China,1566
+Jiangbei,Chongqing,China,107.069,30.198,Binhai,Tianjin,China,117.576,39.207,Sichuan Airlines,China,1385
+Jiangbei,Chongqing,China,107.069,30.198,Diwopu,Urumqi,China,87.79,44.511,Sichuan Airlines,China,2320
+Jiangbei,Chongqing,China,107.069,30.198,Wenzhou Yongqiang Airport,Wenzhou,China,121.42,28.52,Sichuan Airlines,China,1402
+Jiangbei,Chongqing,China,107.069,30.198,Tianhe,Wuhan,China,114.346,31.306,Sichuan Airlines,China,706
+Jiangbei,Chongqing,China,107.069,30.198,Xianyang,Xi'an,China,109.252,34.745,Sichuan Airlines,China,545
+Jiangbei,Chongqing,China,107.069,30.198,Gaoqi,Xiamen,China,118.212,24.906,Sichuan Airlines,China,1245
+Jiangbei,Chongqing,China,107.069,30.198,Xining Caojiabu Airport,Xining,China,102.071,36.879,Sichuan Airlines,China,875
+Jiangbei,Chongqing,China,107.069,30.198,Yichang Airport,Yichang,China,111.735,31.118,Sichuan Airlines,China,457
+Huanghua,Changcha,China,113.366,28.315,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,645
+Huanghua,Changcha,China,113.366,28.315,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,898
+Huanghua,Changcha,China,113.366,28.315,Changle,Fuzhou,China,120.105,26.558,Sichuan Airlines,China,693
+Huanghua,Changcha,China,113.366,28.315,Gaoqi,Xiamen,China,118.212,24.906,Sichuan Airlines,China,612
+Shuangliu,Chengdu,China,104.578,30.964,Baiyun Intl,Guangzhou,China,113.497,23.654,Sichuan Airlines,China,1197
+Shuangliu,Chengdu,China,104.578,30.964,Xinzheng,Zhengzhou,China,114.401,34.866,Sichuan Airlines,China,1013
+Shuangliu,Chengdu,China,104.578,30.964,Huanghua,Changcha,China,113.366,28.315,Sichuan Airlines,China,898
+Shuangliu,Chengdu,China,104.578,30.964,Dongsheng,Dongsheng,China,110.055,40.416,Sichuan Airlines,China,1160
+Shuangliu,Chengdu,China,104.578,30.964,Meilan,Haikou,China,110.764,20.558,Sichuan Airlines,China,1311
+Shuangliu,Chengdu,China,104.578,30.964,Baita Airport,Huhhot,China,112.373,41.419,Sichuan Airlines,China,1355
+Shuangliu,Chengdu,China,104.578,30.964,Luogang,Hefei,China,117.497,32.3,Sichuan Airlines,China,1231
+Shuangliu,Chengdu,China,104.578,30.964,Xiaoshan,Hangzhou,China,120.724,30.382,Sichuan Airlines,China,1544
+Shuangliu,Chengdu,China,104.578,30.964,Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Sichuan Airlines,China,1361
+Shuangliu,Chengdu,China,104.578,30.964,Phuket Intl,Phuket,Thailand,98.528,8.188,Sichuan Airlines,China,2609
+Shuangliu,Chengdu,China,104.578,30.964,Incheon Intl,Seoul,South Korea,126.75,37.781,Sichuan Airlines,China,2165
+Shuangliu,Chengdu,China,104.578,30.964,Yinchuan,Yinchuan,China,106.015,38.803,Sichuan Airlines,China,881
+Shuangliu,Chengdu,China,104.578,30.964,Jingdezhen Airport,Jingdezhen,China,117.293,29.564,Sichuan Airlines,China,1230
+Shuangliu,Chengdu,China,104.578,30.964,Jiuzhaigou Huanglong,Jiuzhaigou,China,104.138,33.428,Sichuan Airlines,China,277
+Shuangliu,Chengdu,China,104.578,30.964,Changbei Intl,Nanchang,China,116.5,29.441,Sichuan Airlines,China,1157
+Shuangliu,Chengdu,China,104.578,30.964,Wujiaba,Kunming,China,103.239,25.653,Sichuan Airlines,China,604
+Shuangliu,Chengdu,China,104.578,30.964,Ganzhou Airport,Ganzhou,China,115.52,26.376,Sichuan Airlines,China,1182
+Shuangliu,Chengdu,China,104.578,30.964,Longdongbao,Guiyang,China,107.334,26.897,Sichuan Airlines,China,525
+Shuangliu,Chengdu,China,104.578,30.964,Liangjiang,Guilin,China,110.065,25.363,Sichuan Airlines,China,822
+Shuangliu,Chengdu,China,104.578,30.964,Lanzhou Airport,Lanzhou,China,104.028,36.195,Sichuan Airlines,China,583
+Shuangliu,Chengdu,China,104.578,30.964,Lijiang Airport,Lijiang,China,100.388,27.472,Sichuan Airlines,China,562
+Shuangliu,Chengdu,China,104.578,30.964,Lhasa-Gonggar,Lhasa,China,91.519,29.496,Sichuan Airlines,China,1264
+Shuangliu,Chengdu,China,104.578,30.964,Male Intl,Male,Maldives,73.881,4.319,Sichuan Airlines,China,4368
+Shuangliu,Chengdu,China,104.578,30.964,Lukou,Nanjing,China,119.436,32.236,Sichuan Airlines,China,1413
+Shuangliu,Chengdu,China,104.578,30.964,Wuxu,Nanning,China,108.287,23.013,Sichuan Airlines,China,957
+Shuangliu,Chengdu,China,104.578,30.964,Capital Intl,Beijing,China,116.974,40.133,Sichuan Airlines,China,1512
+Shuangliu,Chengdu,China,104.578,30.964,Pudong,Shanghai,China,122.342,31.238,Sichuan Airlines,China,1689
+Shuangliu,Chengdu,China,104.578,30.964,Taichung Ching Chuang Kang Airport,Chingchuakang,Taiwan,121.034,24.441,Sichuan Airlines,China,1772
+Shuangliu,Chengdu,China,104.578,30.964,Shijiazhuang Daguocun International Airport,Shijiazhuang,China,115.162,38.467,Sichuan Airlines,China,1275
+Shuangliu,Chengdu,China,104.578,30.964,Phoenix International,Sanya,China,109.687,18.504,Sichuan Airlines,China,1477
+Shuangliu,Chengdu,China,104.578,30.964,Baoan Intl,Shenzhen,China,114.351,23.065,Sichuan Airlines,China,1305
+Shuangliu,Chengdu,China,104.578,30.964,Liuting,Qingdao,China,120.624,36.443,Sichuan Airlines,China,1601
+Shuangliu,Chengdu,China,104.578,30.964,Tengchong Tuofeng Airport,Tengchong,China,98.805,25.564,Sichuan Airlines,China,824
+Shuangliu,Chengdu,China,104.578,30.964,Jinan,Jinan,China,117.359,37.428,Sichuan Airlines,China,1375
+Shuangliu,Chengdu,China,104.578,30.964,Taoyuan Intl,Taipei,Taiwan,121.388,25.129,Sichuan Airlines,China,1770
+Shuangliu,Chengdu,China,104.578,30.964,Sungshan,Taipei,Taiwan,121.92,25.116,Sichuan Airlines,China,1819
+Shuangliu,Chengdu,China,104.578,30.964,Binhai,Tianjin,China,117.576,39.207,Sichuan Airlines,China,1493
+Shuangliu,Chengdu,China,104.578,30.964,Wusu,Taiyuan,China,113.047,38.244,Sichuan Airlines,China,1119
+Shuangliu,Chengdu,China,104.578,30.964,Diwopu,Urumqi,China,87.79,44.511,Sichuan Airlines,China,2101
+Shuangliu,Chengdu,China,104.578,30.964,Wenzhou Yongqiang Airport,Wenzhou,China,121.42,28.52,Sichuan Airlines,China,1646
+Shuangliu,Chengdu,China,104.578,30.964,Tianhe,Wuhan,China,114.346,31.306,Sichuan Airlines,China,930
+Shuangliu,Chengdu,China,104.578,30.964,Wuxi Airport,Wuxi,China,120.715,31.824,Sichuan Airlines,China,1533
+Shuangliu,Chengdu,China,104.578,30.964,Qingshan,Xichang,China,102.307,28.648,Sichuan Airlines,China,338
+Shuangliu,Chengdu,China,104.578,30.964,Xianyang,Xi'an,China,109.252,34.745,Sichuan Airlines,China,605
+Shuangliu,Chengdu,China,104.578,30.964,Gaoqi,Xiamen,China,118.212,24.906,Sichuan Airlines,China,1497
+Shuangliu,Chengdu,China,104.578,30.964,Xining Caojiabu Airport,Xining,China,102.071,36.879,Sichuan Airlines,China,697
+Shuangliu,Chengdu,China,104.578,30.964,Xuzhou Guanyin Airport,Xuzhou,China,117.183,34.266,Sichuan Airlines,China,1235
+Shuangliu,Chengdu,China,104.578,30.964,Yichang Airport,Yichang,China,111.735,31.118,Sichuan Airlines,China,681
+Changzhou,Changzhou,China,120.186,32.569,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,1271
+Changzhou,Changzhou,China,120.186,32.569,Wuxu,Nanning,China,108.287,23.013,Sichuan Airlines,China,1578
+Changzhou,Changzhou,China,120.186,32.569,Zhuhai Airport,Zhuhai,China,113.626,22.01,Sichuan Airlines,China,1340
+Zhoushuizi,Dalian,China,121.897,39.609,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,1705
+Zhoushuizi,Dalian,China,121.897,39.609,Jinan,Jinan,China,117.359,37.428,Sichuan Airlines,China,463
+Zhoushuizi,Dalian,China,121.897,39.609,Xuzhou Guanyin Airport,Xuzhou,China,117.183,34.266,Sichuan Airlines,China,726
+Dongsheng,Dongsheng,China,110.055,40.416,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1160
+Dongsheng,Dongsheng,China,110.055,40.416,Shenyang Taoxian International Airport,Shenyang,China,123.483,41.637,Sichuan Airlines,China,1133
+Changle,Fuzhou,China,120.105,26.558,Huanghua,Changcha,China,113.366,28.315,Sichuan Airlines,China,693
+Changle,Fuzhou,China,120.105,26.558,Changbei Intl,Nanchang,China,116.5,29.441,Sichuan Airlines,China,477
+Meilan,Haikou,China,110.764,20.558,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1311
+Meilan,Haikou,China,110.764,20.558,Lishe,Ninbo,China,121.769,30.377,Sichuan Airlines,China,1551
+Meilan,Haikou,China,110.764,20.558,Wuxu,Nanning,China,108.287,23.013,Sichuan Airlines,China,374
+Meilan,Haikou,China,110.764,20.558,Zhuhai Airport,Zhuhai,China,113.626,22.01,Sichuan Airlines,China,337
+Baita Airport,Huhhot,China,112.373,41.419,Xinzheng,Zhengzhou,China,114.401,34.866,Sichuan Airlines,China,749
+Baita Airport,Huhhot,China,112.373,41.419,Chifeng Airport,Chifeng,China,119.513,42.391,Sichuan Airlines,China,600
+Baita Airport,Huhhot,China,112.373,41.419,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1355
+Baita Airport,Huhhot,China,112.373,41.419,Changbei Intl,Nanchang,China,116.5,29.441,Sichuan Airlines,China,1382
+Baita Airport,Huhhot,China,112.373,41.419,Jinan,Jinan,China,117.359,37.428,Sichuan Airlines,China,616
+Luogang,Hefei,China,117.497,32.3,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1231
+Xiaoshan,Hangzhou,China,120.724,30.382,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,1310
+Xiaoshan,Hangzhou,China,120.724,30.382,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1544
+Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,1361
+Hong Kong Intl,Hong Kong,Hong Kong,114.524,22.514,Yichang Airport,Yichang,China,111.735,31.118,Sichuan Airlines,China,995
+Phuket Intl,Phuket,Thailand,98.528,8.188,Jiangbei,Chongqing,China,107.069,30.198,Sichuan Airlines,China,2603
+Phuket Intl,Phuket,Thailand,98.528,8.188,Shuangliu,Chengdu,China,104.578,30.964,Sichuan Airlines,China,2609
+Dongshan,Hailar,China,120.375,49.341,Taiping,Harbin,China,126.417,46.039,Sichuan Airlines,China,582
+Taiping,Harbin,China,126.417,46.039,Xinzheng,Zhengzhou,China,114.401,34.866,Sichuan Airlines,China,1601
+Taiping,Harbin,China,126.417,46.039,Dongshan,Hailar,China,120.375,49.341,Sichuan Airlines,China,582
+Taiping,Harbin,China,126.417,46.039,Lishe,Ninbo,China,121.769,30.377,Sichuan Airlines,China,1787
