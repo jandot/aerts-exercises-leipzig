@@ -1,8 +1,8 @@
-table = loadTable("flights.csv","header")
-
 def setup():
+    global table
     global circlePosition
-    size(800,800)
+    table = loadTable("flights.csv","header")
+    size(800,400)
     noLoop()
     circlePosition = 50
 
@@ -30,7 +30,7 @@ def draw():
             to_country = row.getString("to_country")
     
             x = map(from_long,-180,180,0,width)
-            y = map(from_lat,-180,180,height,0)
+            y = map(from_lat,-90,90,height,0)
         
             if from_country == to_country:
                 fill(255,0,0,10)
@@ -43,3 +43,4 @@ def mouseDragged():
     if abs(mouseX - circlePosition) <= 5 and abs(mouseY - 150) <= 5 and mouseX >= 50 and mouseX <= 150:
           circlePosition = mouseX
           redraw()
+

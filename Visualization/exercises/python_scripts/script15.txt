@@ -10,7 +10,7 @@ class Flight:
         self.to_country = tc
 
         self.x = map(self.from_long, -180, 180, 0, width)
-        self.y = map(self.from_lat, -180, 180, height, 0)
+        self.y = map(self.from_lat, -90, 90, height, 0)
 
     def selected(self):
         if dist(mouseX, mouseY, self.x, self.y) < 10:
@@ -28,7 +28,7 @@ class Flight:
 def setup():
     global flights
     flights = []
-    size(800, 800)
+    size(800, 400)
     noStroke()
     noLoop()
     fill(0, 0, 255, 10)
@@ -53,3 +53,4 @@ def draw():
 
 def mouseMoved():
     redraw()
+

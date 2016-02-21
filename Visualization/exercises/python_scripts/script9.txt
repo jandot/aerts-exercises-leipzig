@@ -1,7 +1,7 @@
-table = loadTable("flights.csv","header")
-
 def setup():
-    size(800,800)
+    global table
+    table = loadTable("flights.csv","header")    
+    size(800,400)
     noStroke()
     noLoop()
 
@@ -21,7 +21,7 @@ def draw():
             to_country = row.getString("to_country")
             
             x = map(from_long,-180,180,0,width)
-            y = map(from_lat,-180,180,height,0)
+            y = map(from_lat,-90,90,height,0)
             if from_country == to_country:
                 fill(255,0,0,10)
             else:
@@ -31,3 +31,4 @@ def draw():
     
 def mouseMoved():
     redraw()
+
